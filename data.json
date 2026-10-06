@@ -1,35 +1,75 @@
 {
   "lessons": [
+    { "id": "lesson-1", "title": "제1과 인사 (第一課：問候)" },
+    { "id": "lesson-2", "title": "제2과 일상생활 (第二課：日常生活)" }
+  ],
+  "questions": [
     {
-      "id": "lesson-1",
-      "title": "제1과 인사 (第一課：問候)",
-      "questions": [
-        {
-          "id": 101,
-          "translation": "我是韓國人。",
-          "correctOrder": ["저는", "한국", "사람입니다"],
-          "options": ["사람입니다", "저는", "학생입니다", "한국", "일본"]
-        }
-      ]
+      "id": 101,
+      "lessonId": "lesson-1",
+      "translation": "我是韓國人。",
+      "correctOrder": ["저는", "한국", "사람입니다"],
+      "options": ["사람입니다", "저는", "학생입니다", "한국", "일본"]
+    },
+    {
+      "id": 102,
+      "lessonId": "lesson-1",
+      "translation": "我不是公司職員。",
+      "correctOrder": ["저는", "회사원이", "아닙니다"],
+      "options": ["회사원이", "저는", "의사가", "아닙니다", "입니다"]
+    },
+    {
+      "id": 201,
+      "lessonId": "lesson-2",
+      "translation": "在喝咖啡。",
+      "correctOrder": ["커피를", "마십니다"],
+      "options": ["커피를", "우유를", "마십니다", "먹습니다"]
+    },
+    {
+      "id": 202,
+      "lessonId": "lesson-2",
+      "translation": "朋友在看電影。",
+      "correctOrder": ["친구가", "영화를", "봅니다"],
+      "options": ["친구가", "영화를", "음악을", "봅니다", "마십니다"]
     }
   ],
   "grammars": [
     {
       "id": "g1",
-      "title": "連音現象 (연음 현상)",
-      "formula": "終聲(받침) + 初聲 ㅇ",
-      "explanation": "當前一個字的底音（받침）遇到下一個字以『ㅇ』開頭時，底音會移到『ㅇ』的位置發音。",
-      "exampleKr": "한국어 → [한구거]",
-      "exampleZh": "韓語（實際讀作 한구거）"
+      "lessonId": "lesson-1",
+      "title": "입니다",
+      "formula": "名詞 + 입니다",
+      "explanation": "接在名詞後，表示事物的身份、狀態或指定，相當於中文的「是」。",
+      "exampleKr": "저는 <span class=\"hl-red\">학생입니다</span>.",
+      "exampleZh": "我是學生。"
+    },
+    {
+      "id": "g2",
+      "lessonId": "lesson-1",
+      "title": "이 / 가 아니다",
+      "formula": "名詞 + 이/가 아니다",
+      "explanation": "이다 的否定形式，相當於中文的「不是」。有底音接 이 아니다，無底音接 가 아니다。",
+      "exampleKr": "저는 <span class=\"hl-red\">회사원이 아닙니다</span>.",
+      "exampleZh": "我不是公司職員。"
+    },
+    {
+      "id": "g3",
+      "lessonId": "lesson-2",
+      "title": "을 / 를",
+      "formula": "名詞 + 을/를",
+      "explanation": "目的格助詞，接在受詞（賓語）後面。有底音接 을，無底音接 를。",
+      "exampleKr": "커피<span class=\"hl-red\">를</span> 마십니다.",
+      "exampleZh": "喝咖啡。"
     }
   ],
   "vocabularies": [
-    { "id": "v1", "kr": "한국어", "pron": "[한구거]", "zh": "韓語", "category": "連音單字" },
-    { "id": "v2", "kr": "음악", "pron": "[으막]", "zh": "音樂", "category": "連音單字" },
-    { "id": "v3", "kr": "월요일", "pron": "[워료일]", "zh": "星期一", "category": "連音單字" },
-    { "id": "v4", "kr": "집에", "pron": "[지베]", "zh": "在家/去家裡", "category": "連音短語" },
-    { "id": "v5", "kr": "할아버지", "pron": "[하라버지]", "zh": "爺爺", "category": "連音單字" },
-    { "id": "v6", "kr": "있어요", "pron": "[이써요]", "zh": "有/在", "category": "連音短語" },
-    { "id": "v7", "kr": "꽃이", "pron": "[꼬치]", "zh": "花（主格）", "category": "連音單字" }
+    { "id": "v1", "lessonId": "lesson-1", "kr": "한국어", "pron": "한구거", "zh": "韓語", "category": "語言" },
+    { "id": "v2", "lessonId": "lesson-1", "kr": "학생", "zh": "學生", "category": "職業" },
+    { "id": "v3", "lessonId": "lesson-1", "kr": "회사원", "pron": "회사와닌", "zh": "公司職員", "category": "職業" },
+    { "id": "v4", "lessonId": "lesson-1", "kr": "음악", "pron": "으막", "zh": "音樂", "category": "興趣" },
+    { "id": "v5", "lessonId": "lesson-2", "kr": "월요일", "pron": "워료일", "zh": "星期一", "category": "時間" },
+    { "id": "v6", "lessonId": "lesson-2", "kr": "집에", "pron": "지베", "zh": "在家/去家裡", "category": "場所" },
+    { "id": "v7", "lessonId": "lesson-2", "kr": "있어요", "pron": "이써요", "zh": "有 / 在", "category": "動詞" },
+    { "id": "v8", "lessonId": "lesson-2", "kr": "커피", "zh": "咖啡", "category": "飲料" }
   ]
 }
