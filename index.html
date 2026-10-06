@@ -348,10 +348,7 @@
               <div class="vocab-kr" id="vocabKrDisplay">-</div>
               <div class="vocab-pron" id="vocabPronDisplay"></div>
               
-              <!-- 卡片內直接按發音 (加入雙重事件阻擋，絕不觸發翻牌) -->
-              <button class="btn-audio" style="margin-top:12px;" onclick="event.stopPropagation(); playCurrentVocabCardAudio();" ontouchstart="event.stopPropagation();">🔊 聽發音</button>
-              
-              <div class="vocab-hint">💡 點擊卡片翻轉查看中文 (可左右滑動)</div>
+                            <div class="vocab-hint">💡 點擊卡片翻轉查看中文 (可左右滑動)</div>
             </div>
             <div class="flip-card-back">
               <div class="vocab-zh" id="vocabZhDisplay">-</div>
@@ -371,7 +368,6 @@
   </div>
 </div>
 
-<script>
   let appData = { lessons: [], questions: [], grammars: [], vocabularies: [] };
 
   // 1. 句子測驗變數
