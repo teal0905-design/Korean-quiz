@@ -34,6 +34,24 @@ body {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
 }
 
+/* 頂部進度條 */
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background-color: #E5E7EB;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #4F46E5, #818CF8);
+  border-radius: 10px;
+  transition: width 0.35s ease;
+}
+
 /* 頂部導航分頁 */
 .nav-tabs {
   display: flex;
@@ -95,7 +113,9 @@ select {
   color: var(--text-main);
 }
 
+/* 聲音按鈕與聲波脈衝特效 (Pulse Ripple) */
 .btn-audio {
+  position: relative;
   background: #EEF2FF;
   color: var(--primary);
   border: 1px solid #C7D2FE;
@@ -107,10 +127,33 @@ select {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  transition: transform 0.1s;
+  transition: transform 0.1s, box-shadow 0.2s;
 }
 
 .btn-audio:active { transform: scale(0.95); }
+
+@keyframes audioPulse {
+  0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+}
+
+.btn-audio.playing {
+  animation: audioPulse 1.2s infinite;
+  background: #E0E7FF;
+}
+
+/* 答對彈跳特效 (Bounce) */
+@keyframes bounceSuccess {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.04); }
+  70% { transform: scale(0.98); }
+  100% { transform: scale(1); }
+}
+
+.bounce-success {
+  animation: bounceSuccess 0.4s ease-out;
+}
 
 .answer-zone {
   min-height: 80px;
@@ -219,8 +262,25 @@ select {
   margin-right: 4px;
   vertical-align: middle;
 }
-.badge-has { background: #E0E7FF; color: #3730A3; }  /* 有尾音：淺靛藍 */
-.badge-none { background: #DCFCE7; color: #166534; } /* 無尾音：淡綠色 */
+.badge-has { background: #E0E7FF; color: #3730A3; }
+.badge-none { background: #DCFCE7; color: #166534; }
+
+/* 單字眼睛切換按鈕 */
+.btn-eye {
+  background: #F3F4F6;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  cursor: pointer;
+}
+.btn-eye.hidden-mode {
+  background: #FEE2E2;
+  color: #DC2626;
+  border-color: #FCA5A5;
+}
 
 /* 單字卡片 3D 與手勢滑動 */
 .slider-viewport {
@@ -285,7 +345,19 @@ select {
 .flip-card-back { background: #EEF2FF; color: var(--primary); transform: rotateY(180deg); -webkit-transform: rotateY(180deg); z-index: 1; }
 
 .vocab-kr { font-size: 2.3rem; font-weight: 700; color: var(--text-main); }
-.vocab-pron { font-size: 1.15rem; color: var(--error); font-weight: 600; margin-top: 4px; min-height: 24px; }
+.vocab-pron {
+  font-size: 1.15rem;
+  color: var(--error);
+  font-weight: 600;
+  margin-top: 4px;
+  min-height: 24px;
+  transition: opacity 0.2s ease;
+}
+.vocab-pron.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .vocab-zh { font-size: 1.85rem; font-weight: 700; }
 .vocab-hint { font-size: 0.8rem; color: #9CA3AF; margin-top: 10px; }
 
