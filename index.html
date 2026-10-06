@@ -475,7 +475,7 @@
     });
   }
 
-    // 單字卡邏輯（支援連音發音顯示）
+  // 單字卡邏輯
   function updateVocabCard() {
     if (vocabList.length === 0) return;
     const cardEl = document.getElementById('vocabFlipCard');
@@ -483,18 +483,11 @@
 
     setTimeout(() => {
       const v = vocabList[vocabIndex];
-      
-      // 正面：單字 + 實際連音發音
-      const pronText = v.pron ? `<div style="font-size: 1.1rem; color: #E11D48; margin-top: 4px;">實際發音：${v.pron}</div>` : '';
-      document.getElementById('vocabKrDisplay').innerHTML = `${v.kr} ${pronText}`;
-      
-      // 背面：中文翻譯 + 分類
+      document.getElementById('vocabKrDisplay').innerText = v.kr;
       document.getElementById('vocabZhDisplay').innerText = v.zh;
       document.getElementById('vocabCategoryDisplay').innerText = `分類：${v.category || '通用'}`;
       document.getElementById('vocabProgress').innerText = `${vocabIndex + 1} / ${vocabList.length}`;
     }, 150);
-  }
-
   }
 
   function toggleCardFlip() {
