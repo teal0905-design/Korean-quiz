@@ -20,6 +20,11 @@
 
   <!-- 1. 句子重組測驗 -->
   <div id="quizView" class="view-section active">
+    <!-- 頂部平滑進度條 -->
+    <div class="progress-track">
+      <div class="progress-fill" id="sentenceProgressBar"></div>
+    </div>
+
     <div class="filter-bar">
       <select id="sentenceLessonSelect" onchange="initSentenceQuiz()"></select>
       <select id="sentenceCountSelect" onchange="initSentenceQuiz()" style="display:none;">
@@ -31,7 +36,7 @@
     </div>
     <div class="prompt-box">
       <div class="prompt" id="promptText">載入中...</div>
-      <button class="btn-audio" onclick="playCurrentSentenceAudio()">🔊 聽發音</button>
+      <button class="btn-audio" id="sentenceAudioBtn" onclick="playCurrentSentenceAudio()">🔊 聽發音</button>
     </div>
     <div class="answer-zone" id="answerZone"></div>
     <div class="word-bank" id="wordBank"></div>
@@ -44,6 +49,11 @@
 
   <!-- 2. 單字選擇測驗 -->
   <div id="vocabQuizView" class="view-section">
+    <!-- 單字測驗進度條 -->
+    <div class="progress-track">
+      <div class="progress-fill" id="vocabQuizProgressBar"></div>
+    </div>
+
     <div class="filter-bar">
       <select id="vocabQuizLessonSelect" onchange="startVocabQuiz()"></select>
       <select id="vocabQuizCountSelect" onchange="startVocabQuiz()">
@@ -55,7 +65,7 @@
     </div>
     <div class="prompt-box" style="justify-content: center; gap: 10px;">
       <div class="vocab-quiz-q" id="vocabQuizWord">-</div>
-      <button class="btn-audio" onclick="playVocabQuizAudio()">🔊 聽發音</button>
+      <button class="btn-audio" id="vocabQuizAudioBtn" onclick="playVocabQuizAudio()">🔊 聽發音</button>
     </div>
     <div class="quiz-options" id="vocabQuizOptions"></div>
     <div class="message" id="vocabQuizMessage"></div>
@@ -77,6 +87,8 @@
     <div id="vocabSubView" style="display: none;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
         <button class="btn-reset" style="padding: 6px 12px; border-radius: 6px; cursor:pointer;" onclick="shuffleVocabCards()">🔀 隨機排列</button>
+        <!-- 連音顯示/隱藏眼睛開關 -->
+        <button class="btn-eye" id="togglePronBtn" onclick="togglePronVisibility()">👁️ 連音顯示</button>
         <div style="font-weight:600; color:var(--text-sub);" id="vocabProgress">0 / 0</div>
       </div>
       <div class="slider-viewport">
@@ -96,7 +108,7 @@
       </div>
       <div class="controls">
         <button class="btn btn-reset" onclick="prevVocabCard()">⬅ 上一張</button>
-        <button class="btn btn-reset" style="background:#EEF2FF; color:var(--primary); border:1px solid #C7D2FE;" onclick="playCurrentVocabCardAudio()">🔊 聽發音</button>
+        <button class="btn btn-reset" id="vocabCardAudioBtn" style="background:#EEF2FF; color:var(--primary); border:1px solid #C7D2FE;" onclick="playCurrentVocabCardAudio()">🔊 聽發音</button>
         <button class="btn btn-submit" onclick="nextVocabCard()">下一張 ➡️</button>
       </div>
     </div>
