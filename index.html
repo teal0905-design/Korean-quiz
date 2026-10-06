@@ -2,8 +2,8 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>韓文學習助手</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>韓文互動學習 App</title>
   <style>
     :root {
       --primary: #4F46E5;
@@ -23,7 +23,7 @@
       background-color: var(--bg);
       display: flex;
       justify-content: center;
-      padding: 16px;
+      padding: 12px;
       color: #374151;
       margin: 0;
     }
@@ -32,26 +32,26 @@
       width: 100%;
       max-width: 600px;
       background: #FFFFFF;
-      padding: 20px;
+      padding: 18px;
       border-radius: 20px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
     }
 
-    /* 頂部主選單頁籤 */
+    /* 頂部導航分頁 */
     .nav-tabs {
       display: flex;
       background: #E5E7EB;
       padding: 4px;
       border-radius: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .nav-btn {
       flex: 1;
-      padding: 10px;
+      padding: 10px 4px;
       border: none;
       border-radius: 8px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 600;
       color: var(--text-sub);
       background: transparent;
@@ -62,40 +62,60 @@
     .nav-btn.active {
       background: #FFFFFF;
       color: var(--primary);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
     }
 
-    /* 頁面視圖隱藏控制 */
     .view-section { display: none; }
     .view-section.active { display: block; }
 
-    /* ================= 1. 測驗區樣式 ================= */
-    .header-bar {
+    /* 通用選單控制列 */
+    .filter-bar {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      gap: 8px;
       margin-bottom: 16px;
+      align-items: center;
     }
 
     select {
-      padding: 8px 12px;
-      border-radius: 8px;
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
       border: 1px solid #D1D5DB;
       font-size: 0.95rem;
-      background: #fff;
+      background: #FFF;
+      font-weight: 500;
     }
 
-    .progress { font-size: 0.9rem; color: var(--text-sub); font-weight: 600; }
-    .prompt { font-size: 1.2rem; font-weight: 600; margin-bottom: 16px; color: var(--text-main); min-height: 28px; }
+    /* 1. 句子測驗樣式 */
+    .prompt-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .prompt { font-size: 1.2rem; font-weight: 700; color: var(--text-main); }
+    .btn-audio {
+      background: #EEF2FF;
+      color: var(--primary);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
 
     .answer-zone {
       min-height: 80px;
       border: 2px dashed #D1D5DB;
       border-radius: 12px;
-      padding: 12px;
+      padding: 10px;
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
       margin-bottom: 16px;
       background: #FAFAFA;
@@ -105,30 +125,29 @@
     .answer-zone.correct { border-color: var(--success); background-color: #ECFDF5; }
     .answer-zone.incorrect { border-color: var(--error); background-color: #FEF2F2; }
 
-    .word-bank { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; min-height: 60px; }
+    .word-bank { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; min-height: 60px; }
 
     .card {
-      padding: 10px 16px;
+      padding: 10px 14px;
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 8px;
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 500;
       cursor: pointer;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
       user-select: none;
       touch-action: manipulation;
     }
+    .card:active { transform: scale(0.96); }
 
-    .card:active { transform: scale(0.98); }
-
-    .controls { display: flex; gap: 12px; }
-    .btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+    .controls { display: flex; gap: 10px; }
+    .btn { flex: 1; padding: 12px; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; }
     .btn-submit { background: var(--primary); color: white; }
     .btn-reset { background: #E5E7EB; color: #4B5563; }
     .message { margin-top: 12px; font-weight: 600; text-align: center; min-height: 24px; }
 
-    /* ================= 2. 題庫區樣式 ================= */
+    /* 2. 文法資料庫樣式 */
     .sub-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
     .sub-btn {
       flex: 1;
@@ -142,43 +161,47 @@
     }
     .sub-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-    /* 文法列表卡片 */
     .grammar-card {
       background: #F9FAFB;
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 16px;
+      padding: 14px;
       margin-bottom: 12px;
     }
-    .grammar-title { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .grammar-title { font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
     .grammar-formula { display: inline-block; background: #EEF2FF; color: var(--primary); padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
-    .grammar-exp { font-size: 0.95rem; line-height: 1.5; color: #4B5563; margin-bottom: 10px; }
+    .grammar-exp { font-size: 0.95rem; line-height: 1.5; color: #4B5563; margin-bottom: 8px; }
     .grammar-ex { background: #FFF; padding: 8px 12px; border-radius: 6px; border-left: 3px solid var(--primary); font-size: 0.9rem; }
+    
+    /* 紅色突出文法標註 */
+    .hl-red { color: #EF4444 !important; font-weight: bold; }
 
-    /* 單字 3D 翻轉卡片 */
-    .vocab-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .vocab-top-bar {
+    /* 3. 單字 3D 翻轉 + 滑動動畫卡片 */
+    .slider-viewport {
       width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .flip-card {
-      background-color: transparent;
-      width: 100%;
-      height: 220px;
-      perspective: 1000px;
-      cursor: pointer;
+      height: 230px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
       margin-bottom: 16px;
-      touch-action: pan-y; /* 允許垂直滾動，水平由 JS 監聽 */
     }
+
+    .flip-card-wrapper {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      perspective: 1000px;
+      transition: transform 0.35s ease-in-out, opacity 0.35s ease-in-out;
+    }
+
+    /* 滑動動畫類別 */
+    .slide-out-left { transform: translateX(-100%); opacity: 0; }
+    .slide-out-right { transform: translateX(100%); opacity: 0; }
+    .slide-in-left { transform: translateX(-100%); opacity: 0; }
+    .slide-in-right { transform: translateX(100%); opacity: 0; }
+    .slide-center { transform: translateX(0); opacity: 1; }
 
     .flip-card-inner {
       position: relative;
@@ -189,9 +212,10 @@
       transform-style: preserve-3d;
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      cursor: pointer;
     }
 
-    .flip-card.flipped .flip-card-inner {
+    .flip-card-wrapper.flipped .flip-card-inner {
       transform: rotateY(180deg);
     }
 
@@ -206,73 +230,123 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 16px;
       border: 1px solid var(--border);
+      background: #FFFFFF;
     }
 
-    .flip-card-front { background: #FFFFFF; color: var(--text-main); }
     .flip-card-back { background: #EEF2FF; color: var(--primary); transform: rotateY(180deg); }
 
-    .vocab-kr { font-size: 2.2rem; font-weight: 700; margin-bottom: 8px; }
-    .vocab-zh { font-size: 1.8rem; font-weight: 600; }
-    .vocab-hint { font-size: 0.85rem; color: #9CA3AF; margin-top: 12px; }
+    .vocab-kr { font-size: 2.2rem; font-weight: 700; color: var(--text-main); }
+    .vocab-pron { font-size: 1.1rem; color: #EF4444; font-weight: 600; margin-top: 4px; }
+    .vocab-zh { font-size: 1.8rem; font-weight: 700; }
+    .vocab-hint { font-size: 0.8rem; color: #9CA3AF; margin-top: 10px; }
 
-    .vocab-controls { display: flex; width: 100%; gap: 12px; }
+    /* 4. 單字測驗樣式 */
+    .vocab-quiz-q { font-size: 2rem; font-weight: 700; text-align: center; margin: 20px 0; color: var(--text-main); }
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .opt-btn {
+      padding: 14px;
+      border: 1px solid var(--border);
+      background: #FFF;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+    }
+    .opt-btn.correct { background: #ECFDF5; border-color: var(--success); color: var(--success); }
+    .opt-btn.wrong { background: #FEF2F2; border-color: var(--error); color: var(--error); }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <!-- 主功能分頁 -->
+  <!-- 主導航欄 -->
   <div class="nav-tabs">
     <button class="nav-btn active" onclick="switchMainView('quiz')">🧩 句子測驗</button>
-    <button class="nav-btn" onclick="switchMainView('bank')">📚 字卡題庫</button>
+    <button class="nav-btn" onclick="switchMainView('vocabQuiz')">🔤 單字測驗</button>
+    <button class="nav-btn" onclick="switchMainView('bank')">📚 學習資料庫</button>
   </div>
 
-  <!-- ================= View 1: 測驗模式 ================= -->
+  <!-- ================= 1. 句子組裝測驗 View ================= -->
   <div id="quizView" class="view-section active">
-    <div class="header-bar">
-      <select id="lessonSelect" onchange="switchLesson(this.value)"></select>
-      <div class="progress" id="progressText">0 / 0</div>
+    <div class="filter-bar">
+      <select id="sentenceLessonSelect" onchange="initSentenceQuiz()"></select>
+      <select id="sentenceCountSelect" onchange="initSentenceQuiz()" style="display:none;">
+        <option value="5">5 題</option>
+        <option value="10" selected>10 題</option>
+        <option value="15">15 題</option>
+        <option value="20">20 題</option>
+      </select>
     </div>
 
-    <div class="prompt" id="promptText">載入中...</div>
+    <div class="prompt-box">
+      <div class="prompt" id="promptText">載入中...</div>
+      <button class="btn-audio" onclick="playCurrentSentenceAudio()">🔊 聽發音</button>
+    </div>
+
     <div class="answer-zone" id="answerZone"></div>
     <div class="word-bank" id="wordBank"></div>
 
     <div class="controls">
-      <button class="btn btn-reset" onclick="resetCurrentQuiz()">重設</button>
-      <button class="btn btn-submit" id="submitBtn" onclick="handleSubmit()">檢查答案</button>
+      <button class="btn btn-reset" onclick="resetSentenceQuiz()">重設卡片</button>
+      <button class="btn btn-submit" id="submitBtn" onclick="handleSentenceSubmit()">檢查答案</button>
     </div>
     <div class="message" id="message"></div>
   </div>
 
-  <!-- ================= View 2: 字卡題庫模式 ================= -->
+  <!-- ================= 2. 單字測驗 View ================= -->
+  <div id="vocabQuizView" class="view-section">
+    <div class="filter-bar">
+      <select id="vocabQuizLessonSelect" onchange="startVocabQuiz()"></select>
+      <select id="vocabQuizCountSelect" onchange="startVocabQuiz()">
+        <option value="5">5 題</option>
+        <option value="10" selected>10 題</option>
+        <option value="15">15 題</option>
+        <option value="20">20 題</option>
+      </select>
+    </div>
+
+    <div class="prompt-box" style="justify-content: center; gap: 10px;">
+      <div class="vocab-quiz-q" id="vocabQuizWord">-</div>
+      <button class="btn-audio" onclick="playVocabQuizAudio()">🔊</button>
+    </div>
+
+    <div class="quiz-options" id="vocabQuizOptions"></div>
+    <div class="message" id="vocabQuizMessage"></div>
+    <button class="btn btn-submit" id="vocabNextBtn" style="display:none; width:100%;" onclick="nextVocabQuizQuestion()">下一題 ➔</button>
+  </div>
+
+  <!-- ================= 3. 學習資料庫 View ================= -->
   <div id="bankView" class="view-section">
-    <!-- 子分頁 -->
     <div class="sub-tabs">
       <button class="sub-btn active" id="btnSubGrammar" onclick="switchBankSubView('grammar')">📖 文法資料庫</button>
       <button class="sub-btn" id="btnSubVocab" onclick="switchBankSubView('vocab')">🎴 單字卡片</button>
     </div>
 
-    <!-- 文法子頁面 -->
+    <div class="filter-bar">
+      <select id="bankLessonSelect" onchange="filterBankData()"></select>
+    </div>
+
+    <!-- 文法清單 -->
     <div id="grammarSubView">
       <div id="grammarList"></div>
     </div>
 
-    <!-- 單字卡片子頁面 -->
+    <!-- 單字 3D 翻頁 + 滑動卡片 -->
     <div id="vocabSubView" style="display: none;">
-      <div class="vocab-container">
-        <div class="vocab-top-bar">
-          <button class="btn-reset" style="padding: 6px 12px; border-radius: 6px; border:none; cursor:pointer;" onclick="shuffleVocab()">🔀 隨機排列</button>
-          <div class="progress" id="vocabProgress">1 / 1</div>
-        </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <button class="btn-reset" style="padding: 6px 12px; border-radius: 6px; border:none; cursor:pointer;" onclick="shuffleVocabCards()">🔀 隨機排列</button>
+        <div style="font-weight:600; color:var(--text-sub);" id="vocabProgress">0 / 0</div>
+      </div>
 
-        <!-- 翻轉卡片 -->
-        <div class="flip-card" id="vocabFlipCard" onclick="toggleCardFlip()">
+      <div class="slider-viewport">
+        <div class="flip-card-wrapper slide-center" id="vocabCardWrapper" onclick="toggleCardFlip()">
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <div class="vocab-kr" id="vocabKrDisplay">-</div>
+              <div class="vocab-pron" id="vocabPronDisplay"></div>
               <div class="vocab-hint">💡 點擊翻轉查看中文 (可左右滑動)</div>
             </div>
             <div class="flip-card-back">
@@ -281,51 +355,68 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="vocab-controls">
-          <button class="btn btn-reset" onclick="prevVocabCard()">⬅ 上一張</button>
-          <button class="btn btn-submit" onclick="nextVocabCard()">下一張 ➡️</button>
-        </div>
+      <div class="controls">
+        <button class="btn btn-reset" onclick="prevVocabCard()">⬅ 上一張</button>
+        <button class="btn btn-submit" onclick="nextVocabCard()">下一張 ➡️</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-  let quizData = { lessons: [], grammars: [], vocabularies: [] };
-  
-  // 測驗狀態
-  let currentQuestions = [];
-  let currentIndex = 0;
+  let appData = { lessons: [], questions: [], grammars: [], vocabularies: [] };
+
+  // 1. 句子測驗變數
+  let currentSentenceList = [];
+  let sentenceIdx = 0;
   let availableCards = [];
   let selectedCards = [];
-  let isAnsweredCorrectly = false;
+  let isSentenceCorrect = false;
 
-  // 單字卡狀態
-  let vocabList = [];
-  let vocabIndex = 0;
+  // 2. 單字測驗變數
+  let vocabQuizList = [];
+  let vocabQuizIdx = 0;
+  let vocabQuizScore = 0;
+  let currentVocabQuestion = null;
 
-  // 讀取 JSON 資料
-  async function loadData() {
+  // 3. 單字卡片變數
+  let filteredVocabList = [];
+  let vocabCardIdx = 0;
+  let isAnimating = false;
+
+  // 初始化讀取資料
+  async function initApp() {
     try {
-      const response = await fetch('data.json');
-      quizData = await response.json();
-
-      // 初始化測驗
-      populateLessonSelect();
-      if(quizData.lessons.length > 0) switchLesson(quizData.lessons[0].id);
-
-      // 初始化題庫
-      renderGrammars();
-      vocabList = [...quizData.vocabularies];
-      updateVocabCard();
-
-    } catch (err) {
-      document.getElementById('promptText').innerText = "讀取 data.json 失敗，請檢查格式。";
+      const res = await fetch('data.json');
+      appData = await res.json();
+      
+      populateLessonDropdowns();
+      initSentenceQuiz();
+      startVocabQuiz();
+      filterBankData();
+    } catch (e) {
+      document.getElementById('promptText').innerText = "載入 data.json 失敗，請確認檔案格式！";
     }
   }
 
-  // 主頁面切換
+  function populateLessonDropdowns() {
+    const optionsHtml = `
+      <option value="all">🎲 綜合測驗 (全範圍)</option>
+      ${appData.lessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('')}
+    `;
+    
+    document.getElementById('sentenceLessonSelect').innerHTML = optionsHtml;
+    document.getElementById('vocabQuizLessonSelect').innerHTML = optionsHtml;
+    
+    document.getElementById('bankLessonSelect').innerHTML = `
+      <option value="all">📚 全部課程內容</option>
+      ${appData.lessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('')}
+    `;
+  }
+
+  // 主頁面分頁切換
   function switchMainView(view) {
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
@@ -333,13 +424,244 @@
     if (view === 'quiz') {
       document.querySelectorAll('.nav-btn')[0].classList.add('active');
       document.getElementById('quizView').classList.add('active');
-    } else {
+    } else if (view === 'vocabQuiz') {
       document.querySelectorAll('.nav-btn')[1].classList.add('active');
+      document.getElementById('vocabQuizView').classList.add('active');
+    } else {
+      document.querySelectorAll('.nav-btn')[2].classList.add('active');
       document.getElementById('bankView').classList.add('active');
     }
   }
 
-  // 題庫子頁面切換
+  // 語音發音朗讀 (TTS)
+  function speakKorean(text) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'ko-KR';
+    utter.rate = 0.85;
+    window.speechSynthesis.speak(utter);
+  }
+
+  /* ===================================================
+     1. 句子組裝測驗邏輯
+  =================================================== */
+  function initSentenceQuiz() {
+    const lessonVal = document.getElementById('sentenceLessonSelect').value;
+    const countSelect = document.getElementById('sentenceCountSelect');
+
+    let pool = lessonVal === 'all' 
+      ? [...appData.questions] 
+      : appData.questions.filter(q => q.lessonId === lessonVal);
+
+    countSelect.style.display = lessonVal === 'all' ? 'inline-block' : 'none';
+    
+    // 隨機打散題目
+    pool.sort(() => Math.random() - 0.5);
+
+    if (lessonVal === 'all') {
+      const targetCount = parseInt(countSelect.value);
+      pool = pool.slice(0, targetCount);
+    }
+
+    currentSentenceList = pool;
+    sentenceIdx = 0;
+    loadSentenceQuestion();
+  }
+
+  function loadSentenceQuestion() {
+    if (currentSentenceList.length === 0) {
+      document.getElementById('promptText').innerText = "本單元暫無題目。";
+      document.getElementById('answerZone').innerHTML = '';
+      document.getElementById('wordBank').innerHTML = '';
+      return;
+    }
+
+    isSentenceCorrect = false;
+    document.getElementById('submitBtn').innerText = '檢查答案';
+    
+    const q = currentSentenceList[sentenceIdx];
+    document.getElementById('promptText').innerText = `(${sentenceIdx + 1}/${currentSentenceList.length}) ${q.translation}`;
+
+    // 打散選項卡片
+    const shuffled = [...q.options].sort(() => Math.random() - 0.5);
+    availableCards = shuffled.map((text, idx) => ({ id: idx, text }));
+    selectedCards = [];
+
+    renderSentenceQuiz();
+  }
+
+  function renderSentenceQuiz() {
+    const answerZone = document.getElementById('answerZone');
+    const wordBank = document.getElementById('wordBank');
+    const message = document.getElementById('message');
+
+    if (!isSentenceCorrect) {
+      answerZone.className = 'answer-zone';
+      message.innerText = '';
+    }
+
+    answerZone.innerHTML = '';
+    selectedCards.forEach(card => {
+      const el = createCardEl(card.text, () => {
+        if (isSentenceCorrect) return;
+        selectedCards = selectedCards.filter(c => c.id !== card.id);
+        availableCards.push(card);
+        renderSentenceQuiz();
+      });
+      answerZone.appendChild(el);
+    });
+
+    wordBank.innerHTML = '';
+    availableCards.forEach(card => {
+      const el = createCardEl(card.text, () => {
+        if (isSentenceCorrect) return;
+        availableCards = availableCards.filter(c => c.id !== card.id);
+        selectedCards.push(card);
+        renderSentenceQuiz();
+      });
+      wordBank.appendChild(el);
+    });
+  }
+
+  function createCardEl(text, onClick) {
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.innerText = text;
+    el.onclick = onClick;
+    return el;
+  }
+
+  function resetSentenceQuiz() {
+    if (!isSentenceCorrect) loadSentenceQuestion();
+  }
+
+  function handleSentenceSubmit() {
+    if (isSentenceCorrect) {
+      sentenceIdx++;
+      if (sentenceIdx < currentSentenceList.length) {
+        loadSentenceQuestion();
+      } else {
+        alert("🎉 恭喜完成本次所有句子測驗！");
+        initSentenceQuiz();
+      }
+      return;
+    }
+
+    const q = currentSentenceList[sentenceIdx];
+    const userAns = selectedCards.map(c => c.text);
+    const isCorrect = userAns.length === q.correctOrder.length &&
+      userAns.every((val, i) => val === q.correctOrder[i]);
+
+    const answerZone = document.getElementById('answerZone');
+    const message = document.getElementById('message');
+
+    if (isCorrect) {
+      answerZone.classList.add('correct');
+      message.style.color = '#10B981';
+      message.innerText = '🎉 答對了！點擊按鈕繼續下一題。';
+      document.getElementById('submitBtn').innerText = '下一題 ➔';
+      isSentenceCorrect = true;
+      playCurrentSentenceAudio();
+    } else {
+      answerZone.classList.add('incorrect');
+      message.style.color = '#EF4444';
+      message.innerText = '❌ 順序不正確，請再試一次。';
+    }
+  }
+
+  function playCurrentSentenceAudio() {
+    if (!currentSentenceList[sentenceIdx]) return;
+    const fullText = currentSentenceList[sentenceIdx].correctOrder.join(' ');
+    speakKorean(fullText);
+  }
+
+  /* ===================================================
+     2. 單字選擇題測驗邏輯
+  =================================================== */
+  function startVocabQuiz() {
+    const lessonVal = document.getElementById('vocabQuizLessonSelect').value;
+    const targetCount = parseInt(document.getElementById('vocabQuizCountSelect').value);
+
+    let pool = lessonVal === 'all' 
+      ? [...appData.vocabularies] 
+      : appData.vocabularies.filter(v => v.lessonId === lessonVal);
+
+    if (pool.length < 4) {
+      document.getElementById('vocabQuizWord').innerText = "單字數量不足，無法生成選擇題。";
+      document.getElementById('vocabQuizOptions').innerHTML = '';
+      return;
+    }
+
+    pool.sort(() => Math.random() - 0.5);
+    vocabQuizList = pool.slice(0, Math.min(targetCount, pool.length));
+    vocabQuizIdx = 0;
+    vocabQuizScore = 0;
+
+    loadVocabQuizQuestion();
+  }
+
+  function loadVocabQuizQuestion() {
+    document.getElementById('vocabNextBtn').style.display = 'none';
+    document.getElementById('vocabQuizMessage').innerText = '';
+
+    currentVocabQuestion = vocabQuizList[vocabQuizIdx];
+    document.getElementById('vocabQuizWord').innerText = currentVocabQuestion.kr;
+    speakKorean(currentVocabQuestion.kr);
+
+    // 產生 4 個選項 (1 個正確 + 3 個干擾項)
+    let options = [currentVocabQuestion];
+    let otherPool = appData.vocabularies.filter(v => v.id !== currentVocabQuestion.id);
+    otherPool.sort(() => Math.random() - 0.5);
+    options.push(...otherPool.slice(0, 3));
+    options.sort(() => Math.random() - 0.5);
+
+    const optContainer = document.getElementById('vocabQuizOptions');
+    optContainer.innerHTML = '';
+    options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn';
+      btn.innerText = opt.zh;
+      btn.onclick = () => handleVocabQuizAnswer(btn, opt.id === currentVocabQuestion.id);
+      optContainer.appendChild(btn);
+    });
+  }
+
+  function handleVocabQuizAnswer(selectedBtn, isCorrect) {
+    const btns = document.querySelectorAll('.opt-btn');
+    btns.forEach(b => b.onclick = null); // 禁用點擊
+
+    if (isCorrect) {
+      selectedBtn.classList.add('correct');
+      document.getElementById('vocabQuizMessage').style.color = '#10B981';
+      document.getElementById('vocabQuizMessage').innerText = '🎉 答對了！';
+      vocabQuizScore++;
+    } else {
+      selectedBtn.classList.add('wrong');
+      document.getElementById('vocabQuizMessage').style.color = '#EF4444';
+      document.getElementById('vocabQuizMessage').innerText = `❌ 答錯了！正確答案是：${currentVocabQuestion.zh}`;
+    }
+
+    document.getElementById('vocabNextBtn').style.display = 'block';
+  }
+
+  function nextVocabQuizQuestion() {
+    vocabQuizIdx++;
+    if (vocabQuizIdx < vocabQuizList.length) {
+      loadVocabQuizQuestion();
+    } else {
+      alert(`🎉 單字測驗結束！您的得分：${vocabQuizScore} / ${vocabQuizList.length}`);
+      startVocabQuiz();
+    }
+  }
+
+  function playVocabQuizAudio() {
+    if (currentVocabQuestion) speakKorean(currentVocabQuestion.kr);
+  }
+
+  /* ===================================================
+     3. 學習資料庫 (文法 & 3D 滑動單字卡)
+  =================================================== */
   function switchBankSubView(sub) {
     document.getElementById('btnSubGrammar').classList.toggle('active', sub === 'grammar');
     document.getElementById('btnSubVocab').classList.toggle('active', sub === 'vocab');
@@ -348,193 +670,118 @@
     document.getElementById('vocabSubView').style.display = sub === 'vocab' ? 'block' : 'none';
   }
 
-  /* ================= 1. 測驗區邏輯 ================= */
-  function populateLessonSelect() {
-    const select = document.getElementById('lessonSelect');
-    select.innerHTML = '';
-    quizData.lessons.forEach(l => {
-      const opt = document.createElement('option');
-      opt.value = l.id;
-      opt.innerText = l.title;
-      select.appendChild(opt);
-    });
-  }
+  function filterBankData() {
+    const lessonVal = document.getElementById('bankLessonSelect').value;
+    
+    // 1. 渲染文法
+    const grammars = lessonVal === 'all' 
+      ? appData.grammars 
+      : appData.grammars.filter(g => g.lessonId === lessonVal);
 
-  function switchLesson(lessonId) {
-    const lesson = quizData.lessons.find(l => l.id === lessonId);
-    if (!lesson) return;
-    currentQuestions = lesson.questions;
-    currentIndex = 0;
-    loadQuestion();
-  }
-
-  function loadQuestion() {
-    isAnsweredCorrectly = false;
-    document.getElementById('submitBtn').innerText = '檢查答案';
-    const q = currentQuestions[currentIndex];
-    document.getElementById('promptText').innerText = q.translation;
-    document.getElementById('progressText').innerText = `${currentIndex + 1} / ${currentQuestions.length}`;
-
-    const shuffled = [...q.options].sort(() => Math.random() - 0.5);
-    availableCards = shuffled.map((text, idx) => ({ id: idx, text }));
-    selectedCards = [];
-    renderQuiz();
-  }
-
-  function renderQuiz() {
-    const answerZone = document.getElementById('answerZone');
-    const wordBank = document.getElementById('wordBank');
-    const message = document.getElementById('message');
-
-    if (!isAnsweredCorrectly) {
-      answerZone.className = 'answer-zone';
-      message.innerText = '';
-    }
-
-    answerZone.innerHTML = '';
-    selectedCards.forEach(card => {
-      answerZone.appendChild(createCardEl(card, () => {
-        if (isAnsweredCorrectly) return;
-        selectedCards = selectedCards.filter(c => c.id !== card.id);
-        availableCards.push(card);
-        renderQuiz();
-      }));
-    });
-
-    wordBank.innerHTML = '';
-    availableCards.forEach(card => {
-      wordBank.appendChild(createCardEl(card, () => {
-        if (isAnsweredCorrectly) return;
-        availableCards = availableCards.filter(c => c.id !== card.id);
-        selectedCards.push(card);
-        renderQuiz();
-      }));
-    });
-  }
-
-  function createCardEl(card, onClick) {
-    const el = document.createElement('div');
-    el.className = 'card';
-    el.innerText = card.text;
-    el.onclick = onClick;
-    return el;
-  }
-
-  function resetCurrentQuiz() {
-    if (!isAnsweredCorrectly) loadQuestion();
-  }
-
-  function handleSubmit() {
-    if (isAnsweredCorrectly) {
-      currentIndex++;
-      if (currentIndex < currentQuestions.length) {
-        loadQuestion();
-      } else {
-        alert("🎉 太棒了！您已完成本單元的所有題目！");
-        currentIndex = 0;
-        loadQuestion();
-      }
-      return;
-    }
-
-    const q = currentQuestions[currentIndex];
-    const userResult = selectedCards.map(c => c.text);
-    const isCorrect = userResult.length === q.correctOrder.length &&
-      userResult.every((val, i) => val === q.correctOrder[i]);
-
-    const answerZone = document.getElementById('answerZone');
-    const message = document.getElementById('message');
-
-    if (isCorrect) {
-      answerZone.classList.add('correct');
-      message.style.color = '#10B981';
-      message.innerText = '🎉 答對了！點擊下方按鈕繼續下一題。';
-      document.getElementById('submitBtn').innerText = '下一題 ➔';
-      isAnsweredCorrectly = true;
-    } else {
-      answerZone.classList.add('incorrect');
-      message.style.color = '#EF4444';
-      message.innerText = '❌ 順序不正確，請再試一次。';
-    }
-  }
-
-  /* ================= 2. 題庫區邏輯 ================= */
-  function renderGrammars() {
-    const container = document.getElementById('grammarList');
-    container.innerHTML = '';
-    quizData.grammars.forEach(g => {
-      const card = document.createElement('div');
-      card.className = 'grammar-card';
-      card.innerHTML = `
+    const gContainer = document.getElementById('grammarList');
+    gContainer.innerHTML = grammars.map(g => `
+      <div class="grammar-card">
         <div class="grammar-title">${g.title}</div>
         <div class="grammar-formula">${g.formula}</div>
         <div class="grammar-exp">${g.explanation}</div>
         <div class="grammar-ex">例句：${g.exampleKr} (${g.exampleZh})</div>
-      `;
-      container.appendChild(card);
-    });
+      </div>
+    `).join('');
+
+    // 2. 渲染單字卡
+    filteredVocabList = lessonVal === 'all' 
+      ? [...appData.vocabularies] 
+      : appData.vocabularies.filter(v => v.lessonId === lessonVal);
+
+    vocabCardIdx = 0;
+    updateVocabCardUI();
   }
 
-  // 單字卡邏輯
-  function updateVocabCard() {
-    if (vocabList.length === 0) return;
-    const cardEl = document.getElementById('vocabFlipCard');
-    cardEl.classList.remove('flipped'); // 換頁時重置為正面
+  function updateVocabCardUI() {
+    if (filteredVocabList.length === 0) {
+      document.getElementById('vocabKrDisplay').innerText = '無單字';
+      document.getElementById('vocabPronDisplay').innerText = '';
+      document.getElementById('vocabZhDisplay').innerText = '-';
+      document.getElementById('vocabProgress').innerText = '0 / 0';
+      return;
+    }
 
-    setTimeout(() => {
-      const v = vocabList[vocabIndex];
-      document.getElementById('vocabKrDisplay').innerText = v.kr;
-      document.getElementById('vocabZhDisplay').innerText = v.zh;
-      document.getElementById('vocabCategoryDisplay').innerText = `分類：${v.category || '通用'}`;
-      document.getElementById('vocabProgress').innerText = `${vocabIndex + 1} / ${vocabList.length}`;
-    }, 150);
+    const v = filteredVocabList[vocabCardIdx];
+    document.getElementById('vocabKrDisplay').innerText = v.kr;
+    
+    // 連音/口語標註：有 pron 欄位才顯示 [ ]
+    document.getElementById('vocabPronDisplay').innerText = v.pron ? `[ ${v.pron} ]` : '';
+    document.getElementById('vocabZhDisplay').innerText = v.zh;
+    document.getElementById('vocabCategoryDisplay').innerText = `分類：${v.category || '通用'}`;
+    document.getElementById('vocabProgress').innerText = `${vocabCardIdx + 1} / ${filteredVocabList.length}`;
   }
 
   function toggleCardFlip() {
-    document.getElementById('vocabFlipCard').classList.toggle('flipped');
+    document.getElementById('vocabCardWrapper').classList.toggle('flipped');
+  }
+
+  // 帶有左右滑動 Transition 動畫的切換
+  function animateCardSlide(direction, callback) {
+    if (isAnimating || filteredVocabList.length === 0) return;
+    isAnimating = true;
+
+    const wrapper = document.getElementById('vocabCardWrapper');
+    wrapper.classList.remove('flipped'); // 換頁前重置正面
+
+    // 第一階段：移出
+    wrapper.className = `flip-card-wrapper ${direction === 'next' ? 'slide-out-left' : 'slide-out-right'}`;
+
+    setTimeout(() => {
+      callback(); // 更新資料
+      updateVocabCardUI();
+
+      // 第二階段：瞬間定位到另一側準備進入
+      wrapper.className = `flip-card-wrapper ${direction === 'next' ? 'slide-in-right' : 'slide-in-left'}`;
+      
+      // 強制瀏覽器重繪
+      wrapper.offsetWidth;
+
+      // 第三階段：平滑滑入中央
+      wrapper.className = 'flip-card-wrapper slide-center';
+      
+      setTimeout(() => { isAnimating = false; }, 350);
+    }, 300);
   }
 
   function nextVocabCard() {
-    if (vocabIndex < vocabList.length - 1) {
-      vocabIndex++;
-      updateVocabCard();
+    if (vocabCardIdx < filteredVocabList.length - 1) {
+      animateCardSlide('next', () => vocabCardIdx++);
     }
   }
 
   function prevVocabCard() {
-    if (vocabIndex > 0) {
-      vocabIndex--;
-      updateVocabCard();
+    if (vocabCardIdx > 0) {
+      animateCardSlide('prev', () => vocabCardIdx--);
     }
   }
 
-  function shuffleVocab() {
-    vocabList.sort(() => Math.random() - 0.5);
-    vocabIndex = 0;
-    updateVocabCard();
+  function shuffleVocabCards() {
+    filteredVocabList.sort(() => Math.random() - 0.5);
+    vocabCardIdx = 0;
+    updateVocabCardUI();
   }
 
-  // 滑動手勢支援 (Touch Swipe)
-  let touchStartX = 0;
-  let touchEndX = 0;
-  const flipCardArea = document.getElementById('vocabFlipCard');
-
-  flipCardArea.addEventListener('touchstart', e => {
-    touchStartX = e.changedTouches[0].screenX;
+  // 滑動手勢 (Swipe Touch Support)
+  let startX = 0;
+  const cardViewport = document.querySelector('.slider-viewport');
+  
+  cardViewport.addEventListener('touchstart', e => {
+    startX = e.changedTouches[0].screenX;
   }, false);
 
-  flipCardArea.addEventListener('touchend', e => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
+  cardViewport.addEventListener('touchend', e => {
+    const endX = e.changedTouches[0].screenX;
+    if (endX < startX - 40) nextVocabCard();
+    if (endX > startX + 40) prevVocabCard();
   }, false);
 
-  function handleSwipe() {
-    if (touchEndX < touchStartX - 40) nextVocabCard(); // 向左劃 -> 下一張
-    if (touchEndX > touchStartX + 40) prevVocabCard(); // 向右劃 -> 上一張
-  }
-
-  // 啟動
-  loadData();
+  // 啟動 App
+  initApp();
 </script>
 </body>
 </html>
