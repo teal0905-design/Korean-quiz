@@ -84,74 +84,82 @@
     {
       "id": "sp_1",
       "lessonId": "special",
-      "title": "特殊變化 ①：規則變化 -아요 (母音 ㅏ, ㅗ)",
-      "formula": "詞幹最後母音 ㅏ, ㅗ ➔ 接 -아요",
-      "explanation": "陽性母音語尾變化規則：",
-      "exampleKr": "【有尾音】：앉다 ➔ 앉<span class=\"hl-red\">아요</span> (坐) | 깎다 ➔ 깎<span class=\"hl-red\">아요</span> (殺價)<br>【無尾音】：가다 ➔ 가<span class=\"hl-red\">요</span> (去) | 보다 ➔ <span class=\"hl-red\">봐요</span> (看)"
+      "title": "特殊變化 ①：規則變化 -아요 (陽性母音 ㅏ, ㅗ)",
+      "formula": "詞幹最後母音為 ㅏ, ㅗ ➔ 接 -아요",
+      "explanation": "單字詞幹母音為陽性母音（ㅏ, ㅗ）時，口語半敬語接 -아요。<br>• <b>有尾音</b>：直接加 -아요<br>• <b>無尾音</b>：母音縮合（ㅏ + 아 ➔ ㅏ）",
+      "exampleKr": "【有尾音】：앉다 ➔ 앉<span class=\"hl-red\">아요</span> (坐) | 깎다 ➔ 깎<span class=\"hl-red\">아요</span> (殺價) | 살다 ➔ 살<span class=\"hl-red\">아요</span> (居住) | 잡다 ➔ 잡<span class=\"hl-red\">아요</span> (抓)<br>【無尾音】：가다 ➔ 가<span class=\"hl-red\">요</span> (去) | 사다 ➔ 사<span class=\"hl-red\">요</span> (買) | 만나다 ➔ 만나<span class=\"hl-red\">요</span> (見面)"
     },
     {
       "id": "sp_2",
       "lessonId": "special",
-      "title": "特殊變化 ②：規則變化 -어요 (母音 ㅓ, ㅜ, ㅡ, ㅣ)",
+      "title": "特殊變化 ②：規則變化 -어요 (陰性母音 ㅓ, ㅜ, ㅡ, ㅣ)",
       "formula": "詞幹最後母音為其他 ➔ 接 -어요",
-      "explanation": "陰性母音語尾變化規則：",
-      "exampleKr": "【有尾音】：먹다 ➔ 먹<span class=\"hl-red\">어요</span> (吃) | 있다 ➔ 있<span class=\"hl-red\">어요</span> (有)<br>【無尾音】：서다 ➔ 서<span class=\"hl-red\">요</span> (站) | 마시다 ➔ 마<span class=\"hl-red\">셔요</span> (喝)"
+      "explanation": "單字詞幹母音為陰性母音時，口語半敬語接 -어요。<br>• <b>有尾音</b>：直接加 -어요<br>• <b>無尾音</b>：直接接 -요 或結合縮合",
+      "exampleKr": "【有尾音】：먹다 ➔ 먹<span class=\"hl-red\">어요</span> (吃) | 있다 ➔ 있<span class=\"hl-red\">어요</span> (有/在) | 없다 ➔ 없<span class=\"hl-red\">어요</span> (沒有) | 쉬다 ➔ 쉬<span class=\"hl-red\">어요</span> (休息)<br>【無尾音】：서다 ➔ 서<span class=\"hl-red\">요</span> (站) | 건너다 ➔ 건너<span class=\"hl-red\">요</span> (過馬路)"
     },
     {
       "id": "sp_3",
       "lessonId": "special",
       "title": "特殊變化 ③：-하다 結尾 ➔ 變 -해요",
-      "formula": "-하다 ➔ -해요",
-      "explanation": "所有 -하다 結尾動詞與形容詞，半敬語一律變為 -해요。",
-      "exampleKr": "공부하다 ➔ 공부<span class=\"hl-red\">해요</span> (讀書) | 사랑하다 ➔ 사랑<span class=\"hl-red\">해요</span> (愛) | 좋아하다 ➔ 좋아<span class=\"hl-red\">해요</span> (喜歡)"
+      "formula": "詞尾 -하다 ➔ -해요",
+      "explanation": "所有以 -하다 結尾的動詞與形容詞，半敬語一律變為 -해요。",
+      "exampleKr": "공부하다 ➔ 공부<span class=\"hl-red\">해요</span> (讀書) | 사랑하다 ➔ 사랑<span class=\"hl-red\">해요</span> (愛) | 좋아하다 ➔ 좋아<span class=\"hl-red\">해요</span> (喜歡)<br>따뜻하다 ➔ 따뜻<span class=\"hl-red\">해요</span> (溫暖) | 조심하다 ➔ 조심<span class=\"hl-red\">해요</span> (小心) | 운동하다 ➔ 운동<span class=\"hl-red\">해요</span> (運動)"
     },
     {
       "id": "sp_4",
       "lessonId": "special",
-      "title": "特殊變化 ④：母音 ㅡ 脫落現象",
-      "formula": "詞幹含母音 ㅡ ➔ 遇母音 ㅡ 脫落",
-      "explanation": "詞幹最後為母音 <b>ㅡ</b> 時，遇到母音語尾 <b>ㅡ</b> 脫落，依前一字母音補 -아요 或 -어요。",
-      "exampleKr": "【無尾音 (陽性)】：바쁘다 ➔ 바<span class=\"hl-red\">빠요</span> (忙) | 아프다 ➔ 아<span class=\"hl-red\">파요</span> (痛)<br>【無尾音 (陰性)】：예쁘다 ➔ 예<span class=\"hl-red\">뻐요</span> (漂亮) | 쓰다 ➔ <span class=\"hl-red\">써요</span> (寫/用)"
+      "title": "特殊變化 ④：無尾音母音相遇縮合 (와 / 워 / 여 / 돼)",
+      "formula": "無尾音母音相遇縮合",
+      "explanation": "當詞幹無尾音時，母音會自動相加縮合：<br>• <b>ㅗ + 아 ➔ 와</b><br>• <b>ㅜ + 어 ➔ 워</b><br>• <b>ㅣ + 어 ➔ 여</b><br>• <b>ㅚ + 어 ➔ 돼</b>",
+      "exampleKr": "【無尾音 (ㅗ)】：오다 ➔ <span class=\"hl-red\">와요</span> (來) | 보다 ➔ <span class=\"hl-red\">봐요</span> (看)<br>【無尾音 (ㅜ)】：배우다 ➔ 배<span class=\"hl-red\">워요</span> (學) | 주다 ➔ <span class=\"hl-red\">줘요</span> (給)<br>【無尾音 (ㅣ)】：마시다 ➔ 마<span class=\"hl-red\">셔요</span> (喝) | 기다리다 ➔ 기다<span class=\"hl-red\">려요</span> (等)<br>【無尾音 (ㅚ)】：되다 ➔ <span class=\"hl-red\">돼요</span> (可以/行)"
     },
     {
       "id": "sp_5",
       "lessonId": "special",
-      "title": "特殊變化 ⑤：ㄷ 不規則變化",
-      "formula": "尾音 ㄷ + 母音語尾 ➔ ㄷ 變 ㄹ",
-      "explanation": "尾音 <b>ㄷ</b> 遇到母音語尾時，<b>ㄷ</b> 轉變為 <b>ㄹ</b>。",
-      "exampleKr": "【有尾音 (不規則)】：듣다 ➔ 들<span class=\"hl-red\">어요</span> (聽) | 걷다 ➔ 걸<span class=\"hl-red\">어요</span> (走)<br>【有尾音 (特例規則)】：닫다 ➔ 닫<span class=\"hl-red\">아요</span> (關) | 믿다 ➔ 믿<span class=\"hl-red\">어요</span> (相信)"
+      "title": "特殊變化 ⑤：母音 ㅡ 脫落現象",
+      "formula": "詞幹含母音 ㅡ ➔ 遇母音 ㅡ 脫落",
+      "explanation": "單字詞幹最後為母音 <b>ㅡ</b> 時，遇到母音語尾 <b>ㅡ 一律脫落</b>：<br>1. <b>單音節</b>：直接變 -어 (如 쓰다 ➔ 써요)<br>2. <b>多音節前字為陽性</b>：接 -아요 (如 바쁘다 ➔ 바빠요)<br>3. <b>多音節前字為陰性</b>：接 -어요 (如 예쁘다 ➔ 예뻐요)",
+      "exampleKr": "【無尾音 (單音節脫落)】：쓰다 ➔ <span class=\"hl-red\">써요</span> (寫/用/苦) | 크다 ➔ <span class=\"hl-red\">커요</span> (大) | 끄다 ➔ <span class=\"hl-red\">꺼요</span> (關燈)<br>【無尾音 (前為陽性)】：바쁘다 ➔ 바<span class=\"hl-red\">빠요</span> (忙) | 아프다 ➔ 아<span class=\"hl-red\">파요</span> (痛) | 배고프다 ➔ 배고<span class=\"hl-red\">파요</span> (肚子餓)<br>【無尾音 (前為陰性)】：예쁘다 ➔ 예<span class=\"hl-red\">뻐요</span> (漂亮) | 슬프다 ➔ 슬<span class=\"hl-red\">퍼요</span> (傷心) | 기쁘다 ➔ 기<span class=\"hl-red\">뻐요</span> (高興)"
     },
     {
       "id": "sp_6",
       "lessonId": "special",
-      "title": "特殊變化 ⑥：ㅂ 不規則變化",
-      "formula": "尾音 ㅂ + 母音語尾 ➔ ㅂ 變 워 / 와",
-      "explanation": "尾音 <b>ㅂ</b> 遇到母音語尾時脫落，並變形為 <b>워</b> (極少數變 <b>와</b>)。",
-      "exampleKr": "【有尾音 (不規則)】：덥다 ➔ 더<span class=\"hl-red\">워요</span> (熱) | 춥다 ➔ 추<span class=\"hl-red\">워요</span> (冷)<br>【有尾音 (特例變와)】：돕다 ➔ 도<span class=\"hl-red\">와요</span> (幫助) | 곱다 ➔ 고<span class=\"hl-red\">와요</span> (美)<br>【有尾音 (特例規則)】：입다 ➔ 입<span class=\"hl-red\">어요</span> (穿) | 잡다 ➔ 잡<span class=\"hl-red\">아요</span> (抓)"
+      "title": "特殊變化 ⑥：ㄷ 不規則變化",
+      "formula": "尾音 ㄷ + 母音語尾 ➔ ㄷ 變 ㄹ",
+      "explanation": "動詞底部尾音為 <b>ㄷ</b> 時，遇到以母音開頭的語尾，尾音 <b>ㄷ</b> 轉變為 <b>ㄹ</b>。",
+      "exampleKr": "【有尾音 (不規則)】：듣다 ➔ 들<span class=\"hl-red\">어요</span> (聽) | 걷다 ➔ 걸<span class=\"hl-red\">어요</span> (走路) | 묻다 ➔ 물<span class=\"hl-red\">어요</span> (問) | 싣다 ➔ 실<span class=\"hl-red\">어요</span> (載)<br>【有尾音 (規則特例)】：닫다 ➔ 닫<span class=\"hl-red\">아요</span> (關門) | 받다 ➔ 받<span class=\"hl-red\">아요</span> (收到) | 믿다 ➔ 믿<span class=\"hl-red\">어요</span> (相信)"
     },
     {
       "id": "sp_7",
       "lessonId": "special",
-      "title": "特殊變化 ⑦：르 不規則變化",
-      "formula": "結尾 르 + 母音語尾 ➔ 前字補 ㄹ 尾音，르 變 라/러",
-      "explanation": "結尾為 <b>르</b> 且前字無尾音時，前字補 <b>ㄹ</b>，<b>르</b> 依母音變 <b>라</b> 或 <b>러</b>。",
-      "exampleKr": "【無尾音 (變 라)】：모르다 ➔ 몰<span class=\"hl-red\">라요</span> (不知道) | 빠르다 ➔ 빨<span class=\"hl-red\">라요</span> (快)<br>【無尾音 (變 러)】：부르다 ➔ 불<span class=\"hl-red\">러요</span> (唱/飽) | 서두르다 ➔ 서둘<span class=\"hl-red\">러요</span> (趕緊)"
+      "title": "特殊變化 ⑦：ㅂ 不規則變化",
+      "formula": "尾音 ㅂ + 母音語尾 ➔ ㅂ 變 워 / 와",
+      "explanation": "形容詞或動詞尾音為 <b>ㅂ</b> 時，遇到母音語尾，<b>ㅂ</b> 脫落並轉變為 <b>워</b> (或極少數陽性變 <b>와</b>)。",
+      "exampleKr": "【有尾音 (不規則)】：춥다 ➔ 추<span class=\"hl-red\">워요</span> (冷) | 덥다 ➔ 더<span class=\"hl-red\">워요</span> (熱) | 어렵다 ➔ 어려<span class=\"hl-red\">워요</span> (難) | 가볍다 ➔ 가벼<span class=\"hl-red\">워요</span> (輕)<br>【有尾音 (特例變와)】：돕다 ➔ 도<span class=\"hl-red\">와요</span> (幫助) | 곱다 ➔ 고<span class=\"hl-red\">와요</span> (美麗)<br>【有尾音 (規則特例)】：입다 ➔ 입<span class=\"hl-red\">어요</span> (穿衣服) | 잡다 ➔ 잡<span class=\"hl-red\">아요</span> (抓) | 좁다 ➔ 좁<span class=\"hl-red\">아요</span> (窄)"
     },
     {
       "id": "sp_8",
       "lessonId": "special",
-      "title": "特殊變化 ⑧：ㅎ 不規則變化",
-      "formula": "尾音 ㅎ + 母音語尾 ➔ ㅎ 脫落，母音變 ㅐ / ㅙ",
-      "explanation": "形容詞尾音為 <b>ㅎ</b> 遇到母音語尾時，<b>ㅎ</b> 脫落且母音縮合為 <b>ㅐ</b>。",
-      "exampleKr": "【有尾音 (不規則)】：그렇다 ➔ 그래<span class=\"hl-red\">요</span> (那樣) | 어떻다 ➔ 어때<span class=\"hl-red\">요</span> (如何)<br>【有尾音 (特例規則)】：좋다 ➔ 좋<span class=\"hl-red\">아요</span> (好) | 놓다 ➔ 놓<span class=\"hl-red\">아요</span> (放)"
+      "title": "特殊變化 ⑧：르 不規則變化",
+      "formula": "結尾 르 + 母音語尾 ➔ 前字補 ㄹ 尾音，르 變 라/러",
+      "explanation": "單字結尾為 <b>르</b> 且前字無尾音時，遇到母音語尾，前字補 <b>ㄹ</b> 尾音，<b>르</b> 則依母音變 <b>라</b> 或 <b>러</b>。",
+      "exampleKr": "【無尾音 (變 라)】：모르다 ➔ 몰<span class=\"hl-red\">라요</span> (不知道) | 빠르다 ➔ 빨<span class=\"hl-red\">라요</span> (快) | 오르다 ➔ 올<span class=\"hl-red\">라요</span> (爬山/上升)<br>【無尾音 (變 러)】：부르다 ➔ 불<span class=\"hl-red\">러요</span> (唱/叫/吃飽) | 서두르다 ➔ 서둘<span class=\"hl-red\">러요</span> (趕緊) | 게으르다 ➔ 게을<span class=\"hl-red\">러요</span> (懶惰)"
     },
     {
       "id": "sp_9",
       "lessonId": "special",
-      "title": "特殊變化 ⑨：ㅅ 不規則變化",
-      "formula": "尾音 ㅅ + 母音語尾 ➔ 尾音 ㅅ 脫落",
-      "explanation": "尾音為 <b>ㅅ</b> 遇到母音語尾時直接脫落，前後母音不縮合。",
-      "exampleKr": "【有尾音 (不規則)】：낫다 ➔ 나<span class=\"hl-red\">아요</span> (痊癒) | 짓다 ➔ 지<span class=\"hl-red\">어요</span> (做/蓋)<br>【有尾音 (特例規則)】：웃다 ➔ 웃<span class=\"hl-red\">어요</span> (笑) | 씻다 ➔ 씻<span class=\"hl-red\">어요</span> (洗)"
+      "title": "特殊變化 ⑨：ㅎ 不規則變化",
+      "formula": "尾音 ㅎ + 母音語尾 ➔ ㅎ 脫落，母音變 ㅐ / ㅙ",
+      "explanation": "顏色或狀態形容詞尾音為 <b>ㅎ</b> 時，遇到母音語尾，<b>ㅎ</b> 脫落且母音結合成 <b>ㅐ</b> 或 <b>ㅙ</b>。",
+      "exampleKr": "【有尾音 (不規則)】：그렇다 ➔ 그래<span class=\"hl-red\">요</span> (那樣) | 어떻다 ➔ 어때<span class=\"hl-red\">요</span> (如何) | 이렇다 ➔ 이래<span class=\"hl-red\">요</span> (這樣) | 노랗다 ➔ 노래<span class=\"hl-red\">요</span> (黃色)<br>【有尾音 (規則特例)】：좋다 ➔ 좋<span class=\"hl-red\">아요</span> (好) | 낳다 ➔ 낳<span class=\"hl-red\">아요</span> (生產) | 놓다 ➔ 놓<span class=\"hl-red\">아요</span> (放置)"
+    },
+    {
+      "id": "sp_10",
+      "lessonId": "special",
+      "title": "特殊變化 ⑩：ㅅ 不規則變化",
+      "formula": "尾音 ㅅ + 母音語尾 ➔ 尾音 ㅅ 直接脫落",
+      "explanation": "動詞/形容詞尾音為 <b>ㅅ</b> 時，遇到母音語尾，尾音 <b>ㅅ</b> 脫落，但前後母音不縮合。",
+      "exampleKr": "【有尾音 (不規則)】：낫다 ➔ 나<span class=\"hl-red\">아요</span> (痊癒/更好) | 짓다 ➔ 지<span class=\"hl-red\">어요</span> (做飯/蓋房子) | 붓다 ➔ 부<span class=\"hl-red\">어요</span> (倒水/腫脹) | 젓다 ➔ 저<span class=\"hl-red\">어요</span> (攪拌)<br>【有尾音 (規則特例)】：웃다 ➔ 웃<span class=\"hl-red\">어요</span> (笑) | 벗다 ➔ 벗<span class=\"hl-red\">어요</span> (脫衣服) | 씻다 ➔ 씻<span class=\"hl-red\">어요</span> (洗手/洗臉)"
     }
   ]
 }
