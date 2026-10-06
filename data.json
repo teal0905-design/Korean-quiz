@@ -1,7 +1,22 @@
 {
   "lessons": [
     { "id": "lesson-1", "title": "제1과 인사 (第一課：問候)" },
-    { "id": "lesson-2", "title": "제2과 일상생활 (第二課：日常生活)" }
+    { "id": "lesson-2", "title": "제2과 일상생활 (第二課：日常生活)" },
+    { "id": "special", "title": "✨ 特殊變化 (動詞與形容詞語尾)" }
+  ],
+  "vocabularies": [
+    { "id": "v1", "lessonId": "lesson-1", "kr": "한국어", "pron": "한구거", "zh": "韓語", "category": "語言" },
+    { "id": "v2", "lessonId": "lesson-1", "kr": "학생", "zh": "學生", "category": "職業" },
+    { "id": "v3", "lessonId": "lesson-1", "kr": "회사원", "zh": "公司職員", "category": "職業" },
+    { "id": "v4", "lessonId": "lesson-1", "kr": "선생님", "zh": "老師", "category": "職業" },
+    { "id": "v5", "lessonId": "lesson-1", "kr": "음악", "pron": "으막", "zh": "音樂", "category": "興趣" },
+    { "id": "v6", "lessonId": "lesson-2", "kr": "월요일", "pron": "워료일", "zh": "星期一", "category": "時間" },
+    { "id": "v7", "lessonId": "lesson-2", "kr": "집에", "pron": "지베", "zh": "在家 / 去家裡", "category": "場所" },
+    { "id": "v8", "lessonId": "lesson-2", "kr": "있어요", "pron": "이써요", "zh": "有 / 在", "category": "動詞" },
+    { "id": "v9", "lessonId": "lesson-2", "kr": "없어요", "pron": "업써요", "zh": "沒有 / 不在", "category": "動詞" },
+    { "id": "v10", "lessonId": "lesson-2", "kr": "커피", "zh": "咖啡", "category": "飲料" },
+    { "id": "v11", "lessonId": "lesson-2", "kr": "책", "zh": "書", "category": "物品" },
+    { "id": "v12", "lessonId": "lesson-2", "kr": "마시다", "zh": "喝", "category": "動詞" }
   ],
   "questions": [
     {
@@ -28,48 +43,115 @@
     {
       "id": 202,
       "lessonId": "lesson-2",
-      "translation": "朋友在看電影。",
-      "correctOrder": ["친구가", "영화를", "봅니다"],
-      "options": ["친구가", "영화를", "음악을", "봅니다", "마십니다"]
+      "translation": "星期一在家。",
+      "correctOrder": ["월요일에", "집에", "있어요"],
+      "options": ["월요일에", "집에", "있어요", "없어요", "학교에"]
     }
   ],
   "grammars": [
     {
-      "id": "g1",
+      "id": "g_l1_1",
       "lessonId": "lesson-1",
       "title": "입니다",
       "formula": "名詞 + 입니다",
-      "explanation": "接在名詞後，表示事物的身份、狀態或指定，相當於中文的「是」。",
-      "exampleKr": "저는 <span class=\"hl-red\">학생입니다</span>.",
-      "exampleZh": "我是學生。"
+      "explanation": "接在名詞後，表示肯定身份或狀態「是...」。用於正式、客氣的場合。",
+      "exampleKr": "【有尾音】：선생님<span class=\"hl-red\">입니다</span>. (是老師。)<br>【無尾音】：저<span class=\"hl-red\">는</span> 학생<span class=\"hl-red\">입니다</span>. (我是學生。)"
     },
     {
-      "id": "g2",
+      "id": "g_l1_2",
       "lessonId": "lesson-1",
-      "title": "이 / 가 아니다",
-      "formula": "名詞 + 이/가 아니다",
-      "explanation": "이다 的否定形式，相當於中文的「不是」。有底音接 이 아니다，無底音接 가 아니다。",
-      "exampleKr": "저는 <span class=\"hl-red\">회사원이 아닙니다</span>.",
-      "exampleZh": "我不是公司職員。"
+      "title": "은 / 는",
+      "formula": "名詞 + 은 / 는",
+      "explanation": "主題助詞，用於介紹話題或形成對比。<br>• <b>有尾音</b> 接 <b>은</b><br>• <b>無尾音</b> 接 <b>는</b>",
+      "exampleKr": "【有尾音】：선생님<span class=\"hl-red\">은</span> 한국 사람입니다. (老師是韓國人。)<br>【無尾音】：저<span class=\"hl-red\">는</span> 대만 사람입니다. (我是台灣人。)"
     },
     {
-      "id": "g3",
+      "id": "g_l1_3",
+      "lessonId": "lesson-1",
+      "title": "이 / 가 아닙니다",
+      "formula": "名詞 + 이/가 아닙니다",
+      "explanation": "否定助詞句型，表示「不是...」。<br>• <b>有尾音</b> 接 <b>이 아닙니다</b><br>• <b>無尾音</b> 接 <b>가 아닙니다</b>",
+      "exampleKr": "【有尾音】：회사원<span class=\"hl-red\">이 아닙니다</span>. (不是公司職員。)<br>【無尾音】：의사<span class=\"hl-red\">가 아닙니다</span>. (不是醫生。)"
+    },
+    {
+      "id": "g_l2_1",
       "lessonId": "lesson-2",
       "title": "을 / 를",
-      "formula": "名詞 + 을/를",
-      "explanation": "目的格助詞，接在受詞（賓語）後面。有底音接 을，無底音接 를。",
-      "exampleKr": "커피<span class=\"hl-red\">를</span> 마십니다.",
-      "exampleZh": "喝咖啡。"
+      "formula": "名詞 + 을 / 를",
+      "explanation": "受格助詞，標示動作支配的對象。<br>• <b>有尾音</b> 接 <b>을</b><br>• <b>無尾音</b> 接 <b>를</b>",
+      "exampleKr": "【有尾音】：책<span class=\"hl-red\">을</span> 읽습니다. (看書。)<br>【無尾音】：커피<span class=\"hl-red\">를</span> 마십니다. (喝咖啡。)"
+    },
+    {
+      "id": "sp_1",
+      "lessonId": "special",
+      "title": "特殊變化 ①：規則變化 -아요 (母音 ㅏ, ㅗ)",
+      "formula": "詞幹最後母音 ㅏ, ㅗ ➔ 接 -아요",
+      "explanation": "陽性母音語尾變化規則：",
+      "exampleKr": "【有尾音】：앉다 ➔ 앉<span class=\"hl-red\">아요</span> (坐) | 깎다 ➔ 깎<span class=\"hl-red\">아요</span> (殺價)<br>【無尾音】：가다 ➔ 가<span class=\"hl-red\">요</span> (去) | 보다 ➔ <span class=\"hl-red\">봐요</span> (看)"
+    },
+    {
+      "id": "sp_2",
+      "lessonId": "special",
+      "title": "特殊變化 ②：規則變化 -어요 (母音 ㅓ, ㅜ, ㅡ, ㅣ)",
+      "formula": "詞幹最後母音為其他 ➔ 接 -어요",
+      "explanation": "陰性母音語尾變化規則：",
+      "exampleKr": "【有尾音】：먹다 ➔ 먹<span class=\"hl-red\">어요</span> (吃) | 있다 ➔ 있<span class=\"hl-red\">어요</span> (有)<br>【無尾音】：서다 ➔ 서<span class=\"hl-red\">요</span> (站) | 마시다 ➔ 마<span class=\"hl-red\">셔요</span> (喝)"
+    },
+    {
+      "id": "sp_3",
+      "lessonId": "special",
+      "title": "特殊變化 ③：-하다 結尾 ➔ 變 -해요",
+      "formula": "-하다 ➔ -해요",
+      "explanation": "所有 -하다 結尾動詞與形容詞，半敬語一律變為 -해요。",
+      "exampleKr": "공부하다 ➔ 공부<span class=\"hl-red\">해요</span> (讀書) | 사랑하다 ➔ 사랑<span class=\"hl-red\">해요</span> (愛) | 좋아하다 ➔ 좋아<span class=\"hl-red\">해요</span> (喜歡)"
+    },
+    {
+      "id": "sp_4",
+      "lessonId": "special",
+      "title": "特殊變化 ④：母音 ㅡ 脫落現象",
+      "formula": "詞幹含母音 ㅡ ➔ 遇母音 ㅡ 脫落",
+      "explanation": "詞幹最後為母音 <b>ㅡ</b> 時，遇到母音語尾 <b>ㅡ</b> 脫落，依前一字母音補 -아요 或 -어요。",
+      "exampleKr": "【無尾音 (陽性)】：바쁘다 ➔ 바<span class=\"hl-red\">빠요</span> (忙) | 아프다 ➔ 아<span class=\"hl-red\">파요</span> (痛)<br>【無尾音 (陰性)】：예쁘다 ➔ 예<span class=\"hl-red\">뻐요</span> (漂亮) | 쓰다 ➔ <span class=\"hl-red\">써요</span> (寫/用)"
+    },
+    {
+      "id": "sp_5",
+      "lessonId": "special",
+      "title": "特殊變化 ⑤：ㄷ 不規則變化",
+      "formula": "尾音 ㄷ + 母音語尾 ➔ ㄷ 變 ㄹ",
+      "explanation": "尾音 <b>ㄷ</b> 遇到母音語尾時，<b>ㄷ</b> 轉變為 <b>ㄹ</b>。",
+      "exampleKr": "【有尾音 (不規則)】：듣다 ➔ 들<span class=\"hl-red\">어요</span> (聽) | 걷다 ➔ 걸<span class=\"hl-red\">어요</span> (走)<br>【有尾音 (特例規則)】：닫다 ➔ 닫<span class=\"hl-red\">아요</span> (關) | 믿다 ➔ 믿<span class=\"hl-red\">어요</span> (相信)"
+    },
+    {
+      "id": "sp_6",
+      "lessonId": "special",
+      "title": "特殊變化 ⑥：ㅂ 不規則變化",
+      "formula": "尾音 ㅂ + 母音語尾 ➔ ㅂ 變 워 / 와",
+      "explanation": "尾音 <b>ㅂ</b> 遇到母音語尾時脫落，並變形為 <b>워</b> (極少數變 <b>와</b>)。",
+      "exampleKr": "【有尾音 (不規則)】：덥다 ➔ 더<span class=\"hl-red\">워요</span> (熱) | 춥다 ➔ 추<span class=\"hl-red\">워요</span> (冷)<br>【有尾音 (特例變와)】：돕다 ➔ 도<span class=\"hl-red\">와요</span> (幫助) | 곱다 ➔ 고<span class=\"hl-red\">와요</span> (美)<br>【有尾音 (特例規則)】：입다 ➔ 입<span class=\"hl-red\">어요</span> (穿) | 잡다 ➔ 잡<span class=\"hl-red\">아요</span> (抓)"
+    },
+    {
+      "id": "sp_7",
+      "lessonId": "special",
+      "title": "特殊變化 ⑦：르 不規則變化",
+      "formula": "結尾 르 + 母音語尾 ➔ 前字補 ㄹ 尾音，르 變 라/러",
+      "explanation": "結尾為 <b>르</b> 且前字無尾音時，前字補 <b>ㄹ</b>，<b>르</b> 依母音變 <b>라</b> 或 <b>러</b>。",
+      "exampleKr": "【無尾音 (變 라)】：모르다 ➔ 몰<span class=\"hl-red\">라요</span> (不知道) | 빠르다 ➔ 빨<span class=\"hl-red\">라요</span> (快)<br>【無尾音 (變 러)】：부르다 ➔ 불<span class=\"hl-red\">러요</span> (唱/飽) | 서두르다 ➔ 서둘<span class=\"hl-red\">러요</span> (趕緊)"
+    },
+    {
+      "id": "sp_8",
+      "lessonId": "special",
+      "title": "特殊變化 ⑧：ㅎ 不規則變化",
+      "formula": "尾音 ㅎ + 母音語尾 ➔ ㅎ 脫落，母音變 ㅐ / ㅙ",
+      "explanation": "形容詞尾音為 <b>ㅎ</b> 遇到母音語尾時，<b>ㅎ</b> 脫落且母音縮合為 <b>ㅐ</b>。",
+      "exampleKr": "【有尾音 (不規則)】：그렇다 ➔ 그래<span class=\"hl-red\">요</span> (那樣) | 어떻다 ➔ 어때<span class=\"hl-red\">요</span> (如何)<br>【有尾音 (特例規則)】：좋다 ➔ 좋<span class=\"hl-red\">아요</span> (好) | 놓다 ➔ 놓<span class=\"hl-red\">아요</span> (放)"
+    },
+    {
+      "id": "sp_9",
+      "lessonId": "special",
+      "title": "特殊變化 ⑨：ㅅ 不規則變化",
+      "formula": "尾音 ㅅ + 母音語尾 ➔ 尾音 ㅅ 脫落",
+      "explanation": "尾音為 <b>ㅅ</b> 遇到母音語尾時直接脫落，前後母音不縮合。",
+      "exampleKr": "【有尾音 (不規則)】：낫다 ➔ 나<span class=\"hl-red\">아요</span> (痊癒) | 짓다 ➔ 지<span class=\"hl-red\">어요</span> (做/蓋)<br>【有尾音 (特例規則)】：웃다 ➔ 웃<span class=\"hl-red\">어요</span> (笑) | 씻다 ➔ 씻<span class=\"hl-red\">어요</span> (洗)"
     }
-  ],
-  "vocabularies": [
-    { "id": "v1", "lessonId": "lesson-1", "kr": "한국어", "pron": "한구거", "zh": "韓語", "category": "語言" },
-    { "id": "v2", "lessonId": "lesson-1", "kr": "학생", "zh": "學生", "category": "職業" },
-    { "id": "v3", "lessonId": "lesson-1", "kr": "회사원", "pron": "회사와닌", "zh": "公司職員", "category": "職業" },
-    { "id": "v4", "lessonId": "lesson-1", "kr": "음악", "pron": "으막", "zh": "音樂", "category": "興趣" },
-    { "id": "v5", "lessonId": "lesson-2", "kr": "월요일", "pron": "워료일", "zh": "星期一", "category": "時間" },
-    { "id": "v6", "lessonId": "lesson-2", "kr": "집에", "pron": "지베", "zh": "在家/去家裡", "category": "場所" },
-    { "id": "v7", "lessonId": "lesson-2", "kr": "있어요", "pron": "이써요", "zh": "有 / 在", "category": "動詞" },
-    { "id": "v8", "lessonId": "lesson-2", "kr": "커피", "zh": "咖啡", "category": "飲料" }
   ]
 }
