@@ -595,57 +595,38 @@
     }
   }
 
-  /* ===================================================
-     高相容雙軌語音引擎 (線上高音質 + 系統修復備援)
+    /* ===================================================
+     穩定純原生語音引擎（直接同步觸發，絕不延遲丟失權限）
   =================================================== */
-  let activeAudio = null;
-
   function speakKorean(text) {
     if (!text) return;
-
-    if (activeAudio) {
-      activeAudio.pause();
-      activeAudio = null;
+    if (!('speechSynthesis' in window)) {
+      alert('您的瀏覽器不支援發音功能。');
+      return;
     }
 
-    // 方案 1：高音質線上音訊 (不受各手機瀏覽器語音包缺失限制)
-    const encoded = encodeURIComponent(text);
-    const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=ko&q=${encoded}`;
-    const audio = new Audio(audioUrl);
-    activeAudio = audio;
-
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // 方案 2：系統原生 Web Speech API (修復 iOS 垃圾回收與卡滯 bug)
-        playNativeSpeech(text);
-      });
-    }
-  }
-
-  function playNativeSpeech(text) {
-    if (!('speechSynthesis' in window)) return;
-    
-    if (window.speechSynthesis.paused) {
-      window.speechSynthesis.resume();
-    }
+    // 解決 iOS / Chrome 偶爾背景暫停凍結的問題
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.resume();
 
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = 'ko-KR';
     utter.rate = 0.85;
 
-    // 防止 iOS Safari 垃圾回收導致靜音
-    window._curUtter = utter;
-    utter.onend = () => { window._curUtter = null; };
-    utter.onerror = () => { window._curUtter = null; };
-
+    // 取得系統韓語音色
     const voices = window.speechSynthesis.getVoices();
     const koVoice = voices.find(v => v.lang && (v.lang.toLowerCase().includes('ko') || v.lang.toLowerCase().includes('kr')));
     if (koVoice) utter.voice = koVoice;
 
+    // 防止 iOS Safari 記憶體回收機制提早砍掉聲音物件
+    window._activeUtter = utter;
+    utter.onend = () => { window._activeUtter = null; };
+    utter.onerror = () => { window._activeUtter = null; };
+
     window.speechSynthesis.speak(utter);
   }
 
+  // 預先載入語音包
   if ('speechSynthesis' in window) {
     window.speechSynthesis.onvoiceschanged = () => {
       window.speechSynthesis.getVoices();
