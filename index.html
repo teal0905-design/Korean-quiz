@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>韓文拼字卡練習系統</title>
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-hover: #4338CA;
+      --bg: #F3F4F6;
+      --card-bg: #FFFFFF;
+      --border: #E5E7EB;
+      --success: #10B981;
+      --error: #EF4444;
+    }
+
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+    body {
+      background-color: var(--bg);
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      color: #374151;
+      margin: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: #FFFFFF;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+
+    select {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #D1D5DB;
+      font-size: 0.95rem;
+      background: #fff;
+    }
+
+    .progress {
+      font-size: 0.9rem;
+      color: #6B7280;
+      font-weight: 600;
+    }
+
+    .prompt {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #111827;
+      min-height: 30px;
+    }
+
+    .answer-zone {
+      min-height: 80px;
+      border: 2px dashed #D1D5DB;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 20px;
+      background: #FAFAFA;
+      transition: all 0.2s;
+    }
+
+    .answer-zone.correct { border-color: var(--success); background-color: #ECFDF5; }
+    .answer-zone.incorrect { border-color: var(--error); background-color: #FEF2F2; }
+
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+      min-height: 60px;
+    }
+
+    .card {
+      padding: 10px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    .card:active { transform: scale(0.98); }
+
+    .controls { display: flex; gap: 12px; }
+
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-submit { background: var(--primary); color: white; }
+    .btn-reset { background: #E5E7EB; color: #4B5563; }
+
+    .message {
+      margin-top: 16px;
+      font-weight: 600;
+      text-align: center;
+      min-height: 24px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header-bar">
+    <select id="lessongSelect" onchange="switchLesson(this.value)"></select>
+    <div class="progress" id="progressText">0 / 0</div>
+  </div>
+
+  <div class="prompt" id="promptText">載入中...</div>
+  <div class="answer-zone" id="answerZone"></div>
+  <div class="word-bank" id="wordBank"></div>
+
+  <div class="controls">
+    <button class="btn btn-reset" onclick="resetCurrentQuiz()">重設卡片</button>
+    <button class="btn btn-submit" id="submitBtn" onclick="handleSubmit()">檢查答案</button>
+  </div>
+
+  <div class="message" id="message"></div>
+</div>
+
+<script>
+  let allLessons = [];
+  let currentQuestions = [];
+  let currentIndex = 0;
+  let availableCards = [];
+  let selectedCards = [];
+  let isAnsweredCorrectly = false;
+
+  // 讀取外部 JSON
+  async function loadQuizData() {
+    try {
+      const response = await fetch('data.json');
+      const data = await response.json();
+      allLessons = data.lessons;
+      
+      populateLessonSelect();
+      switchLesson(allLessons[0].id);
+    } catch (err) {
+      document.getElementById('promptText').innerText = "讀取題庫失敗，請確認 data.json 檔案格式。";
+    }
+  }
+
+  function populateLessonSelect() {
+    const select = document.getElementById('lessongSelect');
+    select.innerHTML = '';
+    allLessons.forEach(lesson => {
+      const opt = document.createElement('option');
+      opt.value = lesson.id;
+      opt.innerText = lesson.title;
+      select.appendChild(opt);
+    });
+  }
+
+  function switchLesson(lessonId) {
+    const lesson = allLessons.find(l => l.id === lessonId);
+    if (!lesson) return;
+    currentQuestions = lesson.questions;
+    currentIndex = 0;
+    loadQuestion();
+  }
+
+  function loadQuestion() {
+    isAnsweredCorrectly = false;
+    document.getElementById('submitBtn').innerText = '檢查答案';
+
+    const q = currentQuestions[currentIndex];
+    document.getElementById('promptText').innerText = q.translation;
+    document.getElementById('progressText').innerText = `${currentIndex + 1} / ${currentQuestions.length}`;
+
+    const shuffled = [...q.options].sort(() => Math.random() - 0.5);
+    availableCards = shuffled.map((text, idx) => ({ id: idx, text }));
+    selectedCards = [];
+
+    render();
+  }
+
+  function render() {
+    const answerZone = document.getElementById('answerZone');
+    const wordBank = document.getElementById('wordBank');
+    const message = document.getElementById('message');
+
+    if (!isAnsweredCorrectly) {
+      answerZone.className = 'answer-zone';
+      message.innerText = '';
+    }
+
+    answerZone.innerHTML = '';
+    selectedCards.forEach(card => {
+      answerZone.appendChild(createCardElement(card, () => unselectCard(card)));
+    });
+
+    wordBank.innerHTML = '';
+    availableCards.forEach(card => {
+      wordBank.appendChild(createCardElement(card, () => selectCard(card)));
+    });
+  }
+
+  function createCardElement(card, onClick) {
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.innerText = card.text;
+    el.onclick = onClick;
+    return el;
+  }
+
+  function selectCard(card) {
+    if (isAnsweredCorrectly) return;
+    availableCards = availableCards.filter(c => c.id !== card.id);
+    selectedCards.push(card);
+    render();
+  }
+
+  function unselectCard(card) {
+    if (isAnsweredCorrectly) return;
+    selectedCards = selectedCards.filter(c => c.id !== card.id);
+    availableCards.push(card);
+    render();
+  }
+
+  function resetCurrentQuiz() {
+    if (isAnsweredCorrectly) return;
+    loadQuestion();
+  }
+
+  function handleSubmit() {
+    if (isAnsweredCorrectly) {
+      // 進入下一題
+      currentIndex++;
+      if (currentIndex < currentQuestions.length) {
+        loadQuestion();
+      } else {
+        alert("🎉 太棒了！您已完成本單元的所有題目！");
+        currentIndex = 0;
+        loadQuestion();
+      }
+      return;
+    }
+
+    const q = currentQuestions[currentIndex];
+    const userResult = selectedCards.map(c => c.text);
+    const isCorrect = userResult.length === q.correctOrder.length &&
+      userResult.every((val, i) => val === q.correctOrder[i]);
+
+    const answerZone = document.getElementById('answerZone');
+    const message = document.getElementById('message');
+
+    if (isCorrect) {
+      answerZone.classList.add('correct');
+      message.style.color = '#10B981';
+      message.innerText = '🎉 答對了！點擊下方按鈕繼續下一題。';
+      document.getElementById('submitBtn').innerText = '下一題 ➔';
+      isAnsweredCorrectly = true;
+    } else {
+      answerZone.classList.add('incorrect');
+      message.style.color = '#EF4444';
+      message.innerText = '❌ 順序不正確，請再試一次。';
+    }
+  }
+
+  loadQuizData();
+</script>
+</body>
+</html>
