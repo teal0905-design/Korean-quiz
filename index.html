@@ -166,13 +166,16 @@
       background: #F9FAFB;
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
     }
-    .grammar-title { font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+    .grammar-title { font-size: 1.18rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
     .grammar-formula { display: inline-block; background: #EEF2FF; color: var(--primary); padding: 3px 8px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; margin-bottom: 10px; }
-    .grammar-exp { font-size: 0.95rem; line-height: 1.6; color: #374151; margin-bottom: 10px; }
-    .grammar-ex { background: #FFF; padding: 10px 12px; border-radius: 8px; border-left: 4px solid var(--primary); font-size: 0.95rem; line-height: 1.5; }
+    .grammar-exp { font-size: 0.95rem; line-height: 1.6; color: #374151; margin-bottom: 12px; }
+    .grammar-ex { background: #FFF; padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary); font-size: 0.95rem; line-height: 1.6; }
+
+    /* 紅字高亮標記 */
+    .hl-red { color: #EF4444 !important; font-weight: 700 !important; }
 
     /* 3. 單字 3D 翻轉 + 滑動動畫卡片 */
     .slider-viewport {
@@ -194,7 +197,6 @@
       transition: transform 0.35s ease-in-out, opacity 0.35s ease-in-out;
     }
 
-    /* 滑動動畫類別 */
     .slide-out-left { transform: translateX(-100%); opacity: 0; }
     .slide-out-right { transform: translateX(100%); opacity: 0; }
     .slide-in-left { transform: translateX(-100%); opacity: 0; }
@@ -235,9 +237,9 @@
 
     .flip-card-back { background: #EEF2FF; color: var(--primary); transform: rotateY(180deg); }
 
-    .vocab-kr { font-size: 2.2rem; font-weight: 700; color: var(--text-main); }
-    .vocab-pron { font-size: 1.1rem; color: var(--error); font-weight: 600; margin-top: 2px; }
-    .vocab-zh { font-size: 1.8rem; font-weight: 700; }
+    .vocab-kr { font-size: 2.3rem; font-weight: 700; color: var(--text-main); }
+    .vocab-pron { font-size: 1.15rem; color: var(--error); font-weight: 600; margin-top: 4px; }
+    .vocab-zh { font-size: 1.85rem; font-weight: 700; }
     .vocab-hint { font-size: 0.8rem; color: #9CA3AF; margin-top: 10px; }
 
     /* 4. 單字測驗樣式 */
@@ -255,7 +257,6 @@
     }
     .opt-btn.correct { background: #ECFDF5; border-color: var(--success); color: var(--success); }
     .opt-btn.wrong { background: #FEF2F2; border-color: var(--error); color: var(--error); }
-    .highlight-red { color: #EF4444; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -347,10 +348,10 @@
               <div class="vocab-kr" id="vocabKrDisplay">-</div>
               <div class="vocab-pron" id="vocabPronDisplay"></div>
               
-              <!-- 獨立單字發音按鈕 (阻止冒泡，避免點發音時觸發翻牌) -->
-              <button class="btn-audio" style="margin-top:12px;" onclick="event.stopPropagation(); playCurrentVocabCardAudio();">🔊 聽發音</button>
+              <!-- 卡片內直接按發音 (加入雙重事件阻擋，絕不觸發翻牌) -->
+              <button class="btn-audio" style="margin-top:12px;" onclick="event.stopPropagation(); playCurrentVocabCardAudio();" ontouchstart="event.stopPropagation();">🔊 聽發音</button>
               
-              <div class="vocab-hint">💡 點擊卡片可翻轉查看中文 (可左右滑動)</div>
+              <div class="vocab-hint">💡 點擊卡片翻轉查看中文 (可左右滑動)</div>
             </div>
             <div class="flip-card-back">
               <div class="vocab-zh" id="vocabZhDisplay">-</div>
@@ -360,8 +361,10 @@
         </div>
       </div>
 
+      <!-- 底部控制按鈕列：中央額外提供聽發音按鈕 -->
       <div class="controls">
         <button class="btn btn-reset" onclick="prevVocabCard()">⬅ 上一張</button>
+        <button class="btn btn-reset" style="background:#EEF2FF; color:var(--primary); border:1px solid #C7D2FE;" onclick="playCurrentVocabCardAudio()">🔊 聽發音</button>
         <button class="btn btn-submit" onclick="nextVocabCard()">下一張 ➡️</button>
       </div>
     </div>
@@ -389,89 +392,174 @@
   let vocabCardIdx = 0;
   let isAnimating = false;
 
+  /* ===================================================
+     常規課文文法（含紅字標注與尾音區分）
+  =================================================== */
+  const defaultLessonGrammars = [
+    {
+      id: "lesson1_g1",
+      lessonId: "lesson-1",
+      title: "입니다",
+      formula: "名詞 + 입니다",
+      explanation: "接在名詞後，表示事物的身分、狀態或指定，相當於中文的「是」。用於正式恭敬場合。",
+      exampleKr: "【有尾音】：선생님<span class=\"hl-red\">입니다</span>. (是老師。)<br>【無尾音】：저<span class=\"hl-red\">는</span> 대만 사람<span class=\"hl-red\">입니다</span>. (我是台灣人。)"
+    },
+    {
+      id: "lesson1_g2",
+      lessonId: "lesson-1",
+      title: "은 / 는",
+      formula: "名詞 + 은 / 는",
+      explanation: "主題助詞，引出句子的主題或表示對比。<br>• <b>有尾音</b> 接 <b>은</b><br>• <b>無尾音</b> 接 <b>는</b>",
+      exampleKr: "【有尾音】：선생님<span class=\"hl-red\">은</span> 한국 사람입니다. (老師是韓國人。)<br>【無尾音】：저<span class=\"hl-red\">는</span> 학생입니다. (我是學生。)"
+    },
+    {
+      id: "lesson1_g3",
+      lessonId: "lesson-1",
+      title: "이 / 가 아닙니다",
+      formula: "名詞 + 이/가 아닙니다",
+      explanation: "이다 的正式否定形式，相當於中文的「不是」。<br>• <b>有尾音</b> 接 <b>이 아닙니다</b><br>• <b>無尾音</b> 接 <b>가 아닙니다</b>",
+      exampleKr: "【有尾音】：저<span class=\"hl-red\">는</span> 회사원<span class=\"hl-red\">이 아닙니다</span>. (我不是公司職員。)<br>【無尾音】：의사<span class=\"hl-red\">가 아닙니다</span>. (不是醫生。)"
+    },
+    {
+      id: "lesson2_g1",
+      lessonId: "lesson-2",
+      title: "을 / 를",
+      formula: "名詞 + 을 / 를",
+      explanation: "目的格助詞，接在動詞支配的受詞後。<br>• <b>有尾音</b> 接 <b>을</b><br>• <b>無尾音</b> 接 <b>를</b>",
+      exampleKr: "【有尾音】：책<span class=\"hl-red\">을</span> 읽습니다. (看書。)<br>【無尾音】：커피<span class=\"hl-red\">를</span> 마십니다. (喝咖啡。)"
+    }
+  ];
+
+  /* ===================================================
+     PDF 手寫筆記完整拆分的 10 大特殊變化文法庫
+  =================================================== */
+  const specialGrammarList = [
+    {
+      id: "sp_1",
+      lessonId: "special",
+      title: "特殊變化 ①：規則變化 -아요 (母音 ㅏ, ㅗ)",
+      formula: "詞幹最後母音為 ㅏ, ㅗ ➔ 接 -아요",
+      explanation: "單字詞幹母音為陽性母音（ㅏ, ㅗ）時，口語半敬語接 -아요。",
+      exampleKr: "【有尾音】：앉다 ➔ 앉<span class=\"hl-red\">아요</span> (坐) | 깎다 ➔ 깎<span class=\"hl-red\">아요</span> (殺價) | 살다 ➔ 살<span class=\"hl-red\">아요</span> (居住)<br>【無尾音】：가다 ➔ 가<span class=\"hl-red\">요</span> (去) | 사다 ➔ 사<span class=\"hl-red\">요</span> (買) | 만나다 ➔ 만나<span class=\"hl-red\">요</span> (見面)"
+    },
+    {
+      id: "sp_2",
+      lessonId: "special",
+      title: "特殊變化 ②：規則變化 -어요 (母音 ㅓ, ㅜ, ㅡ, ㅣ)",
+      formula: "詞幹最後母音為其他 ➔ 接 -어요",
+      explanation: "單字詞幹母音為陰性母音時，口語半敬語接 -어요。",
+      exampleKr: "【有尾音】：먹다 ➔ 먹<span class=\"hl-red\">어요</span> (吃) | 있다 ➔ 있<span class=\"hl-red\">어요</span> (有/在) | 없다 ➔ 없<span class=\"hl-red\">어요</span> (沒有)<br>【無尾音】：서다 ➔ 서<span class=\"hl-red\">요</span> (站) | 쉬다 ➔ 쉬<span class=\"hl-red\">어요</span> (休息) | 건너다 ➔ 건너<span class=\"hl-red\">요</span> (過馬路)"
+    },
+    {
+      id: "sp_3",
+      lessonId: "special",
+      title: "特殊變化 ③：-하다 結尾 ➔ 變 -해요",
+      formula: "詞尾 -하다 ➔ -해요",
+      explanation: "所有 -하다 結尾的動詞與形容詞，半敬語一律變為 -해요。",
+      exampleKr: "공부하다 ➔ 공부<span class=\"hl-red\">해요</span> (讀書) | 좋아하다 ➔ 좋아<span class=\"hl-red\">해요</span> (喜歡) | 사랑하다 ➔ 사랑<span class=\"hl-red\">해요</span> (愛)<br>따뜻하다 ➔ 따뜻<span class=\"hl-red\">해요</span> (溫暖) | 조심하다 ➔ 조심<span class=\"hl-red\">해요</span> (小心)"
+    },
+    {
+      id: "sp_4",
+      lessonId: "special",
+      title: "特殊變化 ④：無尾音母音縮合 (와 / 워 / 여 / 돼)",
+      formula: "無尾音母音相遇縮合",
+      explanation: "當詞幹無尾音時，母音會自動相加縮合：<br>• ㅗ + 아 ➔ <b>와</b> | ㅜ + 어 ➔ <b>워</b> | ㅣ + 어 ➔ <b>여</b> | ㅚ + 어 ➔ <b>돼</b>",
+      exampleKr: "【無尾音 (ㅗ)】：오다 ➔ <span class=\"hl-red\">와요</span> (來) | 보다 ➔ <span class=\"hl-red\">봐요</span> (看)<br>【無尾音 (ㅜ)】：배우다 ➔ 배<span class=\"hl-red\">워요</span> (學) | 주다 ➔ <span class=\"hl-red\">줘요</span> (給)<br>【無尾音 (ㅣ)】：마시다 ➔ 마<span class=\"hl-red\">셔요</span> (喝) | 기다리다 ➔ 기다<span class=\"hl-red\">려요</span> (等)<br>【無尾音 (ㅚ)】：되다 ➔ <span class=\"hl-red\">돼요</span> (可以/行)"
+    },
+    {
+      id: "sp_5",
+      lessonId: "special",
+      title: "特殊變化 ⑤：母音 ㅡ 脫落現象",
+      formula: "詞幹含母音 ㅡ ➔ 遇母音 ㅡ 脫落",
+      explanation: "單字詞幹最後為母音 <b>ㅡ</b> 時，遇到母音語尾 <b>ㅡ</b> 一律脫落，並依前一字母音決定接 -아요 或 -어요。",
+      exampleKr: "【單音節 ㅡ 脫落】：쓰다 ➔ <span class=\"hl-red\">써요</span> (寫/用/苦) | 크다 ➔ <span class=\"hl-red\">커요</span> (大) | 끄다 ➔ <span class=\"hl-red\">꺼요</span> (關燈)<br>【多音節前為陽性】：바쁘다 ➔ 바<span class=\"hl-red\">빠요</span> (忙) | 아프다 ➔ 아<span class=\"hl-red\">파요</span> (痛) | 배고프다 ➔ 배고<span class=\"hl-red\">파요</span> (餓)<br>【多音節前為陰性】：예쁘다 ➔ 예<span class=\"hl-red\">뻐요</span> (漂亮) | 슬프다 ➔ 슬<span class=\"hl-red\">퍼요</span> (傷心) | 기쁘다 ➔ 기<span class=\"hl-red\">뻐요</span> (開心)"
+    },
+    {
+      id: "sp_6",
+      lessonId: "special",
+      title: "特殊變化 ⑥：ㄷ 不規則變化",
+      formula: "尾音 ㄷ + 母音語尾 ➔ ㄷ 變 ㄹ",
+      explanation: "動詞底部尾音為 <b>ㄷ</b> 時，遇到以母音開頭的語尾，尾音 <b>ㄷ</b> 轉變為 <b>ㄹ</b>。",
+      exampleKr: "【有尾音 (不規則)】：듣다 ➔ 들<span class=\"hl-red\">어요</span> (聽) | 걷다 ➔ 걸<span class=\"hl-red\">어요</span> (走路) | 묻다 ➔ 물<span class=\"hl-red\">어요</span> (問) | 싣다 ➔ 실<span class=\"hl-red\">어요</span> (載)<br>【有尾音 (規則特例)】：믿다 ➔ 믿<span class=\"hl-red\">어요</span> (相信) | 닫다 ➔ 닫<span class=\"hl-red\">아요</span> (關門) | 받다 ➔ 받<span class=\"hl-red\">아요</span> (收)"
+    },
+    {
+      id: "sp_7",
+      lessonId: "special",
+      title: "特殊變化 ⑦：ㅂ 不規則變化",
+      formula: "尾音 ㅂ + 母音語尾 ➔ ㅂ 變 워 / 와",
+      explanation: "形容詞/動詞尾音為 <b>ㅂ</b> 時，遇到母音語尾，<b>ㅂ</b> 脫落並轉變為 <b>워</b> (或極少數陽性變 <b>와</b>)。",
+      exampleKr: "【有尾音 (不規則)】：춥다 ➔ 추<span class=\"hl-red\">워요</span> (冷) | 덥다 ➔ 더<span class=\"hl-red\">워요</span> (熱) | 어렵다 ➔ 어려<span class=\"hl-red\">워요</span> (難) | 가볍다 ➔ 가벼<span class=\"hl-red\">워요</span> (輕)<br>【有尾音 (特例變와)】：돕다 ➔ 도<span class=\"hl-red\">와요</span> (幫助) | 곱다 ➔ 고<span class=\"hl-red\">와요</span> (美麗)<br>【有尾音 (規則特例)】：입다 ➔ 입<span class=\"hl-red\">어요</span> (穿) | 잡다 ➔ 잡<span class=\"hl-red\">아요</span> (抓) | 좁다 ➔ 좁<span class=\"hl-red\">아요</span> (窄)"
+    },
+    {
+      id: "sp_8",
+      lessonId: "special",
+      title: "特殊變化 ⑧：르 不規則變化",
+      formula: "結尾 르 + 母音語尾 ➔ 前字補 ㄹ 尾音，르 變 라/러",
+      explanation: "單字結尾為 <b>르</b> 且前字無尾音時，遇到母音語尾，前字補 <b>ㄹ</b> 尾音，<b>르</b> 則依母音變 <b>라</b> 或 <b>러</b>。",
+      exampleKr: "【無尾音 (變 라)】：모르다 ➔ 몰<span class=\"hl-red\">라요</span> (不知道) | 빠르다 ➔ 빨<span class=\"hl-red\">라요</span> (快) | 오르다 ➔ 올<span class=\"hl-red\">라요</span> (爬/上升)<br>【無尾音 (變 러)】：부르다 ➔ 불<span class=\"hl-red\">러요</span> (唱/叫/飽) | 서두르다 ➔ 서둘<span class=\"hl-red\">러요</span> (趕緊) | 게으르다 ➔ 게을<span class=\"hl-red\">러요</span> (懶惰)"
+    },
+    {
+      id: "sp_9",
+      lessonId: "special",
+      title: "特殊變化 ⑨：ㅎ 不規則變化",
+      formula: "尾音 ㅎ + 母音語尾 ➔ ㅎ 脫落，母音變 ㅐ / ㅙ",
+      explanation: "顏色或狀態形容詞尾音為 <b>ㅎ</b> 時，遇到母音語尾，<b>ㅎ</b> 脫落且母音結合成 <b>ㅐ</b> 或 <b>ㅙ</b>。",
+      exampleKr: "【有尾音 (不規則)】：그렇다 ➔ 그래<span class=\"hl-red\">요</span> (那樣) | 어떻다 ➔ 어때<span class=\"hl-red\">요</span> (如何) | 이렇다 ➔ 이래<span class=\"hl-red\">요</span> (這樣) | 노랗다 ➔ 노래<span class=\"hl-red\">요</span> (黃色)<br>【有尾音 (規則特例)】：좋다 ➔ 좋<span class=\"hl-red\">아요</span> (好) | 낳다 ➔ 낳<span class=\"hl-red\">아요</span> (生產) | 놓다 ➔ 놓<span class=\"hl-red\">아요</span> (放)"
+    },
+    {
+      id: "sp_10",
+      lessonId: "special",
+      title: "特殊變化 ⑩：ㅅ 不規則變化",
+      formula: "尾音 ㅅ + 母音語尾 ➔ 尾音 ㅅ 直接脫落",
+      explanation: "動詞/形容詞尾音為 <b>ㅅ</b> 時，遇到母音語尾，尾音 <b>ㅅ</b> 脫落，但前後母音不縮合。",
+      exampleKr: "【有尾音 (不規則)】：낫다 ➔ 나<span class=\"hl-red\">아요</span> (痊癒/更好) | 짓다 ➔ 지<span class=\"hl-red\">어요</span> (做/蓋) | 붓다 ➔ 부<span class=\"hl-red\">어요</span> (倒水/腫脹) | 젓다 ➔ 저<span class=\"hl-red\">어요</span> (攪拌)<br>【有尾音 (規則特例)】：웃다 ➔ 웃<span class=\"hl-red\">어요</span> (笑) | 벗다 ➔ 벗<span class=\"hl-red\">어요</span> (脫) | 씻다 ➔ 씻<span class=\"hl-red\">어요</span> (洗)"
+    }
+  ];
+
   // 初始化讀取資料
   async function initApp() {
     try {
       const res = await fetch('data.json');
       appData = await res.json();
-      
-      // 獨立拆分的《特殊變化》文法清單
-      const specialGrammars = [
-        {
-          id: "special_rule_ayo_eyo",
-          lessonId: "special",
-          title: "✨ 特殊變化 1：規則變化 (-아요 / -어요)",
-          formula: "動詞/形容詞詞幹 + -아요 / -어요",
-          explanation: `
-            <b>1. 母音為 ㅏ, ㅗ ➔ 接 -아요</b><br>
-            • <span class="highlight-red">【有尾音】</span>：앉다 ➔ 앉<span class="highlight-red">아요</span> (坐) | 깎다 ➔ 깎<span class="highlight-red">아요</span> (殺價)<br>
-            • <span class="highlight-red">【無尾音】</span>：가다 ➔ 가<span class="highlight-red">요</span> (去) | 오다 ➔ <span class="highlight-red">와요</span> (來)<br><br>
-            <b>2. 母音為其他 (ㅓ, ㅜ, ㅡ, ㅣ) ➔ 接 -어요</b><br>
-            • <span class="highlight-red">【有尾音】</span>：먹다 ➔ 먹<span class="highlight-red">어요</span> (吃) | 있다 ➔ 있<span class="highlight-red">어요</span> (有)<br>
-            • <span class="highlight-red">【無尾音】</span>：마시다 ➔ 마<span class="highlight-red">셔요</span> (喝) | 쓰다 ➔ <span class="highlight-red">써요</span> (寫/用)<br><br>
-            <b>3. -하다 結尾 ➔ 變 -해요</b><br>
-            • 공부하다 ➔ 공부<span class="highlight-red">해요</span> (讀書) | 사랑하다 ➔ 사랑<span class="highlight-red">해요</span> (愛)
-          `,
-          exampleKr: "【有尾音】앉다 ➔ 앉<span class="highlight-red">아요</span> / 먹다 ➔ 먹<span class="highlight-red">어요</span><br>【無尾音】가다 ➔ 가<span class="highlight-red">요</span> / 쓰다 ➔ <span class="highlight-red">써요</span>",
-          exampleZh: "基礎半敬語變化"
-        },
-        {
-          id: "special_d",
-          lessonId: "special",
-          title: "✨ 特殊變化 2：ㄷ 不規則變化",
-          formula: "尾音 ㄷ + 母音語尾 ➔ ㄷ 變 ㄹ",
-          explanation: "動詞底部的尾音為 <b>ㄷ</b> 時，遇到以母音開頭的語尾（如 -아요/어요），尾音 <b>ㄷ</b> 會轉變為 <b>ㄹ</b>。",
-          exampleKr: "【有尾音】듣다 ➔ 들<span class="highlight-red">어요</span> (聽) / 걷다 ➔ 걸<span class="highlight-red">어요</span> (走路)<br><small style='color:#888;'>*特例(維持規則)：믿다 ➔ 믿<span class="highlight-red">아요</span> (相信)、닫다 ➔ 닫<span class="highlight-red">아요</span> (關門)</small>",
-          exampleZh: "ㄷ 轉變成 ㄹ 變化"
-        },
-        {
-          id: "special_b",
-          lessonId: "special",
-          title: "✨ 特殊變化 3：ㅂ 不規則變化",
-          formula: "尾音 ㅂ + 母音語尾 ➔ ㅂ 變 워 / 와",
-          explanation: "形容詞或動詞尾音為 <b>ㅂ</b> 時，遇到母音語尾，<b>ㅂ</b> 會脫落並變形成 <b>워</b> (大多數) 或 <b>와</b> (돕다, 곱다)。",
-          exampleKr: "【有尾音】춥다 ➔ 추<span class="highlight-red">워요</span> (冷) / 돕다 ➔ 도<span class="highlight-red">와요</span> (幫助)<br><small style='color:#888;'>*特例(維持規則)：입다 ➔ 입<span class="highlight-red">어요</span> (穿)、잡다 ➔ 잡<span class="highlight-red">아요</span> (抓)</small>",
-          exampleZh: "ㅂ 轉變成 워/와 變化"
-        },
-        {
-          id: "special_ru",
-          lessonId: "special",
-          title: "✨ 特殊變化 4：르 不規則變化",
-          formula: "語尾 르 + 母音語尾 ➔ 前字補 ㄹ 尾音，르 變 라/러",
-          explanation: "單字結尾為 <b>르</b> 且前字無尾音時，遇到母音語尾，前方字音會補上 <b>ㄹ</b> 尾音，而 <b>르</b> 則依母音變成 <b>라</b> 或 <b>러</b>。",
-          exampleKr: "【無尾音】모르다 ➔ 몰<span class="highlight-red">라요</span> (不知道) / 빠르다 ➔ 빨<span class="highlight-red">라요</span> (快) / 부르다 ➔ 불<span class="highlight-red">러요</span> (唱/飽)",
-          exampleZh: "르 不規則變化"
-        },
-        {
-          id: "special_h",
-          lessonId: "special",
-          title: "✨ 特殊變化 5：ㅎ 不規則變化",
-          formula: "尾音 ㅎ + 母音語尾 ➔ ㅎ 脫落，母音變 ㅐ / ㅙ",
-          explanation: "顏色與狀態形容詞尾音為 <b>ㅎ</b> 時，遇到母音語尾，尾音 <b>ㅎ</b> 會脫落，且原本母音會結合成 <b>ㅐ</b> 或 <b>ㅙ</b>。",
-          exampleKr: "【有尾音】그렇다 ➔ 그래<span class="highlight-red">요</span> (那樣) / 어떻다 ➔ 어때<span class="highlight-red">요</span> (如何)<br><small style='color:#888;'>*特例(維持規則)：좋다 ➔ 좋<span class="highlight-red">아요</span> (好)</small>",
-          exampleZh: "ㅎ 脫落與母音結合變化"
-        },
-        {
-          id: "special_s",
-          lessonId: "special",
-          title: "✨ 特殊變化 6：ㅅ 不規則變化",
-          formula: "尾音 ㅅ + 母音語尾 ➔ ㅅ 脫落",
-          explanation: "動詞/形容詞尾音為 <b>ㅅ</b> 時，遇到母音語尾，尾音 <b>ㅅ</b> 會直接脫落，但前後母音不縮合。",
-          exampleKr: "【有尾音】낫다 ➔ 나<span class="highlight-red">아요</span> (痊癒) / 짓다 ➔ 지<span class="highlight-red">어요</span> (做/蓋)<br><small style='color:#888;'>*特例(維持規則)：웃다 ➔ 웃<span class="highlight-red">어요</span> (笑)、씻다 ➔ 씻<span class="highlight-red">어요</span> (洗)</small>",
-          exampleZh: "ㅅ 脫落變化"
-        }
-      ];
-
-      if (!appData.grammars) appData.grammars = [];
-      appData.grammars.unshift(...specialGrammars);
-
-      populateLessonDropdowns();
-      initSentenceQuiz();
-      startVocabQuiz();
-      filterBankData();
     } catch (e) {
-      document.getElementById('promptText').innerText = "載入 data.json 失敗，請確認檔案格式！";
+      console.log("使用內建題庫備援");
     }
+
+    // 確保題庫與單字完備
+    if (!appData.lessons || appData.lessons.length === 0) {
+      appData.lessons = [
+        { id: "lesson-1", title: "제1과 인사 (第一課：問候)" },
+        { id: "lesson-2", title: "제2과 일상생활 (第二課：日常生活)" }
+      ];
+    }
+
+    if (!appData.vocabularies || appData.vocabularies.length === 0) {
+      appData.vocabularies = [
+        { id: "v1", lessonId: "lesson-1", kr: "한국어", pron: "한구거", zh: "韓語", category: "語言" },
+        { id: "v2", lessonId: "lesson-1", kr: "학생", zh: "學生", category: "職業" },
+        { id: "v3", lessonId: "lesson-1", kr: "회사원", zh: "公司職員", category: "職業" },
+        { id: "v4", lessonId: "lesson-1", kr: "음악", pron: "으막", zh: "音樂", category: "興趣" },
+        { id: "v5", lessonId: "lesson-2", kr: "월요일", pron: "워료일", zh: "星期一", category: "時間" },
+        { id: "v6", lessonId: "lesson-2", kr: "집에", pron: "지베", zh: "在家/去家裡", category: "場所" },
+        { id: "v7", lessonId: "lesson-2", kr: "있어요", pron: "이써요", zh: "有 / 在", category: "動詞" },
+        { id: "v8", lessonId: "lesson-2", kr: "커피", zh: "咖啡", category: "飲料" }
+      ];
+    }
+
+    if (!appData.questions || appData.questions.length === 0) {
+      appData.questions = [
+        { id: 101, lessonId: "lesson-1", translation: "我是韓國人。", correctOrder: ["저는", "한국", "사람입니다"], options: ["사람입니다", "저는", "학생입니다", "한국", "일본"] },
+        { id: 102, lessonId: "lesson-1", translation: "我不是公司職員。", correctOrder: ["저는", "회사원이", "아닙니다"], options: ["회사원이", "저는", "의사가", "아닙니다", "입니다"] }
+      ];
+    }
+
+    // 將常規文法與 10 大特殊變化完整整合
+    appData.grammars = [...defaultLessonGrammars, ...specialGrammarList];
+
+    populateLessonDropdowns();
+    initSentenceQuiz();
+    startVocabQuiz();
+    filterBankData();
   }
 
   function populateLessonDropdowns() {
@@ -483,15 +571,14 @@
     document.getElementById('sentenceLessonSelect').innerHTML = optionsHtml;
     document.getElementById('vocabQuizLessonSelect').innerHTML = optionsHtml;
     
-    // 學習資料庫選單：包含獨立出的「✨ 特殊變化」
+    // 學習資料庫下拉選單：獨立列出「✨ 特殊變化」
     document.getElementById('bankLessonSelect').innerHTML = `
       <option value="all">📚 全部課程內容</option>
-      <option value="special">✨ 特殊變化 (動詞與形容詞)</option>
+      <option value="special">✨ 特殊變化 (動詞與形容詞語尾)</option>
       ${appData.lessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('')}
     `;
   }
 
-  // 主頁面分頁切換
   function switchMainView(view) {
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
@@ -509,23 +596,51 @@
   }
 
   /* ===================================================
-     語音發音引擎 (Web Speech API)
+     高相容雙軌語音引擎 (線上高音質 + 系統修復備援)
   =================================================== */
+  let activeAudio = null;
+
   function speakKorean(text) {
     if (!text) return;
-    if (!('speechSynthesis' in window)) {
-      alert('您的裝置不支援語音朗讀功能。');
-      return;
+
+    if (activeAudio) {
+      activeAudio.pause();
+      activeAudio = null;
     }
 
-    window.speechSynthesis.cancel(); // 停止前一次朗讀
+    // 方案 1：高音質線上音訊 (不受各手機瀏覽器語音包缺失限制)
+    const encoded = encodeURIComponent(text);
+    const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=ko&q=${encoded}`;
+    const audio = new Audio(audioUrl);
+    activeAudio = audio;
+
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // 方案 2：系統原生 Web Speech API (修復 iOS 垃圾回收與卡滯 bug)
+        playNativeSpeech(text);
+      });
+    }
+  }
+
+  function playNativeSpeech(text) {
+    if (!('speechSynthesis' in window)) return;
+    
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+    }
 
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = 'ko-KR';
     utter.rate = 0.85;
 
+    // 防止 iOS Safari 垃圾回收導致靜音
+    window._curUtter = utter;
+    utter.onend = () => { window._curUtter = null; };
+    utter.onerror = () => { window._curUtter = null; };
+
     const voices = window.speechSynthesis.getVoices();
-    const koVoice = voices.find(v => v.lang && (v.lang.includes('ko') || v.lang.includes('KR')));
+    const koVoice = voices.find(v => v.lang && (v.lang.toLowerCase().includes('ko') || v.lang.toLowerCase().includes('kr')));
     if (koVoice) utter.voice = koVoice;
 
     window.speechSynthesis.speak(utter);
@@ -762,10 +877,13 @@
   function filterBankData() {
     const lessonVal = document.getElementById('bankLessonSelect').value;
     
-    // 1. 渲染文法
-    let grammars = (lessonVal === 'all')
-      ? appData.grammars 
-      : appData.grammars.filter(g => g.lessonId === lessonVal);
+    // 1. 渲染文法列表
+    let grammars = [];
+    if (lessonVal === 'all') {
+      grammars = appData.grammars;
+    } else {
+      grammars = appData.grammars.filter(g => g.lessonId === lessonVal);
+    }
 
     const gContainer = document.getElementById('grammarList');
     if (grammars.length === 0) {
@@ -776,12 +894,12 @@
           <div class="grammar-title">${g.title}</div>
           <div class="grammar-formula">${g.formula}</div>
           <div class="grammar-exp">${g.explanation}</div>
-          <div class="grammar-ex"><b>例句：</b><br>${g.exampleKr}</div>
+          <div class="grammar-ex"><b>例句與變化：</b><br>${g.exampleKr}</div>
         </div>
       `).join('');
     }
 
-    // 2. 渲染單字卡
+    // 2. 渲染單字卡列表
     filteredVocabList = (lessonVal === 'all' || lessonVal === 'special')
       ? [...appData.vocabularies] 
       : appData.vocabularies.filter(v => v.lessonId === lessonVal);
@@ -811,20 +929,20 @@
     document.getElementById('vocabCardWrapper').classList.toggle('flipped');
   }
 
-  // 播放當前單字卡語音
+  // 播放當前單字發音
   function playCurrentVocabCardAudio() {
     if (filteredVocabList.length === 0) return;
     const v = filteredVocabList[vocabCardIdx];
     speakKorean(v.kr);
   }
 
-  // 帶有左右滑動 Transition 動畫的切換
+  // 滑動切換動畫
   function animateCardSlide(direction, callback) {
     if (isAnimating || filteredVocabList.length === 0) return;
     isAnimating = true;
 
     const wrapper = document.getElementById('vocabCardWrapper');
-    wrapper.classList.remove('flipped'); // 換頁前重置正面
+    wrapper.classList.remove('flipped');
 
     wrapper.className = `flip-card-wrapper ${direction === 'next' ? 'slide-out-left' : 'slide-out-right'}`;
 
@@ -833,10 +951,9 @@
       updateVocabCardUI();
 
       wrapper.className = `flip-card-wrapper ${direction === 'next' ? 'slide-in-right' : 'slide-in-left'}`;
-      wrapper.offsetWidth; // 強制重繪
+      wrapper.offsetWidth;
 
       wrapper.className = 'flip-card-wrapper slide-center';
-      
       setTimeout(() => { isAnimating = false; }, 350);
     }, 300);
   }
@@ -859,7 +976,7 @@
     updateVocabCardUI();
   }
 
-  // 滑動手勢支援 (Swipe Touch)
+  // 觸控滑動手勢
   let startX = 0;
   const cardViewport = document.querySelector('.slider-viewport');
   
