@@ -1,0 +1,308 @@
+:root {
+  --primary: #4F46E5;
+  --primary-hover: #4338CA;
+  --bg: #F3F4F6;
+  --card-bg: #FFFFFF;
+  --border: #E5E7EB;
+  --success: #10B981;
+  --error: #EF4444;
+  --text-main: #111827;
+  --text-sub: #6B7280;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--bg);
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+  margin: 0;
+  color: #374151;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  background: #FFF;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* 頂部導航分頁 */
+.nav-tabs {
+  display: flex;
+  background: #E5E7EB;
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 10px 4px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn.active {
+  background: #FFF;
+  color: var(--primary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.view-section { display: none; }
+.view-section.active { display: block; }
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+select {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #D1D5DB;
+  font-size: 0.95rem;
+  background: #FFF;
+  font-weight: 500;
+}
+
+/* 句子測驗樣式 */
+.prompt-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.prompt {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.btn-audio {
+  background: #EEF2FF;
+  color: var(--primary);
+  border: 1px solid #C7D2FE;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.1s;
+}
+
+.btn-audio:active { transform: scale(0.95); }
+
+.answer-zone {
+  min-height: 80px;
+  border: 2px dashed #D1D5DB;
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+  background: #FAFAFA;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.answer-zone.correct { border-color: var(--success); background-color: #ECFDF5; }
+.answer-zone.incorrect { border-color: var(--error); background-color: #FEF2F2; }
+
+.word-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  min-height: 60px;
+}
+
+.card {
+  padding: 10px 14px;
+  background: #FFF;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  user-select: none;
+  touch-action: manipulation;
+  transition: transform 0.1s;
+}
+
+.card:active { transform: scale(0.94); }
+
+.controls { display: flex; gap: 10px; }
+.btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn-submit { background: var(--primary); color: white; }
+.btn-reset { background: #E5E7EB; color: #4B5563; }
+.message { margin-top: 12px; font-weight: 600; text-align: center; min-height: 24px; }
+
+/* 答錯晃動特效 (Shake) */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.shake { animation: shake 0.35s ease-in-out; }
+
+/* 文法資料庫樣式 */
+.sub-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.sub-btn {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #F9FAFB;
+  font-weight: 600;
+  color: var(--text-sub);
+  cursor: pointer;
+}
+.sub-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+.grammar-card {
+  background: #F9FAFB;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.grammar-title { font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+.grammar-formula { display: inline-block; background: #EEF2FF; color: var(--primary); padding: 3px 8px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
+.grammar-exp { font-size: 0.95rem; line-height: 1.6; color: #374151; margin-bottom: 10px; }
+.grammar-ex { background: #FFF; padding: 12px; border-radius: 10px; border-left: 4px solid var(--primary); font-size: 0.95rem; line-height: 1.7; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+
+/* 紅字高亮標記 */
+.hl-red { color: #EF4444 !important; font-weight: bold !important; }
+
+/* 膠囊徽章標籤 (Pill Badges) */
+.badge {
+  display: inline-block;
+  padding: 2px 7px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 12px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.badge-has { background: #E0E7FF; color: #3730A3; }  /* 有尾音：淺靛藍 */
+.badge-none { background: #DCFCE7; color: #166534; } /* 無尾音：淡綠色 */
+
+/* 單字卡片 3D 與手勢滑動 */
+.slider-viewport {
+  width: 100%;
+  height: 230px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+.flip-card-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  perspective: 1000px;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.slide-out-left { transform: translateX(-100%); opacity: 0; }
+.slide-out-right { transform: translateX(100%); opacity: 0; }
+.slide-in-left { transform: translateX(-100%); opacity: 0; }
+.slide-in-right { transform: translateX(100%); opacity: 0; }
+.slide-center { transform: translateX(0); opacity: 1; }
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+.flip-card-wrapper.flipped .flip-card-inner { transform: rotateY(180deg); }
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid var(--border);
+  background: #FFF;
+}
+
+.flip-card-front { transform: rotateY(0deg); -webkit-transform: rotateY(0deg); z-index: 2; }
+.flip-card-back { background: #EEF2FF; color: var(--primary); transform: rotateY(180deg); -webkit-transform: rotateY(180deg); z-index: 1; }
+
+.vocab-kr { font-size: 2.3rem; font-weight: 700; color: var(--text-main); }
+.vocab-pron { font-size: 1.15rem; color: var(--error); font-weight: 600; margin-top: 4px; min-height: 24px; }
+.vocab-zh { font-size: 1.85rem; font-weight: 700; }
+.vocab-hint { font-size: 0.8rem; color: #9CA3AF; margin-top: 10px; }
+
+/* 單字測驗樣式 */
+.vocab-quiz-q { font-size: 2.2rem; font-weight: 700; text-align: center; margin: 20px 0; color: var(--text-main); }
+.quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.opt-btn {
+  padding: 14px;
+  border: 1px solid var(--border);
+  background: #FFF;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.opt-btn:active { transform: scale(0.98); }
+.opt-btn.correct { background: #ECFDF5; border-color: var(--success); color: var(--success); }
+.opt-btn.wrong { background: #FEF2F2; border-color: var(--error); color: var(--error); }
