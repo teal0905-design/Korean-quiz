@@ -172,9 +172,6 @@
     .grammar-formula { display: inline-block; background: #EEF2FF; color: var(--primary); padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
     .grammar-exp { font-size: 0.95rem; line-height: 1.5; color: #4B5563; margin-bottom: 8px; }
     .grammar-ex { background: #FFF; padding: 8px 12px; border-radius: 6px; border-left: 3px solid var(--primary); font-size: 0.9rem; }
-    
-    /* 紅色突出文法標註 */
-    .hl-red { color: #EF4444 !important; font-weight: bold; }
 
     /* 3. 單字 3D 翻轉 + 滑動動畫卡片 */
     .slider-viewport {
@@ -392,60 +389,59 @@
       const res = await fetch('data.json');
       appData = await res.json();
       
-      // 動態注入 PDF 檔《特殊變化》文法資料至文法資料庫
+      // 獨立的《特殊變化》文法資料 (lessonId 設定為 'special')
       const specialConjugation = {
         id: "special_conjugation",
-        lessonId: "all",
-        title: "特殊變化 (動詞與形容詞語尾變化)",
+        lessonId: "special",
+        title: "✨ 特殊變化 (動詞與形容詞語尾變化)",
         formula: "口語半敬語 / 平語 (-아요/어요)",
         explanation: `
           <div style="line-height:1.6; margin-top:8px;">
-            <strong style="color:var(--primary); font-size:1.05rem;">📌 一、規則變化 (규칙 변화)</strong><br>
-            <b>1. 母音為 ㅏ, ㅗ, ㅑ ➔ 接 -아요</b><br>
-            • 깎다 ➔ <b>깎아요</b> (殺價) | 맞다 ➔ <b>맞아요</b> (正確)<br>
-            • 살다 ➔ <b>살아요</b> (居住) | 앉다 ➔ <b>앉아요</b> (坐) | 작다 ➔ <b>작아요</b> (小)<br><br>
+            <strong style="color:var(--primary); font-size:1.05rem;">📌 一、規則變化 (-아요 / -어요)</strong><br><br>
 
-            <b>2. 母音為其他 (ㅓ, ㅜ, ㅡ, ㅣ等) ➔ 接 -어요</b><br>
-            • 먹다 ➔ <b>먹어요</b> (吃) | 쉬다 ➔ <b>쉬어요</b> (休息) | 있다 ➔ <b>있어요</b> (在/有)<br>
-            • 물다 ➔ <b>물어요</b> (咬) | 없다 ➔ <b>없어요</b> (沒有) | 적다 ➔ <b>적어요</b> (少)<br>
-            • 열다 ➔ <b>열어요</b> (開門) | 보고 싶다 ➔ <b>보고 싶어요</b> (想念)<br><br>
+            <span style="background:#E0E7FF; color:var(--primary); padding:2px 6px; border-radius:4px; font-weight:bold;">🔹 1. 母音為 ㅏ, ㅗ ➔ 接 -아요</span><br>
+            • <b>【有尾音 (有 받침)】：直接加 -아요</b><br>
+            &nbsp;&nbsp; - 앉다 ➔ <b>앉아요</b> (坐) | 깎다 ➔ <b>깎아요</b> (殺價) | 살다 ➔ <b>살아요</b> (居住) | 잡다 ➔ <b>잡아요</b> (抓)<br>
+            • <b>【無尾音 (無 받침)】：母音/字形縮合</b><br>
+            &nbsp;&nbsp; - 가다 ➔ <b>가요</b> (去) | 오다 ➔ <b>와요</b> (來) | 보다 ➔ <b>봐요</b> (看) | 만나다 ➔ <b>만나요</b> (見面)<br><br>
 
-            <b>3. -하다 結尾 ➔ 變 -해요</b><br>
-            • 공부하다 ➔ <b>공부해요</b> (讀書) | 좋아하다 ➔ <b>좋아해요</b> (喜歡)<br>
-            • 미안하다 ➔ <b>미안해요</b> | 심심하다 ➔ <b>심심해요</b> | 따뜻하다 ➔ <b>따뜻해요</b><br>
-            • 사랑하다 ➔ <b>사랑해요</b> | 조심하다 ➔ <b>조심해요</b><br><br>
+            <span style="background:#E0E7FF; color:var(--primary); padding:2px 6px; border-radius:4px; font-weight:bold;">🔹 2. 母音為其他 (ㅓ, ㅜ, ㅡ, ㅣ等) ➔ 接 -어요</span><br>
+            • <b>【有尾音 (有 받침)】：直接加 -어요</b><br>
+            &nbsp;&nbsp; - 먹다 ➔ <b>먹어요</b> (吃) | 있다 ➔ <b>있어요</b> (有) | 없다 ➔ <b>없어요</b> (沒有) | 쉬다 ➔ <b>쉬어요</b> (休息)<br>
+            • <b>【無尾音 (無 받침)】：字形縮合與 ㅡ 脫落</b><br>
+            &nbsp;&nbsp; - 서다 ➔ <b>서요</b> (站) | 배우다 ➔ <b>배워요</b> (學習) | 마시다 ➔ <b>마셔요</b> (喝) | 기다리다 ➔ <b>기다려요</b> (等)<br>
+            &nbsp;&nbsp; - <b>ㅡ 脫落</b>：쓰다 ➔ <b>써요</b> (寫/用) | 크다 ➔ <b>커요</b> (大) | 바쁘다 ➔ <b>바빠요</b> (忙) | 예쁘다 ➔ <b>예뻐요</b> (漂亮)<br><br>
 
-            <b>4. 無尾音的縮合與 ㅡ 消失</b><br>
-            • <b>省略</b>: 가다➔가요, 만나다➔만나요, 사다➔사요, 타다➔타요, 떠나다➔떠나요, 서다➔서요, 건너다➔건너요, 내다➔내요, 꺼내다➔꺼내요, 펴다➔펴요, 켜다➔켜요, 끝내다➔끝내요<br>
-            • <b>縮合</b>: 오다➔와요, 들어오다➔들어와요, 보다➔봐요, 쏘다➔쏴요, 배우다➔배워요, 싸우다➔싸워요, 주다➔줘요, 멈추다➔멈춰요, 바꾸다➔바꿔요, 마시다➔마셔요, 내리다➔내려요, 가르치다➔가르쳐요, 기다리다➔기다려요, 견디다➔견뎌요, 비키다➔비켜요, 되다➔돼요<br>
-            • <b>ㅡ 消失</b>: 쓰다➔써요, 크다➔커요, 끄다➔꺼요, 바쁘다➔바빠요, 예쁘다➔예뻐요, 아프다➔아파요, (배)고프다➔고파요, 슬프다➔슬퍼요, 기쁘다➔기뻐요<br>
+            <span style="background:#E0E7FF; color:var(--primary); padding:2px 6px; border-radius:4px; font-weight:bold;">🔹 3. -하다 結尾 ➔ 變 -해요</span><br>
+            • 공부하다 ➔ <b>공부해요</b> (讀書) | 좋아하다 ➔ <b>좋아해요</b> (喜歡) | 사랑하다 ➔ <b>사랑해요</b> (愛)<br>
 
-            <hr style="margin: 12px 0; border: none; border-top: 1px dashed var(--border);">
+            <hr style="margin: 14px 0; border: none; border-top: 1px dashed var(--border);">
 
-            <strong style="color:var(--primary); font-size:1.05rem;">📌 二、不規則變化 (불규칙 변화) 5大重點</strong><br>
-            <b>1. ㄷ 不規則 (ㄷ 遇到母音 ➔ 變 ㄹ)</b><br>
-            • 걷다 ➔ <b>걸어요</b> (走), 듣다 ➔ <b>들어요</b> (聽), 묻다 ➔ <b>물어요</b> (問), 싣다 ➔ <b>실어요</b> (裝載)<br>
-            <small style="color:#888;">*例外(維持規則)：믿다 ➔ 믿아요 (相信), 닫다 ➔ 닫아요 (關門), 받다 ➔ 받아요 (收到)</small><br><br>
+            <strong style="color:var(--primary); font-size:1.05rem;">📌 二、不規則變化 (5 大重點)</strong><br><br>
 
-            <b>2. ㅂ 不規則 (ㅂ 遇到母音 ➔ 消失變 워)</b><br>
-            • 덥다 ➔ <b>더워요</b> (熱), 춥다 ➔ <b>추워요</b> (冷), 가볍다 ➔ <b>가벼워요</b> (輕), 무겁다 ➔ <b>무거워요</b> (重), 아름답다 ➔ <b>아름다워요</b> (美), 즐겁다 ➔ <b>즐거워요</b>, 괴롭다 ➔ <b>괴로워요</b><br>
-            <small style="color:#e67e22;">*特例：돕다 ➔ 도와요 (幫助), 곱다 ➔ 고와요 (美麗)</small><br>
-            <small style="color:#888;">*例外(維持規則)：입다 ➔ 입어요 (穿), 씹다 ➔ 씹어요 (嚼), 잡다 ➔ 잡아요 (抓), 좁다 ➔ 좁아요 (窄), 뽑다 ➔ 뽑아요, 접다 ➔ 접아요</small><br><br>
+            <b>1. ㄷ 不規則 (尾音 ㄷ 遇到母音 ➔ 變 ㄹ)</b><br>
+            • <b>【有尾音 (有 받침)】</b>：걷다 ➔ <b>걸어요</b> (走路) | 듣다 ➔ <b>들어요</b> (聽) | 묻다 ➔ <b>물어요</b> (問)<br>
+            <small style="color:#888;">*規則特例 (維持原樣)：믿다 ➔ 믿아요 (相信)、닫다 ➔ 닫아요 (關門)、받다 ➔ 받아요 (收到)</small><br><br>
 
-            <b>3. 르 不規則 (前字補尾音 ㄹ，르 變 라/러)</b><br>
-            • 모르다 ➔ <b>몰라요</b> (不知道), 빠르다 ➔ <b>빨라요</b> (快), 오르다 ➔ <b>올라요</b> (爬/升), 서두르다 ➔ <b>서둘러요</b> (趕緊), 부르다 ➔ <b>불러요</b> (唱/飽), 게으르다 ➔ <b>게을러요</b>, 들르다 ➔ <b>들러요</b> (順道去)<br><br>
+            <b>2. ㅂ 不規則 (尾音 ㅂ 遇到母音 ➔ 變 워 / 와)</b><br>
+            • <b>【有尾音 (有 받침)】</b>：덥다 ➔ <b>더워요</b> (熱) | 춥다 ➔ <b>추워요</b> (冷) | 아름답다 ➔ <b>아름다워요</b> (美)<br>
+            <small style="color:#e67e22;">*特例 (變 -와)：돕다 ➔ 도와요 (幫助)、곱다 ➔ 고와요 (美麗)</small><br>
+            <small style="color:#888;">*規則特例 (維持原樣)：입다 ➔ 입어요 (穿)、잡다 ➔ 잡아요 (抓)、좁다 ➔ 좁아요 (窄)</small><br><br>
 
-            <b>4. ㅎ 不規則 (ㅎ 消失，母音變 ㅐ / ㅙ)</b><br>
-            • 어떻다 ➔ <b>어때요</b> (如何), 노랗다 ➔ <b>노래요</b> (黃色), 까맣다 ➔ <b>까매요</b> (黑色), 그렇다 ➔ <b>그래요</b> (那樣), 이렇다 ➔ <b>이래요</b>, 하얗다 ➔ <b>하얘요</b><br>
-            <small style="color:#888;">*例外(維持規則)：좋다 ➔ 좋아요 (好), 낳다 ➔ 낳아요 (生產), 놓다 ➔ 놓아요 (放置)</small><br><br>
+            <b>3. 르 不規則 (無尾音 르，前字補尾音 ㄹ，르 變 라/러)</b><br>
+            • <b>【無尾音 (無 받침)】</b>：모르다 ➔ <b>몰라요</b> (不知道) | 빠르다 ➔ <b>빨라요</b> (快) | 부르다 ➔ <b>불러요</b> (唱/飽)<br><br>
 
-            <b>5. ㅅ 不規則 (ㅅ 遇到母音 ➔ 消失)</b><br>
-            • 붓다 ➔ <b>부어요</b> (倒/腫), 긋다 ➔ <b>그어요</b> (劃線), 짓다 ➔ <b>지어요</b> (做/蓋), 낫다 ➔ <b>나아요</b> (痊癒), 젓다 ➔ <b>저어요</b> (攪拌)<br>
-            <small style="color:#888;">*例外(維持規則)：웃다 ➔ 웃어요 (笑), 벗다 ➔ 벗어요 (脫), 씻다 ➔ 씻어요 (洗), 뺏다 ➔ 뺏어요 (搶)</small>
+            <b>4. ㅎ 不規則 (尾音 ㅎ 遇到母音 ➔ ㅎ 消失，母音變 ㅐ/ㅙ)</b><br>
+            • <b>【有尾音 (有 받침)】</b>：그렇다 ➔ <b>그래요</b> (那樣) | 어떻다 ➔ <b>어때요</b> (如何) | 까맣다 ➔ <b>까매요</b> (黑)<br>
+            <small style="color:#888;">*規則特例 (維持原樣)：좋다 ➔ 좋아요 (好)、놓다 ➔ 놓아요 (放置)</small><br><br>
+
+            <b>5. ㅅ 不規則 (尾音 ㅅ 遇到母音 ➔ ㅅ 消失)</b><br>
+            • <b>【有尾音 (有 받침)】</b>：낫다 ➔ <b>나아요</b> (痊癒) | 짓다 ➔ <b>지어요</b> (做/蓋) | 붓다 ➔ <b>부어요</b> (腫/倒)<br>
+            <small style="color:#888;">*規則特例 (維持原樣)：웃다 ➔ 웃어요 (笑)、벗다 ➔ 벗어요 (脫)、씻다 ➔ 씻어요 (洗)</small>
           </div>
         `,
-        exampleKr: "걷다 ➔ 걸어요 / 덥다 ➔ 더워요 / 모르다 ➔ 몰라요",
-        exampleZh: "走路 ➔ 走路 / 熱 ➔ 熱 / 不知道 ➔ 不知道"
+        exampleKr: "【有尾音】먹다 ➔ 먹어요 (吃) / 걷다 ➔ 걸어요 (走)<br>【無尾音】가다 ➔ 가요 (去) / 모르다 ➔ 몰라요 (不知道)",
+        exampleZh: "包含【有尾音】與【無尾音】規則與不規則變化"
       };
 
       if (!appData.grammars) appData.grammars = [];
@@ -469,8 +465,10 @@
     document.getElementById('sentenceLessonSelect').innerHTML = optionsHtml;
     document.getElementById('vocabQuizLessonSelect').innerHTML = optionsHtml;
     
+    // 學習資料庫獨有選單：包含獨立出來的「✨ 特殊變化」
     document.getElementById('bankLessonSelect').innerHTML = `
       <option value="all">📚 全部課程內容</option>
+      <option value="special">✨ 特殊變化 (動詞與形容詞)</option>
       ${appData.lessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('')}
     `;
   }
@@ -493,43 +491,30 @@
   }
 
   /* ===================================================
-     強效雙發音引擎 (線上音訊優先 + 系統 TTS 備援)
-     解決 LINE / FB 內建瀏覽器或缺少語音包發音無反應問題
+     穩定原生的語音發音引擎 (Web Speech API)
   =================================================== */
   function speakKorean(text) {
     if (!text) return;
-
-    // 備援方案：系統內建 SpeechSynthesis
-    function fallbackNativeTTS() {
-      if (!('speechSynthesis' in window)) {
-        alert('您的瀏覽器不支援發音，請點選右上角選單改用 Safari 或 Chrome 開啟！');
-        return;
-      }
-      window.speechSynthesis.cancel();
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = 'ko-KR';
-      utter.rate = 0.85;
-
-      const voices = window.speechSynthesis.getVoices();
-      const koVoice = voices.find(v => v.lang && (v.lang.startsWith('ko') || v.lang.includes('KR')));
-      if (koVoice) utter.voice = koVoice;
-
-      setTimeout(() => {
-        window.speechSynthesis.speak(utter);
-      }, 50);
+    if (!('speechSynthesis' in window)) {
+      alert('您的裝置或瀏覽器不支援語音朗讀功能。');
+      return;
     }
 
-    // 優先方案：線上高音質發音 API (不受 LINE/FB 內建瀏覽器限制)
-    try {
-      const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=ko&q=${encodeURIComponent(text)}`;
-      const audio = new Audio(audioUrl);
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => fallbackNativeTTS());
-      }
-    } catch (e) {
-      fallbackNativeTTS();
+    // 取消前一次的朗讀
+    window.speechSynthesis.cancel();
+
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'ko-KR';
+    utter.rate = 0.85;
+
+    // 尋找系統內的韓語語音包
+    const voices = window.speechSynthesis.getVoices();
+    const koVoice = voices.find(v => v.lang && (v.lang.includes('ko') || v.lang.includes('KR')));
+    if (koVoice) {
+      utter.voice = koVoice;
     }
+
+    window.speechSynthesis.speak(utter);
   }
 
   // 預先載入語音包
@@ -673,7 +658,7 @@
   }
 
   /* ===================================================
-     2. 單字選擇題測驗邏輯 (進入題目時不自動發音)
+     2. 單字選擇題測驗邏輯
   =================================================== */
   function startVocabQuiz() {
     const lessonVal = document.getElementById('vocabQuizLessonSelect').value;
@@ -703,8 +688,6 @@
 
     currentVocabQuestion = vocabQuizList[vocabQuizIdx];
     document.getElementById('vocabQuizWord').innerText = currentVocabQuestion.kr;
-    
-    // ⚠️ 取消載入題目時自動發音，使用者需要時點擊 🔊 按鈕手動播放聲音
 
     // 產生 4 個選項 (1 個正確 + 3 個干擾項)
     let options = [currentVocabQuestion];
@@ -771,22 +754,29 @@
     const lessonVal = document.getElementById('bankLessonSelect').value;
     
     // 1. 渲染文法
-    const grammars = lessonVal === 'all' 
-      ? appData.grammars 
-      : appData.grammars.filter(g => g.lessonId === lessonVal || g.lessonId === 'all');
+    let grammars = [];
+    if (lessonVal === 'all') {
+      grammars = appData.grammars;
+    } else {
+      grammars = appData.grammars.filter(g => g.lessonId === lessonVal);
+    }
 
     const gContainer = document.getElementById('grammarList');
-    gContainer.innerHTML = grammars.map(g => `
-      <div class="grammar-card">
-        <div class="grammar-title">${g.title}</div>
-        <div class="grammar-formula">${g.formula}</div>
-        <div class="grammar-exp">${g.explanation}</div>
-        <div class="grammar-ex">例句：${g.exampleKr} (${g.exampleZh})</div>
-      </div>
-    `).join('');
+    if (grammars.length === 0) {
+      gContainer.innerHTML = '<div style="text-align:center; padding:20px; color:#888;">此分類下暫無文法內容。</div>';
+    } else {
+      gContainer.innerHTML = grammars.map(g => `
+        <div class="grammar-card">
+          <div class="grammar-title">${g.title}</div>
+          <div class="grammar-formula">${g.formula}</div>
+          <div class="grammar-exp">${g.explanation}</div>
+          <div class="grammar-ex">例句：${g.exampleKr}</div>
+        </div>
+      `).join('');
+    }
 
     // 2. 渲染單字卡
-    filteredVocabList = lessonVal === 'all' 
+    filteredVocabList = (lessonVal === 'all' || lessonVal === 'special')
       ? [...appData.vocabularies] 
       : appData.vocabularies.filter(v => v.lessonId === lessonVal);
 
