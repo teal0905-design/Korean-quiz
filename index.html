@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>韓文拼字卡練習系統</title>
+  <title>韓文學習助手</title>
   <style>
     :root {
       --primary: #4F46E5;
@@ -13,6 +13,8 @@
       --border: #E5E7EB;
       --success: #10B981;
       --error: #EF4444;
+      --text-main: #111827;
+      --text-sub: #6B7280;
     }
 
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -21,7 +23,7 @@
       background-color: var(--bg);
       display: flex;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
       color: #374151;
       margin: 0;
     }
@@ -30,17 +32,49 @@
       width: 100%;
       max-width: 600px;
       background: #FFFFFF;
-      padding: 24px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
     }
 
+    /* 頂部主選單頁籤 */
+    .nav-tabs {
+      display: flex;
+      background: #E5E7EB;
+      padding: 4px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-btn.active {
+      background: #FFFFFF;
+      color: var(--primary);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    /* 頁面視圖隱藏控制 */
+    .view-section { display: none; }
+    .view-section.active { display: block; }
+
+    /* ================= 1. 測驗區樣式 ================= */
     .header-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      gap: 10px;
+      margin-bottom: 16px;
     }
 
     select {
@@ -51,19 +85,8 @@
       background: #fff;
     }
 
-    .progress {
-      font-size: 0.9rem;
-      color: #6B7280;
-      font-weight: 600;
-    }
-
-    .prompt {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 20px;
-      color: #111827;
-      min-height: 30px;
-    }
+    .progress { font-size: 0.9rem; color: var(--text-sub); font-weight: 600; }
+    .prompt { font-size: 1.2rem; font-weight: 600; margin-bottom: 16px; color: var(--text-main); min-height: 28px; }
 
     .answer-zone {
       min-height: 80px;
@@ -74,7 +97,7 @@
       flex-wrap: wrap;
       gap: 10px;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       background: #FAFAFA;
       transition: all 0.2s;
     }
@@ -82,20 +105,14 @@
     .answer-zone.correct { border-color: var(--success); background-color: #ECFDF5; }
     .answer-zone.incorrect { border-color: var(--error); background-color: #FEF2F2; }
 
-    .word-bank {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 24px;
-      min-height: 60px;
-    }
+    .word-bank { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; min-height: 60px; }
 
     .card {
       padding: 10px 16px;
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 8px;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 500;
       cursor: pointer;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -106,83 +123,245 @@
     .card:active { transform: scale(0.98); }
 
     .controls { display: flex; gap: 12px; }
-
-    .btn {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
+    .btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
     .btn-submit { background: var(--primary); color: white; }
     .btn-reset { background: #E5E7EB; color: #4B5563; }
+    .message { margin-top: 12px; font-weight: 600; text-align: center; min-height: 24px; }
 
-    .message {
-      margin-top: 16px;
+    /* ================= 2. 題庫區樣式 ================= */
+    .sub-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .sub-btn {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #F9FAFB;
       font-weight: 600;
-      text-align: center;
-      min-height: 24px;
+      color: var(--text-sub);
+      cursor: pointer;
     }
+    .sub-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* 文法列表卡片 */
+    .grammar-card {
+      background: #F9FAFB;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .grammar-title { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .grammar-formula { display: inline-block; background: #EEF2FF; color: var(--primary); padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
+    .grammar-exp { font-size: 0.95rem; line-height: 1.5; color: #4B5563; margin-bottom: 10px; }
+    .grammar-ex { background: #FFF; padding: 8px 12px; border-radius: 6px; border-left: 3px solid var(--primary); font-size: 0.9rem; }
+
+    /* 單字 3D 翻轉卡片 */
+    .vocab-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .vocab-top-bar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      width: 100%;
+      height: 220px;
+      perspective: 1000px;
+      cursor: pointer;
+      margin-bottom: 16px;
+      touch-action: pan-y; /* 允許垂直滾動，水平由 JS 監聽 */
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.5s;
+      transform-style: preserve-3d;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .flip-card-front { background: #FFFFFF; color: var(--text-main); }
+    .flip-card-back { background: #EEF2FF; color: var(--primary); transform: rotateY(180deg); }
+
+    .vocab-kr { font-size: 2.2rem; font-weight: 700; margin-bottom: 8px; }
+    .vocab-zh { font-size: 1.8rem; font-weight: 600; }
+    .vocab-hint { font-size: 0.85rem; color: #9CA3AF; margin-top: 12px; }
+
+    .vocab-controls { display: flex; width: 100%; gap: 12px; }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <div class="header-bar">
-    <select id="lessongSelect" onchange="switchLesson(this.value)"></select>
-    <div class="progress" id="progressText">0 / 0</div>
+  <!-- 主功能分頁 -->
+  <div class="nav-tabs">
+    <button class="nav-btn active" onclick="switchMainView('quiz')">🧩 句子測驗</button>
+    <button class="nav-btn" onclick="switchMainView('bank')">📚 字卡題庫</button>
   </div>
 
-  <div class="prompt" id="promptText">載入中...</div>
-  <div class="answer-zone" id="answerZone"></div>
-  <div class="word-bank" id="wordBank"></div>
+  <!-- ================= View 1: 測驗模式 ================= -->
+  <div id="quizView" class="view-section active">
+    <div class="header-bar">
+      <select id="lessonSelect" onchange="switchLesson(this.value)"></select>
+      <div class="progress" id="progressText">0 / 0</div>
+    </div>
 
-  <div class="controls">
-    <button class="btn btn-reset" onclick="resetCurrentQuiz()">重設卡片</button>
-    <button class="btn btn-submit" id="submitBtn" onclick="handleSubmit()">檢查答案</button>
+    <div class="prompt" id="promptText">載入中...</div>
+    <div class="answer-zone" id="answerZone"></div>
+    <div class="word-bank" id="wordBank"></div>
+
+    <div class="controls">
+      <button class="btn btn-reset" onclick="resetCurrentQuiz()">重設</button>
+      <button class="btn btn-submit" id="submitBtn" onclick="handleSubmit()">檢查答案</button>
+    </div>
+    <div class="message" id="message"></div>
   </div>
 
-  <div class="message" id="message"></div>
+  <!-- ================= View 2: 字卡題庫模式 ================= -->
+  <div id="bankView" class="view-section">
+    <!-- 子分頁 -->
+    <div class="sub-tabs">
+      <button class="sub-btn active" id="btnSubGrammar" onclick="switchBankSubView('grammar')">📖 文法資料庫</button>
+      <button class="sub-btn" id="btnSubVocab" onclick="switchBankSubView('vocab')">🎴 單字卡片</button>
+    </div>
+
+    <!-- 文法子頁面 -->
+    <div id="grammarSubView">
+      <div id="grammarList"></div>
+    </div>
+
+    <!-- 單字卡片子頁面 -->
+    <div id="vocabSubView" style="display: none;">
+      <div class="vocab-container">
+        <div class="vocab-top-bar">
+          <button class="btn-reset" style="padding: 6px 12px; border-radius: 6px; border:none; cursor:pointer;" onclick="shuffleVocab()">🔀 隨機排列</button>
+          <div class="progress" id="vocabProgress">1 / 1</div>
+        </div>
+
+        <!-- 翻轉卡片 -->
+        <div class="flip-card" id="vocabFlipCard" onclick="toggleCardFlip()">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="vocab-kr" id="vocabKrDisplay">-</div>
+              <div class="vocab-hint">💡 點擊翻轉查看中文 (可左右滑動)</div>
+            </div>
+            <div class="flip-card-back">
+              <div class="vocab-zh" id="vocabZhDisplay">-</div>
+              <div class="vocab-hint" id="vocabCategoryDisplay">類別</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vocab-controls">
+          <button class="btn btn-reset" onclick="prevVocabCard()">⬅ 上一張</button>
+          <button class="btn btn-submit" onclick="nextVocabCard()">下一張 ➡️</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-  let allLessons = [];
+  let quizData = { lessons: [], grammars: [], vocabularies: [] };
+  
+  // 測驗狀態
   let currentQuestions = [];
   let currentIndex = 0;
   let availableCards = [];
   let selectedCards = [];
   let isAnsweredCorrectly = false;
 
-  // 讀取外部 JSON
-  async function loadQuizData() {
+  // 單字卡狀態
+  let vocabList = [];
+  let vocabIndex = 0;
+
+  // 讀取 JSON 資料
+  async function loadData() {
     try {
       const response = await fetch('data.json');
-      const data = await response.json();
-      allLessons = data.lessons;
-      
+      quizData = await response.json();
+
+      // 初始化測驗
       populateLessonSelect();
-      switchLesson(allLessons[0].id);
+      if(quizData.lessons.length > 0) switchLesson(quizData.lessons[0].id);
+
+      // 初始化題庫
+      renderGrammars();
+      vocabList = [...quizData.vocabularies];
+      updateVocabCard();
+
     } catch (err) {
-      document.getElementById('promptText').innerText = "讀取題庫失敗，請確認 data.json 檔案格式。";
+      document.getElementById('promptText').innerText = "讀取 data.json 失敗，請檢查格式。";
     }
   }
 
+  // 主頁面切換
+  function switchMainView(view) {
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+
+    if (view === 'quiz') {
+      document.querySelectorAll('.nav-btn')[0].classList.add('active');
+      document.getElementById('quizView').classList.add('active');
+    } else {
+      document.querySelectorAll('.nav-btn')[1].classList.add('active');
+      document.getElementById('bankView').classList.add('active');
+    }
+  }
+
+  // 題庫子頁面切換
+  function switchBankSubView(sub) {
+    document.getElementById('btnSubGrammar').classList.toggle('active', sub === 'grammar');
+    document.getElementById('btnSubVocab').classList.toggle('active', sub === 'vocab');
+
+    document.getElementById('grammarSubView').style.display = sub === 'grammar' ? 'block' : 'none';
+    document.getElementById('vocabSubView').style.display = sub === 'vocab' ? 'block' : 'none';
+  }
+
+  /* ================= 1. 測驗區邏輯 ================= */
   function populateLessonSelect() {
-    const select = document.getElementById('lessongSelect');
+    const select = document.getElementById('lessonSelect');
     select.innerHTML = '';
-    allLessons.forEach(lesson => {
+    quizData.lessons.forEach(l => {
       const opt = document.createElement('option');
-      opt.value = lesson.id;
-      opt.innerText = lesson.title;
+      opt.value = l.id;
+      opt.innerText = l.title;
       select.appendChild(opt);
     });
   }
 
   function switchLesson(lessonId) {
-    const lesson = allLessons.find(l => l.id === lessonId);
+    const lesson = quizData.lessons.find(l => l.id === lessonId);
     if (!lesson) return;
     currentQuestions = lesson.questions;
     currentIndex = 0;
@@ -192,7 +371,6 @@
   function loadQuestion() {
     isAnsweredCorrectly = false;
     document.getElementById('submitBtn').innerText = '檢查答案';
-
     const q = currentQuestions[currentIndex];
     document.getElementById('promptText').innerText = q.translation;
     document.getElementById('progressText').innerText = `${currentIndex + 1} / ${currentQuestions.length}`;
@@ -200,11 +378,10 @@
     const shuffled = [...q.options].sort(() => Math.random() - 0.5);
     availableCards = shuffled.map((text, idx) => ({ id: idx, text }));
     selectedCards = [];
-
-    render();
+    renderQuiz();
   }
 
-  function render() {
+  function renderQuiz() {
     const answerZone = document.getElementById('answerZone');
     const wordBank = document.getElementById('wordBank');
     const message = document.getElementById('message');
@@ -216,16 +393,26 @@
 
     answerZone.innerHTML = '';
     selectedCards.forEach(card => {
-      answerZone.appendChild(createCardElement(card, () => unselectCard(card)));
+      answerZone.appendChild(createCardEl(card, () => {
+        if (isAnsweredCorrectly) return;
+        selectedCards = selectedCards.filter(c => c.id !== card.id);
+        availableCards.push(card);
+        renderQuiz();
+      }));
     });
 
     wordBank.innerHTML = '';
     availableCards.forEach(card => {
-      wordBank.appendChild(createCardElement(card, () => selectCard(card)));
+      wordBank.appendChild(createCardEl(card, () => {
+        if (isAnsweredCorrectly) return;
+        availableCards = availableCards.filter(c => c.id !== card.id);
+        selectedCards.push(card);
+        renderQuiz();
+      }));
     });
   }
 
-  function createCardElement(card, onClick) {
+  function createCardEl(card, onClick) {
     const el = document.createElement('div');
     el.className = 'card';
     el.innerText = card.text;
@@ -233,28 +420,12 @@
     return el;
   }
 
-  function selectCard(card) {
-    if (isAnsweredCorrectly) return;
-    availableCards = availableCards.filter(c => c.id !== card.id);
-    selectedCards.push(card);
-    render();
-  }
-
-  function unselectCard(card) {
-    if (isAnsweredCorrectly) return;
-    selectedCards = selectedCards.filter(c => c.id !== card.id);
-    availableCards.push(card);
-    render();
-  }
-
   function resetCurrentQuiz() {
-    if (isAnsweredCorrectly) return;
-    loadQuestion();
+    if (!isAnsweredCorrectly) loadQuestion();
   }
 
   function handleSubmit() {
     if (isAnsweredCorrectly) {
-      // 進入下一題
       currentIndex++;
       if (currentIndex < currentQuestions.length) {
         loadQuestion();
@@ -287,7 +458,83 @@
     }
   }
 
-  loadQuizData();
+  /* ================= 2. 題庫區邏輯 ================= */
+  function renderGrammars() {
+    const container = document.getElementById('grammarList');
+    container.innerHTML = '';
+    quizData.grammars.forEach(g => {
+      const card = document.createElement('div');
+      card.className = 'grammar-card';
+      card.innerHTML = `
+        <div class="grammar-title">${g.title}</div>
+        <div class="grammar-formula">${g.formula}</div>
+        <div class="grammar-exp">${g.explanation}</div>
+        <div class="grammar-ex">例句：${g.exampleKr} (${g.exampleZh})</div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  // 單字卡邏輯
+  function updateVocabCard() {
+    if (vocabList.length === 0) return;
+    const cardEl = document.getElementById('vocabFlipCard');
+    cardEl.classList.remove('flipped'); // 換頁時重置為正面
+
+    setTimeout(() => {
+      const v = vocabList[vocabIndex];
+      document.getElementById('vocabKrDisplay').innerText = v.kr;
+      document.getElementById('vocabZhDisplay').innerText = v.zh;
+      document.getElementById('vocabCategoryDisplay').innerText = `分類：${v.category || '通用'}`;
+      document.getElementById('vocabProgress').innerText = `${vocabIndex + 1} / ${vocabList.length}`;
+    }, 150);
+  }
+
+  function toggleCardFlip() {
+    document.getElementById('vocabFlipCard').classList.toggle('flipped');
+  }
+
+  function nextVocabCard() {
+    if (vocabIndex < vocabList.length - 1) {
+      vocabIndex++;
+      updateVocabCard();
+    }
+  }
+
+  function prevVocabCard() {
+    if (vocabIndex > 0) {
+      vocabIndex--;
+      updateVocabCard();
+    }
+  }
+
+  function shuffleVocab() {
+    vocabList.sort(() => Math.random() - 0.5);
+    vocabIndex = 0;
+    updateVocabCard();
+  }
+
+  // 滑動手勢支援 (Touch Swipe)
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const flipCardArea = document.getElementById('vocabFlipCard');
+
+  flipCardArea.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, false);
+
+  flipCardArea.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, false);
+
+  function handleSwipe() {
+    if (touchEndX < touchStartX - 40) nextVocabCard(); // 向左劃 -> 下一張
+    if (touchEndX > touchStartX + 40) prevVocabCard(); // 向右劃 -> 上一張
+  }
+
+  // 啟動
+  loadData();
 </script>
 </body>
 </html>
