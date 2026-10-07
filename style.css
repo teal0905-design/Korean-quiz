@@ -522,3 +522,91 @@ select {
   background: #D1D5DB;
   border-radius: 4px;
 }
+/* =========================================
+   數字轉換器專屬樣式
+========================================= */
+.number-converter-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 24px;
+  border-top: 4px solid var(--primary);
+}
+.converter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.converter-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+.converter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 8px;
+}
+.converter-tabs .tab-btn {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.converter-tabs .tab-btn.active {
+  background: #fff;
+  color: var(--primary);
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.num-input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  justify-content: center;
+}
+.num-input {
+  width: 70px;
+  padding: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1.1rem;
+  outline: none;
+}
+.num-input:focus {
+  border-color: var(--primary);
+}
+.converter-result {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  margin-top: 16px;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.result-kr {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+/* 藍色代表固有詞 (하나, 둘...) / 紅色代表漢字音 (일, 이...) */
+.text-native { color: #2563eb; }
+.text-sino { color: #dc2626; }
+.text-unit { color: #475569; }
