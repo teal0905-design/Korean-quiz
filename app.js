@@ -92,9 +92,12 @@ function switchMainView(view) {
   } else if (view === 'vocabQuiz') {
     document.querySelectorAll('.nav-btn')[1].classList.add('active');
     document.getElementById('vocabQuizView').classList.add('active');
-  } else {
+  } else if (view === 'bank') {
     document.querySelectorAll('.nav-btn')[2].classList.add('active');
     document.getElementById('bankView').classList.add('active');
+  } else if (view === 'numbers') {
+    document.querySelectorAll('.nav-btn')[3].classList.add('active');
+    document.getElementById('numbersView').classList.add('active');
   }
 }
 
