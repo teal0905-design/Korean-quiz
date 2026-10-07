@@ -2,161 +2,178 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
+  <!-- 確保在手機上正常顯示比例 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <title>韓文互動學習 App</title>
+  <title>韓語學習 App</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-  <!-- 主選單分頁 -->
-  <div class="nav-tabs">
-    <button class="nav-btn active" onclick="switchMainView('quiz')">🧩 句子測驗</button>
-    <button class="nav-btn" onclick="switchMainView('vocabQuiz')">🔤 單字測驗</button>
-    <button class="nav-btn" onclick="switchMainView('bank')">📚 學習資料庫</button>
-  </div>
+  <!-- 頂部標題列 -->
+  <header class="top-header">
+    <h2>韓語學習 App</h2>
+  </header>
 
-  <!-- 1. 句子重組測驗 -->
-  <div id="quizView" class="view-section active">
-    <!-- 頂部平滑進度條 -->
-    <div class="progress-track">
-      <div class="progress-fill" id="sentenceProgressBar"></div>
-    </div>
-
-    <div class="filter-bar">
-      <select id="sentenceLessonSelect" onchange="initSentenceQuiz()"></select>
-      <select id="sentenceCountSelect" onchange="initSentenceQuiz()" style="display:none;">
-        <option value="5">5 題</option>
-        <option value="10" selected>10 題</option>
-        <option value="15">15 題</option>
-        <option value="20">20 題</option>
-      </select>
-    </div>
-    <div class="prompt-box">
-      <div class="prompt" id="promptText">載入中...</div>
-      <button class="btn-audio" id="sentenceAudioBtn" onclick="playCurrentSentenceAudio()">🔊 聽發音</button>
-    </div>
-    <div class="answer-zone" id="answerZone"></div>
-    <div class="word-bank" id="wordBank"></div>
-    <div class="controls">
-      <button class="btn btn-reset" onclick="resetSentenceQuiz()">重設卡片</button>
-      <button class="btn btn-submit" id="submitBtn" onclick="handleSentenceSubmit()">檢查答案</button>
-    </div>
-    <div class="message" id="message"></div>
-  </div>
-
-  <!-- 2. 單字選擇測驗 -->
-  <div id="vocabQuizView" class="view-section">
-    <!-- 單字測驗進度條 -->
-    <div class="progress-track">
-      <div class="progress-fill" id="vocabQuizProgressBar"></div>
-    </div>
-
-    <div class="filter-bar">
-      <select id="vocabQuizLessonSelect" onchange="startVocabQuiz()"></select>
-      <select id="vocabQuizCountSelect" onchange="startVocabQuiz()">
-        <option value="5">5 題</option>
-        <option value="10" selected>10 題</option>
-        <option value="15">15 題</option>
-        <option value="20">20 題</option>
-      </select>
-    </div>
-    <div class="prompt-box" style="justify-content: center; gap: 10px;">
-      <div class="vocab-quiz-q" id="vocabQuizWord">-</div>
-      <button class="btn-audio" id="vocabQuizAudioBtn" onclick="playVocabQuizAudio()">🔊 聽發音</button>
-    </div>
-    <div class="quiz-options" id="vocabQuizOptions"></div>
-    <div class="message" id="vocabQuizMessage"></div>
-    <button class="btn btn-submit" id="vocabNextBtn" style="display:none; width:100%;" onclick="nextVocabQuizQuestion()">下一題 ➔</button>
-  </div>
-
-  <!-- 3. 學習資料庫 -->
-  <div id="bankView" class="view-section">
-        <!-- 🔢 韓文數字轉換器 -->
-    <div class="number-converter-card">
-      <div class="converter-header">
-        <h3>🔢 韓文數字自動轉換器</h3>
-        <button class="btn-audio" onclick="alert('💡 小提示：\\n1, 2, 3, 4, 20 遇到單位會縮寫喔！\\n하나 ➔ 한\\n둘 ➔ 두\\n셋 ➔ 세\\n넷 ➔ 네\\n스물 ➔ 스무')">💡 變形速查表</button>
-      </div>
-      <div class="converter-tabs">
-        <button class="tab-btn active" id="tabTime" onclick="switchConverter('time')">🕒 時間</button>
-        <button class="tab-btn" id="tabCount" onclick="switchConverter('count')">🛍️ 購物</button>
-        <button class="tab-btn" id="tabDate" onclick="switchConverter('date')">📅 日期</button>
-      </div>
-      <div class="converter-body" id="converterBody">
-         <!-- 輸入框將由 JS 動態產生 -->
-      </div>
-      <div class="converter-result" id="converterResult">
-         <div style="color: #94a3b8;">請輸入數字，即可產生韓文與發音</div>
-      </div>
-    </div>
-    <!-- 轉換器結束 -->
-
-    <div class="sub-tabs">
-      <button class="sub-btn active" id="btnSubGrammar" onclick="switchBankSubView('grammar')">📖 文法資料庫</button>
-      <button class="sub-btn" id="btnSubVocab" onclick="switchBankSubView('vocab')">🎴 單字學習與測驗</button>
-    </div>
-    <div class="filter-bar">
-      <select id="bankLessonSelect" onchange="filterBankData()"></select>
-    </div>
-    <div id="grammarSubView">
-      <div id="grammarList"></div>
-    </div>
-
-    <!-- 單字子視圖 (包含清單預覽與 3D 翻牌) -->
-    <div id="vocabSubView" style="display: none;">
-      <!-- 單字內部模式切換 -->
-      <div class="vocab-mode-tabs">
-        <button class="vocab-mode-btn active" id="btnVocabModeList" onclick="switchVocabMode('list')">📋 單字清單預覽 (含例句)</button>
-        <button class="vocab-mode-btn" id="btnVocabModeCard" onclick="switchVocabMode('card')">🎴 3D 翻牌練習</button>
+  <!-- 主內容區 -->
+  <main class="main-content">
+    
+    <!-- 1. 句子重組測驗 (預設顯示) -->
+    <div id="quizView" class="view-section active">
+      <div class="filter-bar">
+        <select id="sentenceLessonSelect" onchange="initSentenceQuiz()"></select>
+        <select id="sentenceCountSelect" onchange="initSentenceQuiz()" style="display:none; margin-left:8px;">
+          <option value="5">測驗 5 題</option>
+          <option value="10">測驗 10 題</option>
+          <option value="20" selected>測驗 20 題</option>
+        </select>
       </div>
 
-      <!-- 1. 單字清單模式 -->
-      <div id="vocabListView">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <span style="font-size:0.9rem; color:var(--text-sub);">點擊發音按鈕可直接聆聽單字發音</span>
-          <button class="btn-eye" id="togglePronBtnList" onclick="togglePronVisibility()">👁️ 連音顯示</button>
+      <div class="progress-container">
+        <div class="progress-bar" id="sentenceProgressBar"></div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="prompt" id="promptText">載入中...</div>
+        <!-- 聽發音按鈕 -->
+        <div style="text-align: right; margin-bottom: 12px;">
+           <button id="sentenceAudioBtn" class="btn-audio" onclick="playCurrentSentenceAudio()">🔊 聽解答發音</button>
         </div>
-        <div id="vocabListContainer"></div>
+        <div class="answer-zone" id="answerZone"></div>
+        <div class="message" id="message"></div>
+        <div class="word-bank" id="wordBank"></div>
+        <div class="controls">
+          <button class="btn btn-reset" onclick="resetSentenceQuiz()">重新排列</button>
+          <button class="btn btn-submit" id="submitBtn" onclick="handleSentenceSubmit()">檢查答案</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 單字選擇測驗 -->
+    <div id="vocabQuizView" class="view-section">
+      <div class="filter-bar">
+        <select id="vocabQuizLessonSelect" onchange="startVocabQuiz()"></select>
+        <select id="vocabQuizCountSelect" onchange="startVocabQuiz()" style="margin-left:8px;">
+          <option value="5">測 5 題</option>
+          <option value="10" selected>測 10 題</option>
+          <option value="20">測 20 題</option>
+        </select>
       </div>
 
-      <!-- 2. 3D 翻牌模式 -->
-      <div id="vocabCardView" style="display: none;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <button class="btn-reset" style="padding: 6px 12px; border-radius: 6px; cursor:pointer;" onclick="shuffleVocabCards()">🔀 隨機排列</button>
-          <button class="btn-eye" id="togglePronBtnCard" onclick="togglePronVisibility()">👁️ 連音顯示</button>
-          <div style="font-weight:600; color:var(--text-sub);" id="vocabProgress">0 / 0</div>
+      <div class="progress-container">
+        <div class="progress-bar" id="vocabQuizProgressBar"></div>
+      </div>
+
+      <div class="quiz-card">
+        <!-- 聽單字發音按鈕 -->
+        <div style="text-align: right; margin-bottom: 8px;">
+           <button id="vocabQuizAudioBtn" class="btn-audio" onclick="playVocabQuizAudio()">🔊 聽單字</button>
         </div>
-        <div class="slider-viewport">
-          <div class="flip-card-wrapper slide-center" id="vocabCardWrapper" onclick="toggleCardFlip()">
-            <div class="flip-card-inner">
-              <div class="flip-card-front">
-                <div class="vocab-kr" id="vocabKrDisplay">-</div>
-                <div class="vocab-pron" id="vocabPronDisplay"></div>
-                <div class="vocab-hint">💡 點擊卡片翻轉查看中文 (可左右滑動)</div>
-              </div>
-              <div class="flip-card-back">
-                <div class="vocab-zh" id="vocabZhDisplay">-</div>
-                <div class="vocab-hint" id="vocabCategoryDisplay">類別</div>
+        <div class="prompt" style="font-size: 2rem; margin-bottom: 24px; color: var(--primary);" id="vocabQuizWord"></div>
+        <div class="vocab-quiz-options" id="vocabQuizOptions"></div>
+        <div class="message" id="vocabQuizMessage" style="margin-top: 16px;"></div>
+        <div class="controls" style="margin-top: 16px;">
+          <button class="btn btn-submit" id="vocabNextBtn" style="display:none; width:100%;" onclick="nextVocabQuizQuestion()">下一題 ➔</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 學習資料庫 -->
+    <div id="bankView" class="view-section">
+      <div class="sub-tabs">
+        <button class="sub-btn active" id="btnSubGrammar" onclick="switchBankSubView('grammar')">📖 文法資料庫</button>
+        <button class="sub-btn" id="btnSubVocab" onclick="switchBankSubView('vocab')">📱 單字學習與測驗</button>
+      </div>
+
+      <div class="filter-bar">
+        <select id="bankLessonSelect" onchange="filterBankData()"></select>
+      </div>
+
+      <!-- 文法清單 -->
+      <div id="grammarSubView">
+        <div id="grammarList"></div>
+      </div>
+
+      <!-- 單字學習視圖 (清單 vs 翻牌) -->
+      <div id="vocabSubView" style="display: none;">
+        <div class="vocab-mode-toggle">
+          <button class="mode-btn active" id="btnVocabModeList" onclick="switchVocabMode('list')">📄 清單模式</button>
+          <button class="mode-btn" id="btnVocabModeCard" onclick="switchVocabMode('card')">📇 翻牌模式</button>
+        </div>
+
+        <div style="text-align: right; margin-bottom: 8px; padding-right: 4px;">
+          <button class="btn-audio" onclick="togglePronVisibility()">👁️ 顯示/隱藏羅馬拼音</button>
+        </div>
+
+        <!-- 清單模式 -->
+        <div id="vocabListView">
+          <div id="vocabListContainer"></div>
+        </div>
+
+        <!-- 翻牌模式 -->
+        <div id="vocabCardView" style="display: none;">
+          <div class="slider-viewport">
+            <div class="flip-card-wrapper slide-center" id="vocabCardWrapper">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <div class="vocab-kr" id="vocabKrDisplay">-</div>
+                  <div class="vocab-pron" id="vocabPronDisplay"></div>
+                  <div class="vocab-hint">💡 點擊卡片翻轉查看中文 (可左右滑動)</div>
+                </div>
+                <div class="flip-card-back">
+                  <div class="vocab-zh" id="vocabZhDisplay">-</div>
+                  <div class="vocab-hint" id="vocabCategoryDisplay">類別</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="controls">
-          <button class="btn btn-reset" onclick="prevVocabCard()">⬅ 上一張</button>
-          <button class="btn btn-reset" id="vocabCardAudioBtn" style="background:#EEF2FF; color:var(--primary); border:1px solid #C7D2FE;" onclick="playCurrentVocabCardAudio()">🔊 聽發音</button>
-          <button class="btn btn-submit" onclick="nextVocabCard()">下一張 ➡️</button>
+          <div class="controls">
+            <button class="btn btn-reset" onclick="prevVocabCard()">⬅️ 上一個</button>
+            <button class="btn btn-reset" id="vocabCardAudioBtn" style="flex:0.5;" onclick="playCurrentVocabCardAudio()">🔊</button>
+            <button class="btn btn-submit" onclick="nextVocabCard()">下一個 ➔</button>
+          </div>
+          <div style="text-align:center; margin-top:12px;">
+            <span id="vocabProgress" style="color:#64748b; font-size:0.9rem;">0 / 0</span>
+            <button class="btn-audio" style="margin-left:12px;" onclick="shuffleVocabCards()">🔀 打亂順序</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+
+    <!-- 4. 數字工具區 (全新獨立區塊) -->
+    <div id="numbersView" class="view-section">
+      <div class="number-converter-card" style="margin-bottom:0; box-shadow:none; border:none;">
+        <div class="converter-header">
+          <h3 style="font-size: 1.2rem;">🔢 韓文數字自動轉換器</h3>
+          <button class="btn-audio" onclick="alert('💡 小提示：\\n1, 2, 3, 4, 20 遇到單位會縮寫！\\n하나 ➔ 한\\n둘 ➔ 두\\n셋 ➔ 세\\n넷 ➔ 네\\n스물 ➔ 스무')">💡 變形速查</button>
+        </div>
+        <div class="converter-tabs">
+          <button class="tab-btn active" id="tabTime" onclick="switchConverter('time')">🕒 時間</button>
+          <button class="tab-btn" id="tabUnit" onclick="switchConverter('unit')">📏 單位與金額</button>
+          <button class="tab-btn" id="tabDate" onclick="switchConverter('date')">📅 日期</button>
+        </div>
+        <div class="converter-body" id="converterBody">
+           <!-- 輸入框將由 JS 動態產生 -->
+        </div>
+        <div class="converter-result" id="converterResult">
+           <div style="color: #94a3b8;">請輸入數字，即可產生韓文與發音</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 底部導覽列 -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" onclick="switchMainView('quiz')">📝 句子測驗</button>
+    <button class="nav-btn" onclick="switchMainView('vocabQuiz')">🎯 單字測驗</button>
+    <button class="nav-btn" onclick="switchMainView('bank')">📚 資料庫</button>
+    <button class="nav-btn" onclick="switchMainView('numbers')">🔢 數字工具</button>
+  </nav>
+
+  <!-- 模組化載入 JavaScript -->
   <script src="app.js"></script>
   <script src="quiz.js"></script>
   <script src="bank.js"></script>
   <script src="numbers.js"></script>
 </body>
 </html>
-
