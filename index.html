@@ -132,26 +132,53 @@
     </div>
   </div>
 
-  <!-- 👇 4. 數字工具區 (全新加入) -->
+    <!-- 👇 4. 數字工具區 (轉換器 + 極限特訓) -->
   <div id="numbersView" class="view-section">
-    <div class="number-converter-card" style="margin-bottom:0; box-shadow:none; border:none; padding:0;">
-      <div class="converter-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <h3 style="font-size: 1.2rem; margin:0;">🔢 韓文數字自動轉換器</h3>
-        <button class="btn-audio" onclick="alert('💡 小提示：\\n1, 2, 3, 4, 20 遇到單位會縮寫！\\n하나 ➔ 한\\n둘 ➔ 두\\n셋 ➔ 세\\n넷 ➔ 네\\n스물 ➔ 스무')">💡 變形速查</button>
+    <!-- 子選單切換 -->
+    <div class="sub-tabs">
+      <button class="sub-btn active" id="btnSubConverter" onclick="switchNumberSubView('converter')">🧮 數字轉換器</button>
+      <button class="sub-btn" id="btnSubNumQuiz" onclick="switchNumberSubView('quiz')">⏳ 極限特訓測驗</button>
+    </div>
+
+    <!-- A. 轉換器視圖 -->
+    <div id="converterSubView">
+      <div class="number-converter-card" style="margin-bottom:0; box-shadow:none; border:none; padding:0;">
+        <div class="converter-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <h3 style="font-size: 1.2rem; margin:0;">🔢 韓文數字自動轉換器</h3>
+          <button class="btn-audio" onclick="alert('💡 小提示：\\n1, 2, 3, 4, 20 遇到單位會縮寫！\\n하나 ➔ 한\\n둘 ➔ 두\\n셋 ➔ 세\\n넷 ➔ 네\\n스물 ➔ 스무')">💡 變形速查</button>
+        </div>
+        <div class="converter-tabs" style="display: flex; gap: 8px; margin-bottom: 16px; background: #f1f5f9; padding: 4px; border-radius: 8px;">
+          <button class="tab-btn active" id="tabTime" onclick="switchConverter('time')" style="flex: 1; padding: 8px 0; border: none; background: transparent; border-radius: 6px; font-weight:bold; cursor: pointer;">🕒 時間</button>
+          <button class="tab-btn" id="tabUnit" onclick="switchConverter('unit')" style="flex: 1; padding: 8px 0; border: none; background: transparent; border-radius: 6px; font-weight:bold; cursor: pointer;">📏 單位金額</button>
+          <button class="tab-btn" id="tabDate" onclick="switchConverter('date')" style="flex: 1; padding: 8px 0; border: none; background: transparent; border-radius: 6px; font-weight:bold; cursor: pointer;">📅 日期</button>
+        </div>
+        <div class="converter-body" id="converterBody"></div>
+        <div class="converter-result" id="converterResult" style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 16px; text-align: center; margin-top: 16px; min-height: 90px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+           <div style="color: #94a3b8;">請輸入數字，即可產生韓文與發音</div>
+        </div>
       </div>
-      <div class="converter-tabs" style="display: flex; gap: 8px; margin-bottom: 16px; background: #f1f5f9; padding: 4px; border-radius: 8px;">
-        <button class="tab-btn active" id="tabTime" onclick="switchConverter('time')" style="flex: 1; padding: 8px 0; border: none; background: transparent; border-radius: 6px; font-weight:bold; cursor: pointer;">🕒 時間</button>
-        <button class="tab-btn" id="tabUnit" onclick="switchConverter('unit')" style="flex: 1; padding: 8px 0; border: none; background: transparent; border-radius: 6px; font-weight:bold; cursor: pointer;">📏 單位金額</button>
-        <button class="tab-btn" id="tabDate" onclick="switchConverter('date')" style="flex: 1; padding: 8px 0; border: none; background: transparent; border-radius: 6px; font-weight:bold; cursor: pointer;">📅 日期</button>
-      </div>
-      <div class="converter-body" id="converterBody">
-         <!-- 輸入框將由 JS 動態產生 -->
-      </div>
-      <div class="converter-result" id="converterResult" style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 16px; text-align: center; margin-top: 16px; min-height: 90px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-         <div style="color: #94a3b8;">請輸入數字，即可產生韓文與發音</div>
+    </div>
+
+    <!-- B. 極限特訓視圖 (隱藏) -->
+    <div id="numQuizSubView" style="display: none;">
+      <div class="quiz-card" style="margin-top: 16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+          <span style="font-size:0.9rem; color:var(--text-sub);">🔥 挑戰數字直覺反射！</span>
+          <span id="numQuizScore" style="font-weight:bold; color:var(--primary); font-size: 1.1rem;">得分：0</span>
+        </div>
+        
+        <div class="prompt-box" style="justify-content: center; min-height: 80px; text-align: center; flex-direction: column;">
+          <div class="vocab-quiz-q" id="numQuizPrompt" style="font-size: 1.6rem; color:#1e293b;">-</div>
+          <button class="btn-audio" id="numQuizAudioBtn" style="display:none; margin-top: 12px; align-self: center;">🔊 聽正確發音</button>
+        </div>
+        
+        <div class="quiz-options" id="numQuizOptions" style="margin-top: 16px;"></div>
+        <div class="message" id="numQuizMessage" style="margin-top: 16px; text-align: center;"></div>
+        <button class="btn btn-submit" id="numQuizNextBtn" style="display:none; width:100%; margin-top: 16px;" onclick="nextNumQuiz()">下一題 ➔</button>
       </div>
     </div>
   </div>
+
 
 </div>
 
