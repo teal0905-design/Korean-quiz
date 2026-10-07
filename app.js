@@ -4,11 +4,11 @@ let vocabQuizList = [], vocabQuizIdx = 0, vocabQuizScore = 0, currentVocabQuesti
 let filteredVocabList = [], vocabCardIdx = 0, isAnimating = false;
 let isPronHidden = false;
 
-// 教材模組檔案清單
+// 支援「教材資料」與「獨立題庫」分開載入
 const DATA_FILES = [
-  'data_1_2.json',
-  'data_3_4.json',
-  'data_5_6.json',
+  'data_1_2.json', 'quiz_1_2.json',
+  'data_3_4.json', 'quiz_3_4.json',
+  'data_5_6.json', 'quiz_5_6.json',
   'data_special.json'
 ];
 
@@ -16,14 +16,12 @@ async function initApp() {
   try {
     appData = { lessons: [], questions: [], grammars: [], vocabularies: [] };
 
-    // 安全容錯載入機制
     const fetchPromises = DATA_FILES.map(async (file) => {
       try {
         const res = await fetch(file);
         if (!res.ok) return null;
         return await res.json();
       } catch (err) {
-        console.warn(`檔案 ${file} 載入失敗:`, err);
         return null;
       }
     });
@@ -34,8 +32,26 @@ async function initApp() {
       if (!data) return;
       if (data.lessons) appData.lessons.push(...data.lessons);
       if (data.vocabularies) appData.vocabularies.push(...data.vocabularies);
-      if (data.questions) appData.questions.push(...data.questions);
       if (data.grammars) appData.grammars.push(...data.grammars);
+
+      // 自動解析題庫：支援極簡格式 (kr + extra) 與舊格式 (correctOrder + options)
+      if (data.questions) {
+        const parsedQuestions = data.questions.map(q => {
+          if (q.kr) {
+            const correctOrder = q.kr.trim().split(/\s+/);
+            const extra = q.extra || [];
+            return {
+              id: q.id,
+              lessonId: q.lessonId,
+              translation: q.zh || q.translation,
+              correctOrder: correctOrder,
+              options: [...correctOrder, ...extra]
+            };
+          }
+          return q;
+        });
+        appData.questions.push(...parsedQuestions);
+      }
     });
 
     if (appData.lessons.length === 0) {
@@ -83,7 +99,6 @@ function switchMainView(view) {
   }
 }
 
-/* 語音播放器 */
 function speakKorean(text, activeBtnId = null) {
   if (!text || !('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
@@ -299,16 +314,13 @@ function playVocabQuizAudio() {
   if (currentVocabQuestion) speakKorean(currentVocabQuestion.kr, 'vocabQuizAudioBtn');
 }
 
-/* 3. 學習資料庫 (文法 & 單字預覽/翻牌) */
+/* 3. 學習資料庫 */
 function switchBankSubView(sub) {
   document.getElementById('btnSubGrammar').classList.toggle('active', sub === 'grammar');
   document.getElementById('btnSubVocab').classList.toggle('active', sub === 'vocab');
   document.getElementById('grammarSubView').style.display = (sub === 'grammar') ? 'block' : 'none';
   document.getElementById('vocabSubView').style.display = (sub === 'vocab') ? 'block' : 'none';
-  
-  if (sub === 'vocab') {
-    renderVocabList();
-  }
+  if (sub === 'vocab') renderVocabList();
 }
 
 function switchVocabMode(mode) {
@@ -317,38 +329,33 @@ function switchVocabMode(mode) {
   document.getElementById('btnVocabModeCard').classList.toggle('active', !isList);
   document.getElementById('vocabListView').style.display = isList ? 'block' : 'none';
   document.getElementById('vocabCardView').style.display = isList ? 'none' : 'block';
-  
-  if (isList) {
-    renderVocabList();
-  }
+  if (isList) renderVocabList();
 }
 
 function filterBankData() {
   const val = document.getElementById('bankLessonSelect').value;
-  let gList = (val === 'all') 
-    ? appData.grammars 
-    : appData.grammars.filter(g => g.lessonId === val);
+  let gList = (val === 'all') ? appData.grammars : appData.grammars.filter(g => g.lessonId === val);
 
   const gBox = document.getElementById('grammarList');
-  if (!gBox) return;
+  if (gBox) {
+    if (!gList || gList.length === 0) {
+      gBox.innerHTML = '<div style="text-align:center; padding:20px; color:#888;">暫無文法內容</div>';
+    } else {
+      gBox.innerHTML = gList.map(g => {
+        const formattedEx = g.exampleKr
+          .replace(/【有尾音[^】]*】/g, '<span class="badge badge-has">有尾音</span>')
+          .replace(/【無尾音[^】]*】/g, '<span class="badge badge-none">無尾音</span>');
 
-  if (!gList || gList.length === 0) {
-    gBox.innerHTML = '<div style="text-align:center; padding:20px; color:#888;">暫無文法內容</div>';
-  } else {
-    gBox.innerHTML = gList.map(g => {
-      const formattedEx = g.exampleKr
-        .replace(/【有尾音[^】]*】/g, '<span class="badge badge-has">有尾音</span>')
-        .replace(/【無尾音[^】]*】/g, '<span class="badge badge-none">無尾音</span>');
-
-      return `
-        <div class="grammar-card">
-          <div class="grammar-title">${g.title}</div>
-          <div class="grammar-formula">${g.formula}</div>
-          <div class="grammar-exp">${g.explanation}</div>
-          <div class="grammar-ex"><b>例句與變化：</b><br>${formattedEx}</div>
-        </div>
-      `;
-    }).join('');
+        return `
+          <div class="grammar-card">
+            <div class="grammar-title">${g.title}</div>
+            <div class="grammar-formula">${g.formula}</div>
+            <div class="grammar-exp">${g.explanation}</div>
+            <div class="grammar-ex"><b>例句與變化：</b><br>${formattedEx}</div>
+          </div>
+        `;
+      }).join('');
+    }
   }
 
   filteredVocabList = (val === 'all' || val === 'special') 
@@ -364,7 +371,6 @@ function filterBankData() {
   }
 }
 
-/* 單字清單：支援純文字專屬例句與「🔊 聽例句」按鈕 */
 function renderVocabList() {
   const container = document.getElementById('vocabListContainer');
   if (!container) return;
@@ -377,7 +383,6 @@ function renderVocabList() {
   container.innerHTML = filteredVocabList.map((v, idx) => {
     let exampleHtml = '';
     
-    // 若單字自帶 example 物件，直接呈現純文字與獨立發音按鈕
     if (v.example && v.example.kr) {
       const safeEx = v.example.kr.replace(/'/g, "\\'");
       exampleHtml = `
@@ -392,7 +397,6 @@ function renderVocabList() {
         </div>
       `;
     } else {
-      // 備援比對題庫
       const matchedQ = appData.questions.find(q => q.correctOrder.some(w => w.includes(v.kr)));
       if (matchedQ) {
         const fullQ = matchedQ.correctOrder.join(' ');
@@ -461,7 +465,6 @@ function togglePronVisibility() {
     if (isPronHidden) pronEl.classList.add('hidden');
     else pronEl.classList.remove('hidden');
   }
-  
   document.querySelectorAll('[id^="listPron_"]').forEach(el => {
     if (isPronHidden) el.classList.add('hidden');
     else el.classList.remove('hidden');
