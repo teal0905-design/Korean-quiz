@@ -265,6 +265,99 @@ select {
 .badge-has { background: #E0E7FF; color: #3730A3; }
 .badge-none { background: #DCFCE7; color: #166534; }
 
+/* 單字內部模式切換按鈕 */
+.vocab-mode-tabs {
+  display: flex;
+  background: #E5E7EB;
+  padding: 3px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+.vocab-mode-btn {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.vocab-mode-btn.active {
+  background: #FFF;
+  color: var(--primary);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* 單字清單卡片樣式 */
+.vocab-item-card {
+  background: #F9FAFB;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.vocab-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vocab-item-kr-group {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.vocab-item-kr {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.vocab-item-pron {
+  font-size: 0.95rem;
+  color: var(--error);
+  font-weight: 600;
+}
+
+.vocab-item-pron.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vocab-item-zh {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.vocab-item-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.vocab-item-example {
+  background: #FFF;
+  padding: 10px;
+  border-radius: 8px;
+  border-left: 3px solid var(--primary);
+  font-size: 0.9rem;
+  color: #374151;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
 /* 單字眼睛切換按鈕 */
 .btn-eye {
   background: #F3F4F6;
