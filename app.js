@@ -61,7 +61,6 @@ function speakKorean(text, activeBtnId = null) {
   const koVoice = voices.find(v => v.lang && (v.lang.toLowerCase().includes('ko') || v.lang.toLowerCase().includes('kr')));
   if (koVoice) utter.voice = koVoice;
 
-  // 觸發音訊漣漪特效
   let btn = activeBtnId ? document.getElementById(activeBtnId) : null;
   if (btn) btn.classList.add('playing');
 
@@ -264,12 +263,29 @@ function playVocabQuizAudio() {
   if (currentVocabQuestion) speakKorean(currentVocabQuestion.kr, 'vocabQuizAudioBtn');
 }
 
-/* 3. 學習資料庫 (文法 & 3D 單字卡) */
+/* 3. 學習資料庫 (文法 & 單字預覽/翻牌) */
 function switchBankSubView(sub) {
   document.getElementById('btnSubGrammar').classList.toggle('active', sub === 'grammar');
   document.getElementById('btnSubVocab').classList.toggle('active', sub === 'vocab');
   document.getElementById('grammarSubView').style.display = (sub === 'grammar') ? 'block' : 'none';
   document.getElementById('vocabSubView').style.display = (sub === 'vocab') ? 'block' : 'none';
+  
+  if (sub === 'vocab') {
+    renderVocabList();
+  }
+}
+
+/* 單字檢視模式切換：清單預覽 vs 3D翻牌 */
+function switchVocabMode(mode) {
+  const isList = (mode === 'list');
+  document.getElementById('btnVocabModeList').classList.toggle('active', isList);
+  document.getElementById('btnVocabModeCard').classList.toggle('active', !isList);
+  document.getElementById('vocabListView').style.display = isList ? 'block' : 'none';
+  document.getElementById('vocabCardView').style.display = isList ? 'none' : 'block';
+  
+  if (isList) {
+    renderVocabList();
+  }
 }
 
 function filterBankData() {
@@ -304,6 +320,50 @@ function filterBankData() {
 
   vocabCardIdx = 0;
   updateVocabCardUI();
+  
+  if (document.getElementById('vocabSubView').style.display !== 'none' && 
+      document.getElementById('vocabListView').style.display !== 'none') {
+    renderVocabList();
+  }
+}
+
+/* 渲染單字清單（含智慧匹配例句） */
+function renderVocabList() {
+  const container = document.getElementById('vocabListContainer');
+  if (!filteredVocabList || filteredVocabList.length === 0) {
+    container.innerHTML = '<div style="text-align:center; padding:20px; color:#888;">暫無單字內容</div>';
+    return;
+  }
+
+  container.innerHTML = filteredVocabList.map((v, idx) => {
+    const matchedQ = appData.questions.find(q => q.correctOrder.some(word => word.includes(v.kr)));
+    let exampleHtml = '';
+    if (matchedQ) {
+      exampleHtml = `<div class="vocab-item-example"><b>實戰例句：</b> ${matchedQ.correctOrder.join(' ')} <span style="color:var(--text-sub);">(${matchedQ.translation})</span></div>`;
+    } else {
+      exampleHtml = `<div class="vocab-item-example" style="color:var(--text-sub); font-style:italic;">基礎核心單字，可透過 3D 翻牌進行測驗複習。</div>`;
+    }
+
+    const pronText = v.pron ? `[ ${v.pron} ]` : '';
+    const pronClass = isPronHidden ? 'vocab-item-pron hidden' : 'vocab-item-pron';
+
+    return `
+      <div class="vocab-item-card">
+        <div class="vocab-item-header">
+          <div class="vocab-item-kr-group">
+            <span class="vocab-item-kr">${v.kr}</span>
+            <span class="${pronClass}" id="listPron_${idx}">${pronText}</span>
+          </div>
+          <button class="btn-audio" style="padding: 4px 10px; font-size:0.8rem;" onclick="speakKorean('${v.kr}')">🔊 播放</button>
+        </div>
+        <div class="vocab-item-meta">
+          <span class="badge badge-has">${v.category || '通用'}</span>
+          <span class="vocab-item-zh">${v.zh}</span>
+        </div>
+        ${exampleHtml}
+      </div>
+    `;
+  }).join('');
 }
 
 function updateVocabCardUI() {
@@ -327,20 +387,21 @@ function updateVocabCardUI() {
   document.getElementById('vocabProgress').innerText = `${vocabCardIdx + 1} / ${filteredVocabList.length}`;
 }
 
-/* 連音顯示/隱藏切換 */
+/* 連音顯示/隱藏切換（同步支援清單與卡片） */
 function togglePronVisibility() {
   isPronHidden = !isPronHidden;
-  const btn = document.getElementById('togglePronBtn');
   const pronEl = document.getElementById('vocabPronDisplay');
   if (isPronHidden) {
-    btn.innerText = '🙈 連音隱藏';
-    btn.classList.add('hidden-mode');
-    pronEl.classList.add('hidden');
+    if (pronEl) pronEl.classList.add('hidden');
   } else {
-    btn.innerText = '👁️ 連音顯示';
-    btn.classList.remove('hidden-mode');
-    pronEl.classList.remove('hidden');
+    if (pronEl) pronEl.classList.remove('hidden');
   }
+  
+  // 同步清單模式中的連音狀態
+  document.querySelectorAll('[id^="listPron_"]').forEach(el => {
+    if (isPronHidden) el.classList.add('hidden');
+    else el.classList.remove('hidden');
+  });
 }
 
 function toggleCardFlip() {
