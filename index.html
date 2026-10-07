@@ -76,7 +76,7 @@
   <div id="bankView" class="view-section">
     <div class="sub-tabs">
       <button class="sub-btn active" id="btnSubGrammar" onclick="switchBankSubView('grammar')">📖 文法資料庫</button>
-      <button class="sub-btn" id="btnSubVocab" onclick="switchBankSubView('vocab')">🎴 單字卡片</button>
+      <button class="sub-btn" id="btnSubVocab" onclick="switchBankSubView('vocab')">🎴 單字學習與測驗</button>
     </div>
     <div class="filter-bar">
       <select id="bankLessonSelect" onchange="filterBankData()"></select>
@@ -84,32 +84,51 @@
     <div id="grammarSubView">
       <div id="grammarList"></div>
     </div>
+
+    <!-- 單字子視圖 (包含清單預覽與 3D 翻牌) -->
     <div id="vocabSubView" style="display: none;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-        <button class="btn-reset" style="padding: 6px 12px; border-radius: 6px; cursor:pointer;" onclick="shuffleVocabCards()">🔀 隨機排列</button>
-        <!-- 連音顯示/隱藏眼睛開關 -->
-        <button class="btn-eye" id="togglePronBtn" onclick="togglePronVisibility()">👁️ 連音顯示</button>
-        <div style="font-weight:600; color:var(--text-sub);" id="vocabProgress">0 / 0</div>
+      <!-- 單字內部模式切換 -->
+      <div class="vocab-mode-tabs">
+        <button class="vocab-mode-btn active" id="btnVocabModeList" onclick="switchVocabMode('list')">📋 單字清單預覽 (含例句)</button>
+        <button class="vocab-mode-btn" id="btnVocabModeCard" onclick="switchVocabMode('card')">🎴 3D 翻牌練習</button>
       </div>
-      <div class="slider-viewport">
-        <div class="flip-card-wrapper slide-center" id="vocabCardWrapper" onclick="toggleCardFlip()">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <div class="vocab-kr" id="vocabKrDisplay">-</div>
-              <div class="vocab-pron" id="vocabPronDisplay"></div>
-              <div class="vocab-hint">💡 點擊卡片翻轉查看中文 (可左右滑動)</div>
-            </div>
-            <div class="flip-card-back">
-              <div class="vocab-zh" id="vocabZhDisplay">-</div>
-              <div class="vocab-hint" id="vocabCategoryDisplay">類別</div>
+
+      <!-- 1. 單字清單模式 -->
+      <div id="vocabListView">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <span style="font-size:0.9rem; color:var(--text-sub);">點擊發音按鈕可直接聆聽單字發音</span>
+          <button class="btn-eye" id="togglePronBtnList" onclick="togglePronVisibility()">👁️ 連音顯示</button>
+        </div>
+        <div id="vocabListContainer"></div>
+      </div>
+
+      <!-- 2. 3D 翻牌模式 -->
+      <div id="vocabCardView" style="display: none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <button class="btn-reset" style="padding: 6px 12px; border-radius: 6px; cursor:pointer;" onclick="shuffleVocabCards()">🔀 隨機排列</button>
+          <button class="btn-eye" id="togglePronBtnCard" onclick="togglePronVisibility()">👁️ 連音顯示</button>
+          <div style="font-weight:600; color:var(--text-sub);" id="vocabProgress">0 / 0</div>
+        </div>
+        <div class="slider-viewport">
+          <div class="flip-card-wrapper slide-center" id="vocabCardWrapper" onclick="toggleCardFlip()">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <div class="vocab-kr" id="vocabKrDisplay">-</div>
+                <div class="vocab-pron" id="vocabPronDisplay"></div>
+                <div class="vocab-hint">💡 點擊卡片翻轉查看中文 (可左右滑動)</div>
+              </div>
+              <div class="flip-card-back">
+                <div class="vocab-zh" id="vocabZhDisplay">-</div>
+                <div class="vocab-hint" id="vocabCategoryDisplay">類別</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="controls">
-        <button class="btn btn-reset" onclick="prevVocabCard()">⬅ 上一張</button>
-        <button class="btn btn-reset" id="vocabCardAudioBtn" style="background:#EEF2FF; color:var(--primary); border:1px solid #C7D2FE;" onclick="playCurrentVocabCardAudio()">🔊 聽發音</button>
-        <button class="btn btn-submit" onclick="nextVocabCard()">下一張 ➡️</button>
+        <div class="controls">
+          <button class="btn btn-reset" onclick="prevVocabCard()">⬅ 上一張</button>
+          <button class="btn btn-reset" id="vocabCardAudioBtn" style="background:#EEF2FF; color:var(--primary); border:1px solid #C7D2FE;" onclick="playCurrentVocabCardAudio()">🔊 聽發音</button>
+          <button class="btn btn-submit" onclick="nextVocabCard()">下一張 ➡️</button>
+        </div>
       </div>
     </div>
   </div>
