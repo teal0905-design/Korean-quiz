@@ -1,0 +1,541 @@
+{
+  "lessons": [
+    { "id": "lesson-1", "title": "제1과 인사 (第一課：問候)" },
+    { "id": "lesson-2", "title": "제2과 학교와 집 (第二課：學校與家)" },
+    { "id": "lesson-3", "title": "제3과 가족과 친구 (第三課：家人與朋友)" },
+    { "id": "lesson-4", "title": "제4과 음식 (第四課：飲食)" },
+    { "id": "lesson-5", "title": "제5과 하루 생활 (第五課：日常生活)" }
+  ],
+  "vocabularies": [
+    { "id": "v101", "lessonId": "lesson-1", "kr": "선생님", "zh": "老師", "category": "稱謂" },
+    { "id": "v102", "lessonId": "lesson-1", "kr": "이름", "zh": "名字", "category": "基本" },
+    { "id": "v103", "lessonId": "lesson-1", "kr": "친구", "zh": "朋友", "category": "稱謂" },
+    { "id": "v104", "lessonId": "lesson-1", "kr": "한국", "zh": "韓國", "category": "國家" },
+    { "id": "v105", "lessonId": "lesson-1", "kr": "대만", "zh": "台灣", "category": "國家" },
+    { "id": "v106", "lessonId": "lesson-1", "kr": "미국", "zh": "美國", "category": "國家" },
+    { "id": "v107", "lessonId": "lesson-1", "kr": "일본", "zh": "日本", "category": "國家" },
+    { "id": "v108", "lessonId": "lesson-1", "kr": "학생", "zh": "學生", "category": "職業" },
+    { "id": "v109", "lessonId": "lesson-1", "kr": "회사원", "zh": "公司職員", "category": "職業" },
+    { "id": "v110", "lessonId": "lesson-1", "kr": "의사", "zh": "醫生", "category": "職業" },
+    { "id": "v111", "lessonId": "lesson-1", "kr": "가다", "zh": "去 / 走", "category": "動詞" },
+    { "id": "v112", "lessonId": "lesson-1", "kr": "오다", "zh": "來", "category": "動詞" },
+    { "id": "v113", "lessonId": "lesson-1", "kr": "만나다", "zh": "見面", "category": "動詞" },
+    { "id": "v114", "lessonId": "lesson-1", "kr": "먹다", "pron": "먹따", "zh": "吃", "category": "動詞" },
+    { "id": "v115", "lessonId": "lesson-1", "kr": "자다", "zh": "睡覺", "category": "動詞" },
+    { "id": "v116", "lessonId": "lesson-1", "kr": "읽다", "pron": "익따", "zh": "閱讀 / 看書", "category": "動詞" },
+    { "id": "v117", "lessonId": "lesson-1", "kr": "쓰다", "zh": "寫 / 使用", "category": "動詞" },
+    { "id": "v118", "lessonId": "lesson-1", "kr": "듣다", "pron": "듣따", "zh": "聽", "category": "動詞" },
+    { "id": "v119", "lessonId": "lesson-1", "kr": "누구", "zh": "誰", "category": "代名詞" },
+    { "id": "v120", "lessonId": "lesson-1", "kr": "반갑습니다", "pron": "반갑씀니다", "zh": "很高興見到您", "category": "會話" },
+
+    { "id": "v201", "lessonId": "lesson-2", "kr": "교과서", "zh": "教科書 / 課本", "category": "物品" },
+    { "id": "v202", "lessonId": "lesson-2", "kr": "사전", "zh": "字典 / 辭典", "category": "物品" },
+    { "id": "v203", "lessonId": "lesson-2", "kr": "연필", "zh": "鉛筆", "category": "文具" },
+    { "id": "v204", "lessonId": "lesson-2", "kr": "지우개", "zh": "橡皮擦", "category": "文具" },
+    { "id": "v205", "lessonId": "lesson-2", "kr": "볼펜", "zh": "原子筆", "category": "文具" },
+    { "id": "v206", "lessonId": "lesson-2", "kr": "책상", "pron": "책쌍", "zh": "書桌", "category": "家具" },
+    { "id": "v207", "lessonId": "lesson-2", "kr": "의자", "zh": "椅子", "category": "家具" },
+    { "id": "v208", "lessonId": "lesson-2", "kr": "가방", "zh": "書包 / 包包", "category": "物品" },
+    { "id": "v209", "lessonId": "lesson-2", "kr": "지갑", "zh": "皮夾 / 錢包", "category": "物品" },
+    { "id": "v210", "lessonId": "lesson-2", "kr": "창문", "zh": "窗戶", "category": "設施" },
+    { "id": "v211", "lessonId": "lesson-2", "kr": "칠판", "zh": "黑板", "category": "設施" },
+    { "id": "v212", "lessonId": "lesson-2", "kr": "지도", "zh": "地圖", "category": "物品" },
+    { "id": "v213", "lessonId": "lesson-2", "kr": "도서관", "zh": "圖書館", "category": "場所" },
+    { "id": "v214", "lessonId": "lesson-2", "kr": "은행", "zh": "銀行", "category": "場所" },
+    { "id": "v215", "lessonId": "lesson-2", "kr": "백화점", "pron": "배콰점", "zh": "百貨公司", "category": "場所" },
+    { "id": "v216", "lessonId": "lesson-2", "kr": "지하철역", "pron": "지하철력", "zh": "捷運站 / 地鐵站", "category": "場所" },
+    { "id": "v217", "lessonId": "lesson-2", "kr": "앞에", "pron": "아페", "zh": "在前面", "category": "方位" },
+    { "id": "v218", "lessonId": "lesson-2", "kr": "뒤에", "zh": "在後面", "category": "方位" },
+    { "id": "v219", "lessonId": "lesson-2", "kr": "위에", "zh": "在上面", "category": "方位" },
+    { "id": "v220", "lessonId": "lesson-2", "kr": "아래에", "zh": "在下面", "category": "方位" },
+    { "id": "v221", "lessonId": "lesson-2", "kr": "밑에", "pron": "미테", "zh": "在底下", "category": "方位" },
+    { "id": "v222", "lessonId": "lesson-2", "kr": "옆에", "pron": "여페", "zh": "在旁邊", "category": "方位" },
+    { "id": "v223", "lessonId": "lesson-2", "kr": "안에", "pron": "아네", "zh": "在裡面", "category": "方位" },
+    { "id": "v224", "lessonId": "lesson-2", "kr": "밖에", "pron": "바께", "zh": "在外面", "category": "方位" },
+    { "id": "v225", "lessonId": "lesson-2", "kr": "근처에", "zh": "在附近", "category": "方位" },
+
+    { "id": "v301", "lessonId": "lesson-3", "kr": "가족", "zh": "家人", "category": "家庭" },
+    { "id": "v302", "lessonId": "lesson-3", "kr": "사진", "zh": "照片", "category": "物品" },
+    { "id": "v303", "lessonId": "lesson-3", "kr": "부모님", "zh": "父母", "category": "家庭" },
+    { "id": "v304", "lessonId": "lesson-3", "kr": "아버지", "zh": "父親", "category": "家庭" },
+    { "id": "v305", "lessonId": "lesson-3", "kr": "어머니", "zh": "母親", "category": "家庭" },
+    { "id": "v306", "lessonId": "lesson-3", "kr": "할아버지", "zh": "爺爺", "category": "家庭" },
+    { "id": "v307", "lessonId": "lesson-3", "kr": "할머니", "zh": "奶奶", "category": "家庭" },
+    { "id": "v308", "lessonId": "lesson-3", "kr": "형", "zh": "哥哥 (男稱)", "category": "家庭" },
+    { "id": "v309", "lessonId": "lesson-3", "kr": "오빠", "zh": "哥哥 (女稱)", "category": "家庭" },
+    { "id": "v310", "lessonId": "lesson-3", "kr": "누나", "zh": "姐姐 (男稱)", "category": "家庭" },
+    { "id": "v311", "lessonId": "lesson-3", "kr": "언니", "zh": "姐姐 (女稱)", "category": "家庭" },
+    { "id": "v312", "lessonId": "lesson-3", "kr": "동생", "zh": "弟弟/妹妹", "category": "家庭" },
+    { "id": "v313", "lessonId": "lesson-3", "kr": "계시다", "zh": "在 (있다 敬語)", "category": "敬語" },
+    { "id": "v314", "lessonId": "lesson-3", "kr": "주무시다", "zh": "睡覺 (자다 敬語)", "category": "敬語" },
+    { "id": "v315", "lessonId": "lesson-3", "kr": "드시다", "zh": "吃 (먹다 敬語)", "category": "敬語" },
+    { "id": "v316", "lessonId": "lesson-3", "kr": "말씀하시다", "zh": "說話 (말하다 敬語)", "category": "敬語" },
+    { "id": "v317", "lessonId": "lesson-3", "kr": "조용하다", "zh": "安靜", "category": "形容詞" },
+    { "id": "v318", "lessonId": "lesson-3", "kr": "깨끗하다", "zh": "乾淨", "category": "形容詞" },
+    { "id": "v319", "lessonId": "lesson-3", "kr": "시끄럽다", "pron": "시끄럽따", "zh": "吵鬧", "category": "形容詞" },
+    { "id": "v320", "lessonId": "lesson-3", "kr": "넓다", "pron": "널따", "zh": "寬敞", "category": "形容詞" },
+    { "id": "v321", "lessonId": "lesson-3", "kr": "좁다", "pron": "좁따", "zh": "狹窄", "category": "形容詞" },
+    { "id": "v322", "lessonId": "lesson-3", "kr": "덥다", "pron": "덥따", "zh": "熱", "category": "形容詞" },
+    { "id": "v323", "lessonId": "lesson-3", "kr": "춥다", "pron": "춥따", "zh": "冷", "category": "形容詞" },
+    { "id": "v324", "lessonId": "lesson-3", "kr": "시원하다", "zh": "涼爽", "category": "形容詞" },
+    { "id": "v325", "lessonId": "lesson-3", "kr": "따뜻하다", "pron": "따뜨타다", "zh": "溫暖", "category": "形容詞" },
+    { "id": "v326", "lessonId": "lesson-3", "kr": "아름답다", "pron": "아름답따", "zh": "美麗", "category": "形容詞" },
+    { "id": "v327", "lessonId": "lesson-3", "kr": "고향", "zh": "故鄉", "category": "名詞" },
+    { "id": "v328", "lessonId": "lesson-3", "kr": "경제학", "pron": "경제학", "zh": "經濟學", "category": "主修" },
+    { "id": "v329", "lessonId": "lesson-3", "kr": "자주", "zh": "經常", "category": "副詞" },
+    { "id": "v330", "lessonId": "lesson-3", "kr": "가끔", "zh": "偶爾", "category": "副詞" },
+
+    { "id": "v401", "lessonId": "lesson-4", "kr": "식당", "pron": "식땅", "zh": "餐廳", "category": "場所" },
+    { "id": "v402", "lessonId": "lesson-4", "kr": "불고기", "zh": "烤肉", "category": "食物" },
+    { "id": "v403", "lessonId": "lesson-4", "kr": "비빔밥", "zh": "拌飯", "category": "食物" },
+    { "id": "v404", "lessonId": "lesson-4", "kr": "냉면", "zh": "冷麵", "category": "食物" },
+    { "id": "v405", "lessonId": "lesson-4", "kr": "김치찌개", "zh": "泡菜鍋", "category": "食物" },
+    { "id": "v406", "lessonId": "lesson-4", "kr": "된장찌개", "zh": "大醬湯", "category": "食物" },
+    { "id": "v407", "lessonId": "lesson-4", "kr": "맛있다", "pron": "마싣따", "zh": "好吃", "category": "形容詞" },
+    { "id": "v408", "lessonId": "lesson-4", "kr": "맛없다", "pron": "마덥따", "zh": "難吃", "category": "形容詞" },
+    { "id": "v409", "lessonId": "lesson-4", "kr": "맵다", "pron": "맵따", "zh": "辣", "category": "形容詞" },
+    { "id": "v410", "lessonId": "lesson-4", "kr": "달다", "zh": "甜", "category": "形容詞" },
+    { "id": "v411", "lessonId": "lesson-4", "kr": "짜다", "zh": "鹹", "category": "形容詞" },
+    { "id": "v412", "lessonId": "lesson-4", "kr": "시다", "zh": "酸", "category": "形容詞" },
+    { "id": "v413", "lessonId": "lesson-4", "kr": "쓰다", "zh": "苦", "category": "形容詞" },
+    { "id": "v414", "lessonId": "lesson-4", "kr": "싱겁다", "pron": "싱겁따", "zh": "清淡", "category": "形容詞" },
+    { "id": "v415", "lessonId": "lesson-4", "kr": "만들다", "zh": "製作", "category": "動詞" },
+    { "id": "v416", "lessonId": "lesson-4", "kr": "주다", "zh": "給", "category": "動詞" },
+    { "id": "v417", "lessonId": "lesson-4", "kr": "드리다", "zh": "給 (주다 敬語)", "category": "敬語" },
+    { "id": "v418", "lessonId": "lesson-4", "kr": "물", "zh": "水", "category": "食物" },
+    { "id": "v419", "lessonId": "lesson-4", "kr": "인분", "zh": "人份", "category": "單位" },
+    { "id": "v420", "lessonId": "lesson-4", "kr": "그릇", "zh": "碗", "category": "單位" },
+
+    { "id": "v501", "lessonId": "lesson-5", "kr": "지금", "zh": "現在", "category": "時間" },
+    { "id": "v502", "lessonId": "lesson-5", "kr": "오늘", "zh": "今天", "category": "時間" },
+    { "id": "v503", "lessonId": "lesson-5", "kr": "어제", "zh": "昨天", "category": "時間" },
+    { "id": "v504", "lessonId": "lesson-5", "kr": "내일", "zh": "明天", "category": "時間" },
+    { "id": "v505", "lessonId": "lesson-5", "kr": "월요일", "pron": "워료일", "zh": "星期一", "category": "時間" },
+    { "id": "v506", "lessonId": "lesson-5", "kr": "화요일", "zh": "星期二", "category": "時間" },
+    { "id": "v507", "lessonId": "lesson-5", "kr": "수요일", "zh": "星期三", "category": "時間" },
+    { "id": "v508", "lessonId": "lesson-5", "kr": "목요일", "pron": "모교일", "zh": "星期四", "category": "時間" },
+    { "id": "v509", "lessonId": "lesson-5", "kr": "금요일", "pron": "그묘일", "zh": "星期五", "category": "時間" },
+    { "id": "v510", "lessonId": "lesson-5", "kr": "토요일", "zh": "星期六", "category": "時間" },
+    { "id": "v511", "lessonId": "lesson-5", "kr": "일요일", "pron": "이료일", "zh": "星期日", "category": "時間" },
+    { "id": "v512", "lessonId": "lesson-5", "kr": "일어나다", "zh": "起床", "category": "動詞" },
+    { "id": "v513", "lessonId": "lesson-5", "kr": "세수하다", "zh": "洗臉", "category": "動詞" },
+    { "id": "v514", "lessonId": "lesson-5", "kr": "이를 닦다", "pron": "이를 닥따", "zh": "刷牙", "category": "動詞" },
+    { "id": "v515", "lessonId": "lesson-5", "kr": "타다", "zh": "搭乘", "category": "動詞" },
+    { "id": "v516", "lessonId": "lesson-5", "kr": "내리다", "zh": "下車", "category": "動詞" },
+    { "id": "v517", "lessonId": "lesson-5", "kr": "쉬다", "zh": "休息", "category": "動詞" },
+    { "id": "v518", "lessonId": "lesson-5", "kr": "수업", "zh": "課程 / 上課", "category": "名詞" },
+    { "id": "v519", "lessonId": "lesson-5", "kr": "시작하다", "pron": "시자카다", "zh": "開始", "category": "動詞" },
+    { "id": "v520", "lessonId": "lesson-5", "kr": "생일", "zh": "生日", "category": "名詞" }
+  ],
+  "questions": [
+    {
+      "id": 101,
+      "lessonId": "lesson-1",
+      "translation": "我是台灣人。",
+      "correctOrder": ["저는", "대만", "사람입니다"],
+      "options": ["사람입니다", "저는", "한국", "대만", "일본입니다"]
+    },
+    {
+      "id": 102,
+      "lessonId": "lesson-1",
+      "translation": "初次見面，很高興見到您。",
+      "correctOrder": ["처음", "뵙겠습니다", "반갑습니다"],
+      "options": ["처음", "뵙겠습니다", "반갑습니다", "안녕", "있습니다"]
+    },
+    {
+      "id": 103,
+      "lessonId": "lesson-1",
+      "translation": "我是學生，不是醫生。",
+      "correctOrder": ["저는", "학생입니다", "의사가", "아닙니다"],
+      "options": ["저는", "학생입니다", "의사가", "아닙니다", "회사원입니다", "선생님"]
+    },
+    {
+      "id": 104,
+      "lessonId": "lesson-1",
+      "translation": "您是哪國人？",
+      "correctOrder": ["어느", "나라", "사람입니까"],
+      "options": ["어느", "나라", "사람입니까", "무엇", "사람입니다"]
+    },
+    {
+      "id": 105,
+      "lessonId": "lesson-1",
+      "translation": "現在去學校。",
+      "correctOrder": ["학교에", "갑니다"],
+      "options": ["학교에", "갑니다", "옵니다", "집에"]
+    },
+
+    {
+      "id": 201,
+      "lessonId": "lesson-2",
+      "translation": "這是教科書嗎？",
+      "correctOrder": ["이것이", "교과서입니까"],
+      "options": ["이것이", "그것이", "교과서입니까", "사전입니다", "책상"]
+    },
+    {
+      "id": 202,
+      "lessonId": "lesson-2",
+      "translation": "教室裡也有時鐘。",
+      "correctOrder": ["교실에", "시계도", "있습니다"],
+      "options": ["교실에", "시계도", "있습니다", "없습니다", "집에"]
+    },
+    {
+      "id": 203,
+      "lessonId": "lesson-2",
+      "translation": "銀行在圖書館前面。",
+      "correctOrder": ["은행은", "도서관", "앞에", "있습니다"],
+      "options": ["은행은", "도서관", "앞에", "뒤에", "있습니다", "없습니다"]
+    },
+    {
+      "id": 204,
+      "lessonId": "lesson-2",
+      "translation": "家附近有百貨公司和捷運站。",
+      "correctOrder": ["집", "근처에", "백화점하고", "지하철역이", "있습니다"],
+      "options": ["집", "근처에", "백화점하고", "지하철역이", "도서관하고", "있습니다"]
+    },
+    {
+      "id": 205,
+      "lessonId": "lesson-2",
+      "translation": "我的房間在二樓。",
+      "correctOrder": ["제", "방은", "2층에", "있습니다"],
+      "options": ["제", "방은", "2층에", "있습니다", "1층에", "없습니다"]
+    },
+
+    {
+      "id": 301,
+      "lessonId": "lesson-3",
+      "translation": "看家人的照片。",
+      "correctOrder": ["가족", "사진을", "봅니다"],
+      "options": ["가족", "사진을", "봅니다", "듣습니다", "책을"]
+    },
+    {
+      "id": 302,
+      "lessonId": "lesson-3",
+      "translation": "父母親在故鄉。",
+      "correctOrder": ["부모님은", "고향에", "계십니다"],
+      "options": ["부모님은", "고향에", "계십니다", "있습니다", "집에"]
+    },
+    {
+      "id": 303,
+      "lessonId": "lesson-3",
+      "translation": "空氣好且安靜。",
+      "correctOrder": ["공기도", "좋고", "조용합니다"],
+      "options": ["공기도", "좋고", "조용합니다", "춥고", "많습니다"]
+    },
+    {
+      "id": 304,
+      "lessonId": "lesson-3",
+      "translation": "在大學念經濟學。",
+      "correctOrder": ["대학교에서", "경제학을", "공부합니다"],
+      "options": ["대학교에서", "경제학을", "공부합니다", "일합니다", "사무실에서"]
+    },
+    {
+      "id": 305,
+      "lessonId": "lesson-3",
+      "translation": "爺爺正在睡覺。",
+      "correctOrder": ["할아버지께서", "주무십니다"],
+      "options": ["할아버지께서", "주무십니다", "잡니다", "가십니다"]
+    },
+
+    {
+      "id": 401,
+      "lessonId": "lesson-4",
+      "translation": "要一起去餐廳嗎？",
+      "correctOrder": ["식당에", "같이", "갈까요"],
+      "options": ["식당에", "같이", "갈까요", "갑시다", "혼자"]
+    },
+    {
+      "id": 402,
+      "lessonId": "lesson-4",
+      "translation": "我們一起吃拌飯吧。",
+      "correctOrder": ["비빔밥을", "먹읍시다"],
+      "options": ["비빔밥을", "먹읍시다", "먹을까요", "만듭시다"]
+    },
+    {
+      "id": 403,
+      "lessonId": "lesson-4",
+      "translation": "烤肉不辣而且很好吃。",
+      "correctOrder": ["불고기는", "맵지", "않고", "맛있습니다"],
+      "options": ["불고기는", "맵지", "않고", "맛있습니다", "답니다", "맵습니다"]
+    },
+    {
+      "id": 404,
+      "lessonId": "lesson-4",
+      "translation": "我想吃冷麵。",
+      "correctOrder": ["냉면을", "먹고", "싶습니다"],
+      "options": ["냉면을", "먹고", "싶습니다", "싶어요", "마시고"]
+    },
+    {
+      "id": 405,
+      "lessonId": "lesson-4",
+      "translation": "請給我水。",
+      "correctOrder": ["물", "좀", "주십시오"],
+      "options": ["물", "좀", "주십시오", "드십시오", "사십시오"]
+    },
+
+    {
+      "id": 501,
+      "lessonId": "lesson-5",
+      "translation": "現在幾點？",
+      "correctOrder": ["지금", "몇", "시예요"],
+      "options": ["지금", "몇", "시예요", "이에요", "언제"]
+    },
+    {
+      "id": 502,
+      "lessonId": "lesson-5",
+      "translation": "今天是星期五吧？",
+      "correctOrder": ["오늘이", "금요일이지요"],
+      "options": ["오늘이", "금요일이지요", "목요일이지요", "이에요"]
+    },
+    {
+      "id": 503,
+      "lessonId": "lesson-5",
+      "translation": "早上七點半起床。",
+      "correctOrder": ["아침", "일곱", "시", "반에", "일어나요"],
+      "options": ["아침", "일곱", "시", "반에", "일어나요", "자요", "다섯"]
+    },
+    {
+      "id": 504,
+      "lessonId": "lesson-5",
+      "translation": "從星期一到星期五上課。",
+      "correctOrder": ["월요일부터", "금요일까지", "수업이", "있어요"],
+      "options": ["월요일부터", "금요일까지", "수업이", "있어요", "없어요", "토요일까지"]
+    },
+    {
+      "id": 505,
+      "lessonId": "lesson-5",
+      "translation": "昨天和朋友看了電影。",
+      "correctOrder": ["어제", "친구하고", "영화를", "봤어요"],
+      "options": ["어제", "친구하고", "영화를", "봤어요", "봐요", "책을"]
+    }
+  ],
+  "grammars": [
+    {
+      "id": "g_l1_1",
+      "lessonId": "lesson-1",
+      "title": "입니다",
+      "formula": "名詞 + 입니다",
+      "explanation": "接在名詞後，表示肯定身份或狀態「是...」。用於正式、客氣的場合。",
+      "exampleKr": "【無尾音】：저<span class=\"hl-red\">는</span> 학생<span class=\"hl-red\">입니다</span>. (我是學生。)<br>【有尾音】：이것은 제 책상<span class=\"hl-red\">입니다</span>. (這是我的書桌。)"
+    },
+    {
+      "id": "g_l1_2",
+      "lessonId": "lesson-1",
+      "title": "은 / 는",
+      "formula": "名詞 + 은 / 는",
+      "explanation": "主題助詞，用於介紹話題或形成對比。<br>• <b>有尾音</b> 接 <b>은</b><br>• <b>無尾音</b> 接 <b>는</b>",
+      "exampleKr": "【有尾音】：서울<span class=\"hl-red\">은</span> 한국의 수도입니다. (首爾是韓國的首都。)<br>【無尾音】：저<span class=\"hl-red\">는</span> 대만 사람입니다. (我是台灣人。)"
+    },
+    {
+      "id": "g_l1_3",
+      "lessonId": "lesson-1",
+      "title": "입니까?",
+      "formula": "名詞 + 입니까?",
+      "explanation": "「입니다」的疑問形式，用於正式場合詢問對方的身份或國籍。",
+      "exampleKr": "이분이 어느 나라 사람<span class=\"hl-red\">입니까?</span> (這位是哪國人？)"
+    },
+    {
+      "id": "g_l1_4",
+      "lessonId": "lesson-1",
+      "title": "이 / 가 아닙니다",
+      "formula": "名詞 + 이/가 아닙니다",
+      "explanation": "否定助詞句型，表示「不是...」。<br>• <b>有尾音</b> 接 <b>이 아닙니다</b><br>• <b>無尾音</b> 接 <b>가 아닙니다</b>",
+      "exampleKr": "【有尾音】：회사원<span class=\"hl-red\">이 아닙니다</span>. (不是公司職員。)<br>【無尾音】：의사<span class=\"hl-red\">가 아닙니다</span>. (不是醫生。)"
+    },
+    {
+      "id": "g_l1_5",
+      "lessonId": "lesson-1",
+      "title": "-습니다 / -ㅂ니다",
+      "formula": "動詞/形容詞詞幹 + 습니다 / ㅂ니다",
+      "explanation": "正式場合的肯定陳述終結語尾。<br>• <b>有尾音</b> 接 <b>-습니다</b><br>• <b>無尾音</b> 接 <b>-ㅂ니다</b>",
+      "exampleKr": "【有尾音】：책을 읽<span class=\"hl-red\">습니다</span>. (看書。)<br>【無尾音】：학교에 가<span class=\"hl-red\">ㅂ니다</span>. (去學校。)"
+    },
+    {
+      "id": "g_l1_6",
+      "lessonId": "lesson-1",
+      "title": "-습니까 / -ㅂ니까?",
+      "formula": "動詞/形容詞詞幹 + 습니까 / ㅂ니까?",
+      "explanation": "正式場合的疑問終結語尾。<br>• <b>有尾音</b> 接 <b>-습니까?</b><br>• <b>無尾音</b> 接 <b>-ㅂ니까?</b>",
+      "exampleKr": "무엇을 먹<span class=\"hl-red\">습니까?</span> (吃什麼？)"
+    },
+
+    {
+      "id": "g_l2_1",
+      "lessonId": "lesson-2",
+      "title": "이 / 가",
+      "formula": "名詞 + 이 / 가",
+      "explanation": "主格助詞，標示句子的主語。<br>• <b>有尾音</b> 接 <b>이</b><br>• <b>無尾音</b> 接 <b>가</b><br>• 代名詞變化：나➔<b>내가</b>、저➔<b>제가</b>、누구➔<b>누가</b>",
+      "exampleKr": "이것<span class=\"hl-red\">이</span> 교과서입니다. (這是課本。)"
+    },
+    {
+      "id": "g_l2_2",
+      "lessonId": "lesson-2",
+      "title": "이 / 그 / 저",
+      "formula": "이 / 그 / 저 + 名詞",
+      "explanation": "冠形指示詞：<br>• <b>이 (這)</b>：靠近說話者<br>• <b>그 (那)</b>：靠近聽話者<br>• <b>저 (那)</b>：遠離雙方",
+      "exampleKr": "<span class=\"hl-red\">이</span> 책이 제 책입니다. (這本書是我的書。)"
+    },
+    {
+      "id": "g_l2_3",
+      "lessonId": "lesson-2",
+      "title": "도",
+      "formula": "名詞 + 도",
+      "explanation": "列舉助詞，表示「也」。會取代主格與受格助詞。",
+      "exampleKr": "책상이 있습니다. 의자<span class=\"hl-red\">도</span> 있습니다. (有桌子，也有椅子。)"
+    },
+    {
+      "id": "g_l2_4",
+      "lessonId": "lesson-2",
+      "title": "있다 / 없다",
+      "formula": "名詞이/가 + 있다 / 없다",
+      "explanation": "表示「存在（在/不在）」或「領有（有/沒有）」。長輩在場時使用 <b>계시다</b>。",
+      "exampleKr": "질문이 있<span class=\"hl-red\">습니다</span>. (有問題。)"
+    },
+    {
+      "id": "g_l2_5",
+      "lessonId": "lesson-2",
+      "title": "에 (位置與場所)",
+      "formula": "場所名詞 + 에 (있다/없다)",
+      "explanation": "時地助詞，接在場所名詞後標示人或事物存在的所在地點。",
+      "exampleKr": "친구가 미국<span class=\"hl-red\">에</span> 있습니다. (朋友在美國。)"
+    },
+    {
+      "id": "g_l2_6",
+      "lessonId": "lesson-2",
+      "title": "하고",
+      "formula": "名詞 + 하고 + 名詞",
+      "explanation": "連接助詞，用於並列兩個或兩個以上的名詞，相當於「和、跟」。",
+      "exampleKr": "책상<span class=\"hl-red\">하고</span> 의자가 있습니다. (有桌子和椅子。)"
+    },
+
+    {
+      "id": "g_l3_1",
+      "lessonId": "lesson-3",
+      "title": "을 / 를",
+      "formula": "名詞 + 을 / 를",
+      "explanation": "受格助詞，標示動作支配的目的對象（賓語）。<br>• <b>有尾音</b> 接 <b>을</b><br>• <b>無尾音</b> 接 <b>를</b>",
+      "exampleKr": "【有尾音】：가족 사진<span class=\"hl-red\">을</span> 봅니다. (看家人的照片。)<br>【無尾音】：노래<span class=\"hl-red\">를</span> 부릅니다. (唱歌。)"
+    },
+    {
+      "id": "g_l3_2",
+      "lessonId": "lesson-3",
+      "title": "-(으)시- / 계시다 (主體尊敬)",
+      "formula": "動詞/形容詞語幹 + -(으)시-",
+      "explanation": "尊敬詞綴，接在動詞/形容詞語幹後表示對句子主語（長輩）的尊敬。<br>• <b>有尾音</b> 接 <b>-으시-</b><br>• <b>無尾音</b> 接 <b>-시-</b><br>• 固有特殊尊敬詞：있다 ➔ <b>계시다</b>、자다 ➔ <b>주무시다</b>、먹다 ➔ <b>드시다</b>",
+      "exampleKr": "아버지께서 신문을 읽<span class=\"hl-red\">으십니다</span>. (爸爸看報紙。)<br>할아버지께서 <span class=\"hl-red\">주무십니다</span>. (爺爺在睡覺。)"
+    },
+    {
+      "id": "g_l3_3",
+      "lessonId": "lesson-3",
+      "title": "-고 (並列連接)",
+      "formula": "動詞/形容詞語幹 + 고",
+      "explanation": "連接語尾，平等並列兩個以上的狀態或動作（表示「既...又...」或「...而且...」）。",
+      "exampleKr": "공기도 좋<span class=\"hl-red\">고</span> 조용합니다. (空氣好又安靜。)<br>교실이 넓<span class=\"hl-red\">고</span> 깨끗합니다. (教室寬敞又乾淨。)"
+    },
+    {
+      "id": "g_l3_4",
+      "lessonId": "lesson-3",
+      "title": "에서 (活動場所)",
+      "formula": "場所名詞 + 에서 + 動詞",
+      "explanation": "接在場所名詞後，標示動作或動態事件發生的地點（相當於中文的「在...做某事」）。注意與純粹表示靜態存在的「에 있다」區分。",
+      "exampleKr": "대학교<span class=\"hl-red\">에서</span> 경제학을 공부합니다. (在大學念經濟學。)<br>도서관<span class=\"hl-red\">에서</span> 책을 읽습니다. (在圖書館看書。)"
+    },
+
+    {
+      "id": "g_l4_1",
+      "lessonId": "lesson-4",
+      "title": "에 가다 / 오다 (目的地)",
+      "formula": "場所名詞 + 에 가다 / 오다",
+      "explanation": "表示前往或來到某個目的地（相當於「去/來某處」）。",
+      "exampleKr": "식당<span class=\"hl-red\">에 갑니다</span>. (去餐廳。)<br>친구가 우리 집<span class=\"hl-red\">에 옵니다</span>. (朋友來我家。)"
+    },
+    {
+      "id": "g_l4_2",
+      "lessonId": "lesson-4",
+      "title": "-(으)ㄹ까요? (提議與詢問)",
+      "formula": "動詞語幹 + -(으)ㄹ까요?",
+      "explanation": "詢問對方的意向或提議共同行動（「我們一起...好嗎？」）。<br>• <b>有尾音</b> 接 <b>-을까요?</b><br>• <b>無尾音</b> 接 <b>-ㄹ까요?</b>",
+      "exampleKr": "【有尾音】：점심을 같이 먹<span class=\"hl-red\">을까요?</span> (一起吃午餐好嗎？)<br>【無尾音】：식당에 가<span class=\"hl-red\">ㄹ까요?</span> (要去餐廳嗎？)"
+    },
+    {
+      "id": "g_l4_3",
+      "lessonId": "lesson-4",
+      "title": "-(으)ㅂ시다 (共同勸誘)",
+      "formula": "動詞語幹 + -(으)ㅂ시다",
+      "explanation": "建議聽者一起做某事（「我們一起...吧！」）。<br>• <b>有尾音</b> 接 <b>-읍시다</b><br>• <b>無尾音</b> 接 <b>-ㅂ시다</b>",
+      "exampleKr": "한국 음식을 먹<span class=\"hl-red\">읍시다</span>. (我們一起吃韓國菜吧！)<br>영화를 보<span class=\"hl-red\">ㅂ시다</span>. (我們看電影吧！)"
+    },
+    {
+      "id": "g_l4_4",
+      "lessonId": "lesson-4",
+      "title": "-지 않다 (否定句型)",
+      "formula": "動詞/形容詞語幹 + 지 않다",
+      "explanation": "接在語幹後表示客觀否定（相當於中文的「不...」）。",
+      "exampleKr": "불고기는 맵<span class=\"hl-red\">지 않습니다</span>. (烤肉不辣。)<br>내일은 학교에 가<span class=\"hl-red\">지 않습니다</span>. (明天不去學校。)"
+    },
+    {
+      "id": "g_l4_5",
+      "lessonId": "lesson-4",
+      "title": "-고 싶다 (願望表達)",
+      "formula": "動詞語幹 + 고 싶다",
+      "explanation": "表達說話者自身的希望或意願（「想要...」）。",
+      "exampleKr": "저는 불고기를 먹<span class=\"hl-red\">고 싶습니다</span>. (我想吃烤肉。)<br>친구를 만나<span class=\"hl-red\">고 싶습니다</span>. (想見朋友。)"
+    },
+    {
+      "id": "g_l4_6",
+      "lessonId": "lesson-4",
+      "title": "-(으)십시오 (客氣請求與命令)",
+      "formula": "動詞語幹 + -(으)십시오",
+      "explanation": "正式、客氣地請求或命令聽者做某事（「請...」）。<br>• <b>有尾音</b> 接 <b>-으십시오</b><br>• <b>無尾音</b> 接 <b>-십시오</b>",
+      "exampleKr": "여기 앉<span class=\"hl-red\">으십시오</span>. (請坐這裡。)<br>물 좀 주<span class=\"hl-red\">십시오</span>. (請給我一點水。)"
+    },
+
+    {
+      "id": "g_l5_1",
+      "lessonId": "lesson-5",
+      "title": "까지 (終點助詞)",
+      "formula": "時間/場所名詞 + 까지",
+      "explanation": "表示時間的截止點或空間的抵達終點（相當於「到...為止」）。",
+      "exampleKr": "두 시<span class=\"hl-red\">까지</span> 가요. (兩點之前會到。)<br>여기<span class=\"hl-red\">까지</span> 하십시오. (請做到這裡。)"
+    },
+    {
+      "id": "g_l5_2",
+      "lessonId": "lesson-5",
+      "title": "-아요 / 어요 (日常非格式體終結語尾)",
+      "formula": "動詞/形容詞語幹 + -아요 / 어요",
+      "explanation": "日常口語中最常用的親切敬語（半敬語）。<br>• <b>陽性母音 (ㅏ, ㅗ)</b> 接 <b>-아요</b><br>• <b>陰性/其他母音</b> 接 <b>-어요</b><br>• <b>하다</b> 變為 <b>해요</b>",
+      "exampleKr": "가다 ➔ 가<span class=\"hl-red\">요</span> (走/去) | 먹다 ➔ 먹<span class=\"hl-red\">어요</span> (吃) | 공부하다 ➔ 공부<span class=\"hl-red\">해요</span> (念書)"
+    },
+    {
+      "id": "g_l5_3",
+      "lessonId": "lesson-5",
+      "title": "-지요? (尋求確認與同意)",
+      "formula": "動詞/形容詞語幹 + -지요?",
+      "explanation": "用在句尾詢問已推知的事實，尋求聽者的同意或再次確認（相當於「...對吧？」）。",
+      "exampleKr": "오늘이 목요일이<span class=\"hl-red\">지요?</span> (今天是星期四對吧？)<br>날씨가 춥<span class=\"hl-red\">지요?</span> (天氣很冷吧？)"
+    },
+    {
+      "id": "g_l5_4",
+      "lessonId": "lesson-5",
+      "title": "-(으)세요 (日常親切尊敬語尾)",
+      "formula": "動詞語幹 + -(으)세요",
+      "explanation": "口語中既親切又帶有尊敬語氣的句尾，可用於陳述、疑問或客氣命令（「請...」）。",
+      "exampleKr": "내일 뭐 하<span class=\"hl-red\">세요?</span> (您明天做什麼呢？)<br>어서 오<span class=\"hl-red\">세요</span>. (歡迎光臨 / 請進。)"
+    },
+    {
+      "id": "g_l5_5",
+      "lessonId": "lesson-5",
+      "title": "부터 ~ 까지 (時間與空間起迄)",
+      "formula": "起點 + 부터 + 終點 + 까지",
+      "explanation": "標示時間或順序的起點與終點（相當於「從...到...」）。",
+      "exampleKr": "월요일<span class=\"hl-red\">부터</span> 금요일<span class=\"hl-red\">까지</span> 수업이 있어요. (從星期一到星期五有課。)"
+    },
+    {
+      "id": "g_l5_6",
+      "lessonId": "lesson-5",
+      "title": "-았/었/였- (過去時態)",
+      "formula": "動詞/形容詞語幹 + -았/었/였-",
+      "explanation": "標示過去已經發生的事件或動作。<br>• <b>陽性母音 (ㅏ, ㅗ)</b> 接 <b>-았-</b><br>• <b>陰性/其他母音</b> 接 <b>-었-</b><br>• <b>하다</b> 變為 <b>했-</b>",
+      "exampleKr": "만나다 ➔ 만<span class=\"hl-red\">났어요</span> (見面了) | 먹다 ➔ 먹<span class=\"hl-red\">었어요</span> (吃了) | 공부하다 ➔ 공부<span class=\"hl-red\">했어요</span> (念書了)"
+    }
+  ]
+}
