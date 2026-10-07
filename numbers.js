@@ -154,3 +154,141 @@ function generateResult() {
 document.addEventListener('DOMContentLoaded', () => {
   switchConverter('time');
 });
+/* =========================================
+   極限數字特訓測驗 (Number Quiz)
+========================================= */
+let numQuizScore = 0;
+let currentNumQuestion = null;
+
+// 切換 轉換器 / 測驗 視圖
+function switchNumberSubView(view) {
+  document.getElementById('btnSubConverter').classList.toggle('active', view === 'converter');
+  document.getElementById('btnSubNumQuiz').classList.toggle('active', view === 'quiz');
+  document.getElementById('converterSubView').style.display = view === 'converter' ? 'block' : 'none';
+  document.getElementById('numQuizSubView').style.display = view === 'quiz' ? 'block' : 'none';
+
+  if (view === 'quiz' && document.getElementById('numQuizPrompt').innerText === '-') {
+    startNumQuiz();
+  }
+}
+
+function startNumQuiz() {
+  numQuizScore = 0;
+  document.getElementById('numQuizScore').innerText = `得分：0`;
+  nextNumQuiz();
+}
+
+function nextNumQuiz() {
+  document.getElementById('numQuizNextBtn').style.display = 'none';
+  document.getElementById('numQuizAudioBtn').style.display = 'none';
+  document.getElementById('numQuizMessage').innerText = '';
+
+  // 隨機抽選題型：0=時間, 1=單位, 2=金額
+  let type = Math.floor(Math.random() * 3);
+  let qText = "", correctAns = "", distractors = [];
+
+  if (type === 0) {
+    // 【時間題】
+    let h = Math.floor(Math.random() * 12) + 1;
+    let m = Math.floor(Math.random() * 60);
+    qText = `🕒 ${h} 點 ${m === 0 ? "整" : m + " 分"}`;
+
+    let hNativeMod = toNative(h, true);  // 縮寫固有詞 (세)
+    let hNativeFull = toNative(h, false); // 完整固有詞 (셋)
+    let hSino = toSino(h);                // 漢字音 (삼)
+    let mSino = m > 0 ? toSino(m) + " 분" : "";
+    let mNative = m > 0 ? toNative(m, false) + " 분" : ""; // 故意用固有詞考分鐘
+
+    correctAns = `${hNativeMod} 시 ${mSino}`.trim();
+    distractors.push(`${hSino} 시 ${mSino}`.trim()); // 陷阱：全漢字音
+    distractors.push(`${hNativeFull} 시 ${mSino}`.trim()); // 陷阱：未縮寫固有詞
+    if (m > 0) distractors.push(`${hNativeMod} 시 ${mNative}`.trim()); // 陷阱：分鐘用固有詞
+    else distractors.push(`${hSino} 시`);
+  } 
+  else if (type === 1) {
+    // 【數量與單位題】
+    let units = [
+      {u: "개", zh: "個"}, {u: "명", zh: "名"}, {u: "잔", zh: "杯"},
+      {u: "병", zh: "瓶"}, {u: "권", zh: "本"}, {u: "송이", zh: "朵"}
+    ];
+    let randUnit = units[Math.floor(Math.random() * units.length)];
+    // 故意選容易縮寫變形的數字 (1~4, 20) 以及幾個普通數字
+    let counts = [1, 2, 3, 4, 5, 6, 10, 20];
+    let c = counts[Math.floor(Math.random() * counts.length)];
+
+    qText = `🛍️ ${c} ${randUnit.zh}`;
+
+    correctAns = `${toNative(c, true)} ${randUnit.u}`;
+    distractors.push(`${toSino(c)} ${randUnit.u}`); // 陷阱：漢字音
+    distractors.push(`${toNative(c, false)} ${randUnit.u}`); // 陷阱：未縮寫固有詞
+    
+    let wrongNum = (c === 1) ? 2 : c - 1;
+    distractors.push(`${toNative(wrongNum, true)} ${randUnit.u}`); // 陷阱：純粹數字錯
+  } 
+  else {
+    // 【金額題】
+    let prices = [1000, 2500, 5000, 10000, 35000, 50000];
+    let p = prices[Math.floor(Math.random() * prices.length)];
+    qText = `💰 ${p.toLocaleString()} 韓元`;
+
+    correctAns = `${toSino(p)} 원`;
+    distractors.push(`${toNative(p > 99 ? 50 : p, false)} 원`); // 陷阱：固有詞
+    distractors.push(`${toSino(p * 10)} 원`); // 陷阱：多一個零
+    let wrongP = p === 1000 ? 2000 : p - 1000;
+    distractors.push(`${toSino(wrongP)} 원`); // 陷阱：數字錯
+  }
+
+  // 去除重複的干擾選項
+  let uniqueOptions = new Set([correctAns]);
+  for (let d of distractors) {
+    if (d !== correctAns && d !== "") uniqueOptions.add(d);
+    if (uniqueOptions.size === 4) break;
+  }
+  
+  let optionsArr = Array.from(uniqueOptions);
+  optionsArr.sort(() => Math.random() - 0.5); // 打亂順序
+
+  currentNumQuestion = { q: qText, ans: correctAns, opts: optionsArr };
+
+  // 渲染畫面
+  document.getElementById('numQuizPrompt').innerText = qText;
+  let box = document.getElementById('numQuizOptions');
+  box.innerHTML = '';
+  
+  optionsArr.forEach(opt => {
+    let btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.innerText = opt;
+    btn.onclick = () => checkNumAnswer(btn, opt);
+    box.appendChild(btn);
+  });
+}
+
+function checkNumAnswer(btn, selectedStr) {
+  // 鎖定所有按鈕
+  document.querySelectorAll('#numQuizOptions .opt-btn').forEach(b => b.onclick = null);
+  let msg = document.getElementById('numQuizMessage');
+  let audioBtn = document.getElementById('numQuizAudioBtn');
+
+  if (selectedStr === currentNumQuestion.ans) {
+    btn.classList.add('correct', 'bounce-success');
+    msg.style.color = 'var(--success)';
+    msg.innerText = '🎉 漂亮！完全正確！';
+    numQuizScore++;
+    document.getElementById('numQuizScore').innerText = `得分：${numQuizScore}`;
+  } else {
+    btn.classList.add('wrong', 'shake');
+    msg.style.color = 'var(--error)';
+    msg.innerText = `❌ 哎呀掉進陷阱了！正確是：${currentNumQuestion.ans}`;
+
+    // 把正確的按鈕標示出來
+    document.querySelectorAll('#numQuizOptions .opt-btn').forEach(b => {
+      if (b.innerText === currentNumQuestion.ans) b.classList.add('correct');
+    });
+  }
+  
+  // 顯示下一題按鈕與發音按鈕
+  document.getElementById('numQuizNextBtn').style.display = 'block';
+  audioBtn.style.display = 'inline-block';
+  audioBtn.onclick = () => speakKorean(currentNumQuestion.ans);
+}
