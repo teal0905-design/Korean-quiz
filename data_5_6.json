@@ -1,0 +1,266 @@
+{
+  "lessons": [
+    { "id": "lesson-5", "title": "제5과 하루 생활 (第五課：日常生活)" },
+    { "id": "lesson-6", "title": "제6과 물건 사기 (第六課：購物)" }
+  ],
+  "vocabularies": [
+    { "id": "v501", "lessonId": "lesson-5", "kr": "지금", "zh": "現在", "category": "時間" },
+    { "id": "v502", "lessonId": "lesson-5", "kr": "오늘", "zh": "今天", "category": "時間" },
+    { "id": "v503", "lessonId": "lesson-5", "kr": "어제", "zh": "昨天", "category": "時間" },
+    { "id": "v504", "lessonId": "lesson-5", "kr": "내일", "zh": "明天", "category": "時間" },
+    { "id": "v505", "lessonId": "lesson-5", "kr": "그저께", "zh": "前天", "category": "時間" },
+    { "id": "v506", "lessonId": "lesson-5", "kr": "모레", "zh": "後天", "category": "時間" },
+    { "id": "v507", "lessonId": "lesson-5", "kr": "지난주", "zh": "上週", "category": "時間" },
+    { "id": "v508", "lessonId": "lesson-5", "kr": "이번주", "zh": "這週", "category": "時間" },
+    { "id": "v509", "lessonId": "lesson-5", "kr": "다음주", "zh": "下週", "category": "時間" },
+    { "id": "v510", "lessonId": "lesson-5", "kr": "작년", "pron": "장년", "zh": "去年", "category": "時間" },
+    { "id": "v511", "lessonId": "lesson-5", "kr": "올해", "zh": "今年", "category": "時間" },
+    { "id": "v512", "lessonId": "lesson-5", "kr": "내년", "zh": "明年", "category": "時間" },
+    { "id": "v513", "lessonId": "lesson-5", "kr": "월요일", "pron": "워료일", "zh": "星期一", "category": "時間" },
+    { "id": "v514", "lessonId": "lesson-5", "kr": "화요일", "zh": "星期二", "category": "時間" },
+    { "id": "v515", "lessonId": "lesson-5", "kr": "수요일", "zh": "星期三", "category": "時間" },
+    { "id": "v516", "lessonId": "lesson-5", "kr": "목요일", "pron": "모교일", "zh": "星期四", "category": "時間" },
+    { "id": "v517", "lessonId": "lesson-5", "kr": "금요일", "pron": "그묘일", "zh": "星期五", "category": "時間" },
+    { "id": "v518", "lessonId": "lesson-5", "kr": "토요일", "zh": "星期六", "category": "時間" },
+    { "id": "v519", "lessonId": "lesson-5", "kr": "일요일", "pron": "이료일", "zh": "星期日", "category": "時間" },
+    { "id": "v520", "lessonId": "lesson-5", "kr": "일어나다", "zh": "起床", "category": "動詞" },
+    { "id": "v521", "lessonId": "lesson-5", "kr": "세수하다", "zh": "洗臉", "category": "動詞" },
+    { "id": "v522", "lessonId": "lesson-5", "kr": "이를 닦다", "pron": "이를 닥따", "zh": "刷牙", "category": "動詞" },
+    { "id": "v523", "lessonId": "lesson-5", "kr": "타다", "zh": "搭乘", "category": "動詞" },
+    { "id": "v524", "lessonId": "lesson-5", "kr": "내리다", "zh": "下車", "category": "動詞" },
+    { "id": "v525", "lessonId": "lesson-5", "kr": "달리다", "zh": "跑步", "category": "動詞" },
+    { "id": "v526", "lessonId": "lesson-5", "kr": "샤워하다", "zh": "洗澡 / 淋浴", "category": "動詞" },
+    { "id": "v527", "lessonId": "lesson-5", "kr": "구경하다", "zh": "觀賞 / 逛街", "category": "動詞" },
+    { "id": "v528", "lessonId": "lesson-5", "kr": "쉬다", "zh": "休息", "category": "動詞" },
+    { "id": "v529", "lessonId": "lesson-5", "kr": "수업", "zh": "上課 / 課程", "category": "名詞" },
+    { "id": "v530", "lessonId": "lesson-5", "kr": "시작하다", "pron": "시자카다", "zh": "開始", "category": "動詞" },
+    { "id": "v531", "lessonId": "lesson-5", "kr": "생일", "zh": "生日", "category": "名詞" },
+    { "id": "v532", "lessonId": "lesson-5", "kr": "샌드위치", "zh": "三明治", "category": "食物" },
+    { "id": "v533", "lessonId": "lesson-5", "kr": "치마", "zh": "裙子", "category": "服飾" },
+    { "id": "v534", "lessonId": "lesson-5", "kr": "바지", "zh": "褲子", "category": "服飾" },
+    { "id": "v535", "lessonId": "lesson-5", "kr": "구두", "zh": "皮鞋", "category": "服飾" },
+
+    { "id": "v601", "lessonId": "lesson-6", "kr": "선물", "zh": "禮物", "category": "名詞" },
+    { "id": "v602", "lessonId": "lesson-6", "kr": "장미꽃", "pron": "장미꼳", "zh": "玫瑰花", "category": "植物" },
+    { "id": "v603", "lessonId": "lesson-6", "kr": "케이크", "zh": "蛋糕", "category": "食物" },
+    { "id": "v604", "lessonId": "lesson-6", "kr": "빵", "zh": "麵包", "category": "食物" },
+    { "id": "v605", "lessonId": "lesson-6", "kr": "꽃가게", "pron": "꼳까게", "zh": "花店", "category": "商店" },
+    { "id": "v606", "lessonId": "lesson-6", "kr": "빵집", "pron": "빵찝", "zh": "麵包店", "category": "商店" },
+    { "id": "v607", "lessonId": "lesson-6", "kr": "옷가게", "pron": "오까게", "zh": "服飾店", "category": "商店" },
+    { "id": "v608", "lessonId": "lesson-6", "kr": "과일가게", "zh": "水果店", "category": "商店" },
+    { "id": "v609", "lessonId": "lesson-6", "kr": "문방구", "zh": "文具店", "category": "商店" },
+    { "id": "v610", "lessonId": "lesson-6", "kr": "편의점", "zh": "便利商店", "category": "商店" },
+    { "id": "v611", "lessonId": "lesson-6", "kr": "슈퍼마켓", "zh": "超級市場", "category": "商店" },
+    { "id": "v612", "lessonId": "lesson-6", "kr": "빨간색", "pron": "빨간색", "zh": "紅色", "category": "顏色" },
+    { "id": "v613", "lessonId": "lesson-6", "kr": "파란색", "pron": "파란색", "zh": "藍色", "category": "顏色" },
+    { "id": "v614", "lessonId": "lesson-6", "kr": "노란색", "pron": "노란색", "zh": "黃色", "category": "顏色" },
+    { "id": "v615", "lessonId": "lesson-6", "kr": "하얀색", "pron": "하얀색", "zh": "白色", "category": "顏色" },
+    { "id": "v616", "lessonId": "lesson-6", "kr": "검은색", "pron": "거믄색", "zh": "黑色", "category": "顏色" },
+    { "id": "v617", "lessonId": "lesson-6", "kr": "까만색", "pron": "까만색", "zh": "純黑色", "category": "顏色" },
+    { "id": "v618", "lessonId": "lesson-6", "kr": "길다", "zh": "長", "category": "形容詞" },
+    { "id": "v619", "lessonId": "lesson-6", "kr": "짧다", "pron": "짤따", "zh": "短", "category": "形容詞" },
+    { "id": "v620", "lessonId": "lesson-6", "kr": "튼튼하다", "zh": "結實 / 耐用", "category": "形容詞" },
+    { "id": "v621", "lessonId": "lesson-6", "kr": "약하다", "pron": "야카다", "zh": "虛弱 / 脆弱", "category": "形容詞" },
+    { "id": "v622", "lessonId": "lesson-6", "kr": "두껍다", "pron": "두껍따", "zh": "厚", "category": "形容詞" },
+    { "id": "v623", "lessonId": "lesson-6", "kr": "얇다", "pron": "얄따", "zh": "薄", "category": "形容詞" },
+    { "id": "v624", "lessonId": "lesson-6", "kr": "무겁다", "pron": "무겁따", "zh": "重", "category": "形容詞" },
+    { "id": "v625", "lessonId": "lesson-6", "kr": "가볍다", "pron": "가볍따", "zh": "輕", "category": "形容詞" },
+    { "id": "v626", "lessonId": "lesson-6", "kr": "비싸다", "zh": "昂貴", "category": "形容詞" },
+    { "id": "v627", "lessonId": "lesson-6", "kr": "싸다", "zh": "便宜", "category": "形容詞" },
+    { "id": "v628", "lessonId": "lesson-6", "kr": "가깝다", "pron": "가깝따", "zh": "近", "category": "形容詞" },
+    { "id": "v629", "lessonId": "lesson-6", "kr": "멀다", "zh": "遠", "category": "形容詞" },
+    { "id": "v630", "lessonId": "lesson-6", "kr": "얼마", "zh": "多少錢", "category": "代名詞" },
+    { "id": "v631", "lessonId": "lesson-6", "kr": "송이", "zh": "朵 (花量詞)", "category": "單位" },
+    { "id": "v632", "lessonId": "lesson-6", "kr": "벌", "zh": "件 / 套 (衣物量詞)", "category": "單位" },
+    { "id": "v633", "lessonId": "lesson-6", "kr": "켤레", "zh": "雙 (鞋襪量詞)", "category": "單位" },
+    { "id": "v634", "lessonId": "lesson-6", "kr": "자루", "zh": "枝 / 支 (筆類量詞)", "category": "單位" },
+    { "id": "v635", "lessonId": "lesson-6", "kr": "마리", "zh": "隻 / 條 (動物魚類量詞)", "category": "單位" },
+    { "id": "v636", "lessonId": "lesson-6", "kr": "대", "zh": "台 / 輛 (車輛電器量詞)", "category": "單位" },
+    { "id": "v637", "lessonId": "lesson-6", "kr": "통", "zh": "盒 / 桶 (糖果餅乾量詞)", "category": "單位" },
+    { "id": "v638", "lessonId": "lesson-6", "kr": "꽃다발", "pron": "꼳따발", "zh": "花束", "category": "禮物" },
+    { "id": "v639", "lessonId": "lesson-6", "kr": "상품권", "pron": "상품꿘", "zh": "商品禮券", "category": "禮物" },
+    { "id": "v640", "lessonId": "lesson-6", "kr": "인형", "zh": "娃娃 / 玩偶", "category": "禮物" },
+    { "id": "v641", "lessonId": "lesson-6", "kr": "화장품", "zh": "化妝品", "category": "禮物" },
+    { "id": "v642", "lessonId": "lesson-6", "kr": "향수", "zh": "香水", "category": "禮物" },
+    { "id": "v643", "lessonId": "lesson-6", "kr": "액세서리", "zh": "首飾 / 配件", "category": "禮物" },
+    { "id": "v644", "lessonId": "lesson-6", "kr": "만년필", "zh": "鋼筆", "category": "禮物" },
+    { "id": "v645", "lessonId": "lesson-6", "kr": "넥타이핀", "zh": "領帶夾", "category": "禮物" },
+    { "id": "v646", "lessonId": "lesson-6", "kr": "목걸이", "pron": "목꺼리", "zh": "項鍊", "category": "禮物" },
+    { "id": "v647", "lessonId": "lesson-6", "kr": "선글라스", "zh": "太陽眼鏡", "category": "禮物" },
+    { "id": "v648", "lessonId": "lesson-6", "kr": "깎다", "pron": "깍따", "zh": "殺價 / 削皮", "category": "動詞" },
+    { "id": "v649", "lessonId": "lesson-6", "kr": "장갑", "pron": "장갑", "zh": "手套", "category": "服飾" },
+    { "id": "v650", "lessonId": "lesson-6", "kr": "코트", "zh": "大衣 / 外套", "category": "服飾" }
+  ],
+  "questions": [
+    {
+      "id": 501,
+      "lessonId": "lesson-5",
+      "translation": "現在幾點？",
+      "correctOrder": ["지금", "몇", "시예요"],
+      "options": ["지금", "몇", "시예요", "이에요", "언제"]
+    },
+    {
+      "id": 502,
+      "lessonId": "lesson-5",
+      "translation": "今天是星期五吧？",
+      "correctOrder": ["오늘이", "금요일이지요"],
+      "options": ["오늘이", "금요일이지요", "목요일이지요", "이에요"]
+    },
+    {
+      "id": 503,
+      "lessonId": "lesson-5",
+      "translation": "早上七點半起床。",
+      "correctOrder": ["아침", "일곱", "시", "반에", "일어나요"],
+      "options": ["아침", "일곱", "시", "반에", "일어나요", "자요", "다섯"]
+    },
+    {
+      "id": 504,
+      "lessonId": "lesson-5",
+      "translation": "從星期一到星期五上課。",
+      "correctOrder": ["월요일부터", "금요일까지", "수업이", "있어요"],
+      "options": ["월요일부터", "금요일까지", "수업이", "있어요", "없어요", "토요일까지"]
+    },
+    {
+      "id": 505,
+      "lessonId": "lesson-5",
+      "translation": "昨天和朋友看了電影。",
+      "correctOrder": ["어제", "친구하고", "영화를", "봤어요"],
+      "options": ["어제", "친구하고", "영화를", "봤어요", "봐요", "책을"]
+    },
+
+    {
+      "id": 601,
+      "lessonId": "lesson-6",
+      "translation": "下午去買禮物吧。",
+      "correctOrder": ["오후에", "선물을", "사러", "갑시다"],
+      "options": ["오후에", "선물을", "사러", "갑시다", "갑니다", "보러"]
+    },
+    {
+      "id": 602,
+      "lessonId": "lesson-6",
+      "translation": "這蛋糕雖然好但有點貴。",
+      "correctOrder": ["이", "케이크는", "좋지만", "좀", "비싸요"],
+      "options": ["이", "케이크는", "좋지만", "좀", "비싸요", "싸요", "큽니다"]
+    },
+    {
+      "id": 603,
+      "lessonId": "lesson-6",
+      "translation": "玫瑰花一朵多少錢？",
+      "correctOrder": ["장미꽃", "한", "송이에", "얼마예요"],
+      "options": ["장미꽃", "한", "송이에", "얼마예요", "개에", "있어요"]
+    },
+    {
+      "id": 604,
+      "lessonId": "lesson-6",
+      "translation": "買了要送給朋友的禮物。",
+      "correctOrder": ["친구에게", "줄", "선물을", "샀어요"],
+      "options": ["친구에게", "줄", "선물을", "샀어요", "주는", "받았어요"]
+    },
+    {
+      "id": 605,
+      "lessonId": "lesson-6",
+      "translation": "價錢有點貴，請算便宜一點。",
+      "correctOrder": ["좀", "비싸요", "깎아", "주세요"],
+      "options": ["좀", "비싸요", "깎아", "주세요", "싸요", "주십시오"]
+    }
+  ],
+  "grammars": [
+    {
+      "id": "g_l5_1",
+      "lessonId": "lesson-5",
+      "title": "까지 (終點助詞)",
+      "formula": "時間/場所名詞 + 까지",
+      "explanation": "表示時間的截止點或空間的抵達終點（「到...為止」）。",
+      "exampleKr": "두 시<span class=\"hl-red\">까지</span> 가요. (兩點之前會到。)<br>여기<span class=\"hl-red\">까지</span> 하십시오. (請做到這裡。)"
+    },
+    {
+      "id": "g_l5_2",
+      "lessonId": "lesson-5",
+      "title": "-아요 / 어요 (日常非格式體終結語尾)",
+      "formula": "動詞/形容詞語幹 + -아요 / 어요",
+      "explanation": "日常口語中最常用的親切敬語（半敬語）。<br>• <b>陽性母音 (ㅏ, ㅗ)</b> 接 <b>-아요</b><br>• <b>陰性/其他母音</b> 接 <b>-어요</b><br>• <b>하다</b> 變為 <b>해요</b>",
+      "exampleKr": "가다 ➔ 가<span class=\"hl-red\">요</span> (走/去) | 먹다 ➔ 먹<span class=\"hl-red\">어요</span> (吃) | 공부하다 ➔ 공부<span class=\"hl-red\">해요</span> (念書)"
+    },
+    {
+      "id": "g_l5_3",
+      "lessonId": "lesson-5",
+      "title": "-지요? (尋求確認與同意)",
+      "formula": "動詞/形容詞語幹 + -지요?",
+      "explanation": "用在句尾詢問已推知的事實，尋求聽者的同意或再次確認（「...對吧？」）。",
+      "exampleKr": "오늘이 목요일이<span class=\"hl-red\">지요?</span> (今天是星期四對吧？)<br>날씨가 춥<span class=\"hl-red\">지요?</span> (天氣很冷吧？)"
+    },
+    {
+      "id": "g_l5_4",
+      "lessonId": "lesson-5",
+      "title": "-(으)세요 (日常親切尊敬語尾)",
+      "formula": "動詞語幹 + -(으)세요",
+      "explanation": "口語中既親切又帶有尊敬語氣的句尾，可用於陳述、疑問或客氣命令（「請...」）。",
+      "exampleKr": "내일 뭐 하<span class=\"hl-red\">세요?</span> (您明天做什麼呢？)<br>어서 오<span class=\"hl-red\">세요</span>. (歡迎光臨 / 請進。)"
+    },
+    {
+      "id": "g_l5_5",
+      "lessonId": "lesson-5",
+      "title": "부터 ~ 까지 (時間與空間起迄)",
+      "formula": "起點 + 부터 + 終點 + 까지",
+      "explanation": "標示時間或順序的起點與終點（「從...到...」）。",
+      "exampleKr": "월요일<span class=\"hl-red\">부터</span> 금요일<span class=\"hl-red\">까지</span> 수업이 있어요. (從星期一到星期五有課。)"
+    },
+    {
+      "id": "g_l5_6",
+      "lessonId": "lesson-5",
+      "title": "-았/었/였- (過去時態)",
+      "formula": "動詞/形容詞語幹 + -았/었/였-",
+      "explanation": "標示過去已經發生的事件或動作。<br>• <b>陽性母音 (ㅏ, ㅗ)</b> 接 <b>-았-</b><br>• <b>陰性/其他母音</b> 接 <b>-었-</b><br>• <b>하다</b> 變為 <b>했-</b>",
+      "exampleKr": "만나다 ➔ 만<span class=\"hl-red\">났어요</span> (見面了) | 먹다 ➔ 먹<span class=\"hl-red\">었어요</span> (吃了) | 공부하다 ➔ 공부<span class=\"hl-red\">했어요</span> (念書了)"
+    },
+
+    {
+      "id": "g_l6_1",
+      "lessonId": "lesson-6",
+      "title": "-(으)러 가다/오다 (移動目的)",
+      "formula": "動詞語幹 + -(으)러 가다/오다",
+      "explanation": "接在動詞後，表示前往或來此的目的。<br>• <b>有尾音</b> 接 <b>-으러</b><br>• <b>無尾音/ㄹ尾音</b> 接 <b>-러</b>",
+      "exampleKr": "선물을 사<span class=\"hl-red\">러 갑니다</span>. (去買禮物。)<br>밥을 먹<span class=\"hl-red\">으러 식당에 가요</span>. (去餐廳吃飯。)"
+    },
+    {
+      "id": "g_l6_2",
+      "lessonId": "lesson-6",
+      "title": "과 / 와 (書面並列連接助詞)",
+      "formula": "名詞 + 과 / 와 + 名詞",
+      "explanation": "並列連接兩個名詞，相當於「和、跟」（書面語感比 하고 強）。<br>• <b>有尾音</b> 接 <b>과</b><br>• <b>無尾音</b> 接 <b>와</b>",
+      "exampleKr": "장미꽃<span class=\"hl-red\">과</span> 케이크를 삽니다. (買玫瑰花和蛋糕。)<br>동생<span class=\"hl-red\">과</span> 누나가 기다립니다. (弟弟和姐姐在等候。)"
+    },
+    {
+      "id": "g_l6_3",
+      "lessonId": "lesson-6",
+      "title": "-지만 (轉折連接語尾)",
+      "formula": "動詞/形容詞語幹 + 지만",
+      "explanation": "連接前後兩句，表示語意上的轉折（相當於「雖然...但是...」）。",
+      "exampleKr": "좋<span class=\"hl-red\">지만</span> 좀 비싸요. (雖然好但有點貴。)<br>값은 비싸<span class=\"hl-red\">지만</span> 물건이 좋아요. (價錢雖貴但東西很好。)"
+    },
+    {
+      "id": "g_l6_4",
+      "lessonId": "lesson-6",
+      "title": "-(으)ㄴ + 名詞 (形容詞冠形詞形)",
+      "formula": "形容詞詞幹 + -(으)ㄴ + 名詞",
+      "explanation": "形容詞轉化為修飾後方名詞的狀態修飾語。<br>• <b>有尾音</b> 接 <b>-은</b><br>• <b>無尾音</b> 接 <b>-ㄴ</b>",
+      "exampleKr": "크다 ➔ <span class=\"hl-red\">큰</span> 케이크 (大蛋糕)<br>좋다 ➔ <span class=\"hl-red\">좋은</span> 집 (好房子)<br>예쁘다 ➔ <span class=\"hl-red\">예쁜</span> 꽃 (漂亮的花)"
+    },
+    {
+      "id": "g_l6_5",
+      "lessonId": "lesson-6",
+      "title": "-아/어/여 주다 (給予幫助與客氣請求)",
+      "formula": "動詞語幹 + -아/어/여 주다 (드리다)",
+      "explanation": "表示為他人提供幫助或請他人為自己做某事。<br>• 請他人幫忙：<b>-아/어 주세요</b><br>• 為長輩效勞：<b>-아/어 드리다</b>",
+      "exampleKr": "좀 깎<span class=\"hl-red\">아 주세요</span>. (請算便宜一點。)<br>장미꽃을 보여 <span class=\"hl-red\">주세요</span>. (請讓我看一下玫瑰花。)<br>제가 도와 <span class=\"hl-red\">드리겠습니다</span>. (我來幫您。)"
+    },
+    {
+      "id": "g_l6_6",
+      "lessonId": "lesson-6",
+      "title": "에게 / 한테 / 께 (動作對象助詞)",
+      "formula": "對象名詞 + 에게 / 한테 / 께",
+      "explanation": "標示動作所指向的接受者或對象（「給...」、「對...」）。<br>• 書面常用：<b>에게</b><br>• 口語常用：<b>한테</b><br>• 對長輩尊敬：<b>께</b>",
+      "exampleKr": "친구<span class=\"hl-red\">에게</span> 선물해요. (送給朋友。)<br>어머니<span class=\"hl-red\">께</span> 향수를 드립니다. (送香水給媽媽。)"
+    }
+  ]
+}
