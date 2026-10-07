@@ -2,9 +2,9 @@ let appData = { lessons: [], questions: [], grammars: [], vocabularies: [] };
 let currentSentenceList = [], sentenceIdx = 0, availableCards = [], selectedCards = [], isSentenceCorrect = false;
 let vocabQuizList = [], vocabQuizIdx = 0, vocabQuizScore = 0, currentVocabQuestion = null;
 let filteredVocabList = [], vocabCardIdx = 0, isAnimating = false;
-let isPronHidden = false; // 連音標記遮蔽狀態
+let isPronHidden = false;
 
-// 教材模組清單 (每兩課一個檔案 + 特殊變化)
+// 教材模組檔案清單
 const DATA_FILES = [
   'data_1_2.json',
   'data_3_4.json',
@@ -16,21 +16,20 @@ async function initApp() {
   try {
     appData = { lessons: [], questions: [], grammars: [], vocabularies: [] };
 
-    // 安全讀取：逐一讀取檔案，就算某個檔案不存在也不會導致網頁死當崩潰
+    // 安全容錯載入機制
     const fetchPromises = DATA_FILES.map(async (file) => {
       try {
         const res = await fetch(file);
         if (!res.ok) return null;
         return await res.json();
       } catch (err) {
-        console.warn(`檔案 ${file} 載入失敗或不存在:`, err);
+        console.warn(`檔案 ${file} 載入失敗:`, err);
         return null;
       }
     });
 
     const dataList = await Promise.all(fetchPromises);
 
-    // 自動合併所有讀取成功的內容
     dataList.forEach(data => {
       if (!data) return;
       if (data.lessons) appData.lessons.push(...data.lessons);
@@ -39,7 +38,6 @@ async function initApp() {
       if (data.grammars) appData.grammars.push(...data.grammars);
     });
 
-    // 檢查是否有讀取到任何資料
     if (appData.lessons.length === 0) {
       document.getElementById('promptText').innerText = "⚠️ 尚未讀取到教材資料，請確認 JSON 檔案是否存在！";
       return;
@@ -85,7 +83,7 @@ function switchMainView(view) {
   }
 }
 
-/* 語音播放器（支援按鈕聲波漣漪動畫） */
+/* 語音播放器 */
 function speakKorean(text, activeBtnId = null) {
   if (!text || !('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
@@ -332,6 +330,8 @@ function filterBankData() {
     : appData.grammars.filter(g => g.lessonId === val);
 
   const gBox = document.getElementById('grammarList');
+  if (!gBox) return;
+
   if (!gList || gList.length === 0) {
     gBox.innerHTML = '<div style="text-align:center; padding:20px; color:#888;">暫無文法內容</div>';
   } else {
@@ -364,20 +364,51 @@ function filterBankData() {
   }
 }
 
+/* 單字清單：支援純文字專屬例句與「🔊 聽例句」按鈕 */
 function renderVocabList() {
   const container = document.getElementById('vocabListContainer');
+  if (!container) return;
+
   if (!filteredVocabList || filteredVocabList.length === 0) {
     container.innerHTML = '<div style="text-align:center; padding:20px; color:#888;">暫無單字內容</div>';
     return;
   }
 
   container.innerHTML = filteredVocabList.map((v, idx) => {
-    const matchedQ = appData.questions.find(q => q.correctOrder.some(word => word.includes(v.kr)));
     let exampleHtml = '';
-    if (matchedQ) {
-      exampleHtml = `<div class="vocab-item-example"><b>實戰例句：</b> ${matchedQ.correctOrder.join(' ')} <span style="color:var(--text-sub);">(${matchedQ.translation})</span></div>`;
+    
+    // 若單字自帶 example 物件，直接呈現純文字與獨立發音按鈕
+    if (v.example && v.example.kr) {
+      const safeEx = v.example.kr.replace(/'/g, "\\'");
+      exampleHtml = `
+        <div class="vocab-item-example" style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border, #E5E7EB);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+            <div>
+              <div style="font-weight: 500; color: var(--text, #1F2937); font-size: 0.95rem;">${v.example.kr}</div>
+              <div style="font-size: 0.82rem; color: var(--text-sub, #6B7280); margin-top: 2px;">${v.example.zh}</div>
+            </div>
+            <button class="btn-audio" style="padding: 3px 8px; font-size: 0.78rem; white-space: nowrap; flex-shrink: 0;" onclick="speakKorean('${safeEx}')">🔊 聽例句</button>
+          </div>
+        </div>
+      `;
     } else {
-      exampleHtml = `<div class="vocab-item-example" style="color:var(--text-sub); font-style:italic;">核心單字，可透過 3D 翻牌進行測驗複習。</div>`;
+      // 備援比對題庫
+      const matchedQ = appData.questions.find(q => q.correctOrder.some(w => w.includes(v.kr)));
+      if (matchedQ) {
+        const fullQ = matchedQ.correctOrder.join(' ');
+        const safeQ = fullQ.replace(/'/g, "\\'");
+        exampleHtml = `
+          <div class="vocab-item-example" style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border, #E5E7EB);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+              <div>
+                <div style="font-weight: 500; color: var(--text, #1F2937); font-size: 0.95rem;">${fullQ}</div>
+                <div style="font-size: 0.82rem; color: var(--text-sub, #6B7280); margin-top: 2px;">${matchedQ.translation}</div>
+              </div>
+              <button class="btn-audio" style="padding: 3px 8px; font-size: 0.78rem; white-space: nowrap; flex-shrink: 0;" onclick="speakKorean('${safeQ}')">🔊 聽例句</button>
+            </div>
+          </div>
+        `;
+      }
     }
 
     const pronText = v.pron ? `[ ${v.pron} ]` : '';
@@ -390,7 +421,7 @@ function renderVocabList() {
             <span class="vocab-item-kr">${v.kr}</span>
             <span class="${pronClass}" id="listPron_${idx}">${pronText}</span>
           </div>
-          <button class="btn-audio" style="padding: 4px 10px; font-size:0.8rem;" onclick="speakKorean('${v.kr}')">🔊 播放</button>
+          <button class="btn-audio" style="padding: 4px 10px; font-size:0.8rem;" onclick="speakKorean('${v.kr}')">🔊 單字</button>
         </div>
         <div class="vocab-item-meta">
           <span class="badge badge-has">${v.category || '通用'}</span>
@@ -426,10 +457,9 @@ function updateVocabCardUI() {
 function togglePronVisibility() {
   isPronHidden = !isPronHidden;
   const pronEl = document.getElementById('vocabPronDisplay');
-  if (isPronHidden) {
-    if (pronEl) pronEl.classList.add('hidden');
-  } else {
-    if (pronEl) pronEl.classList.remove('hidden');
+  if (pronEl) {
+    if (isPronHidden) pronEl.classList.add('hidden');
+    else pronEl.classList.remove('hidden');
   }
   
   document.querySelectorAll('[id^="listPron_"]').forEach(el => {
