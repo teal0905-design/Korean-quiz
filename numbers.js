@@ -187,17 +187,17 @@ const NUM_VOCAB_DATA = {
     title: "🌸 韓式數字 (固有詞)",
     themeColor: "#2563eb",
     list: [
-      { kr: "하나", pron: "ha-na", zh: "一 (1)", example: { kr: "사과 한 개 주세요.", zh: "請給我一顆蘋果。" } },
-      { kr: "둘", pron: "dul", zh: "二 (2)", example: { kr: "커피 두 잔 마셨어요.", zh: "喝了兩杯咖啡。" } },
-      { kr: "셋", pron: "set", zh: "三 (3)", example: { kr: "세 시에 만나요.", zh: "三點見面吧。" } },
-      { kr: "넷", pron: "net", zh: "四 (4)", example: { kr: "학생 네 명 있어요.", zh: "有四名學生。" } },
+      { kr: "하나", pron: "ha-na", zh: "一 (1)", note: "💡 遇到量詞縮寫為：한 (例：한 개)", example: { kr: "사과 한 개 주세요.", zh: "請給我一顆蘋果。" } },
+      { kr: "둘", pron: "dul", zh: "二 (2)", note: "💡 遇到量詞縮寫為：두 (例：두 시)", example: { kr: "커피 두 잔 마셨어요.", zh: "喝了兩杯咖啡。" } },
+      { kr: "셋", pron: "set", zh: "三 (3)", note: "💡 遇到量詞縮寫為：세 (例：세 잔)", example: { kr: "세 시에 만나요.", zh: "三點見面吧。" } },
+      { kr: "넷", pron: "net", zh: "四 (4)", note: "💡 遇到量詞縮寫為：네 (例：네 명)", example: { kr: "학생 네 명 있어요.", zh: "有四名學生。" } },
       { kr: "다섯", pron: "da-seot", zh: "五 (5)", example: { kr: "다섯 살이에요.", zh: "五歲。" } },
       { kr: "여섯", pron: "yeo-seot", zh: "六 (6)", example: { kr: "여섯 개 샀어요.", zh: "買了六個。" } },
       { kr: "일곱", pron: "il-gop", zh: "七 (7)", example: { kr: "일곱 시에 일어납니다.", zh: "七點起床。" } },
       { kr: "여덟", pron: "yeo-deol", zh: "八 (8)", example: { kr: "고양이 여덟 마리.", zh: "八隻貓。" } },
       { kr: "아홉", pron: "a-hop", zh: "九 (9)", example: { kr: "아홉 번 말했어요.", zh: "說了九次。" } },
       { kr: "열", pron: "yeol", zh: "十 (10)", example: { kr: "열 명 왔어요.", zh: "來了十個人。" } },
-      { kr: "스물", pron: "seu-mul", zh: "二十 (20)", example: { kr: "스무 살입니다.", zh: "是二十歲。" } }
+      { kr: "스물", pron: "seu-mul", zh: "二十 (20)", note: "💡 遇到量詞縮寫為：스무 (例：스무 살)", example: { kr: "스무 살입니다.", zh: "是二十歲。" } }
     ]
   },
   sino: {
@@ -222,17 +222,21 @@ const NUM_VOCAB_DATA = {
 };
 
 function openNumLibDetail(type) {
-  // 隱藏選單，顯示清單
   document.getElementById('numLibMenu').style.display = 'none';
   document.getElementById('numLibDetail').style.display = 'block';
   
   const data = NUM_VOCAB_DATA[type];
   document.getElementById('numLibDetailTitle').innerText = data.title;
   
-  // 完全套用 bank.js 裡的 CSS 樣式，渲染出相同的卡片
   const container = document.getElementById('numLibListContainer');
   container.innerHTML = data.list.map(v => {
     const safeEx = v.example.kr.replace(/'/g, "\\'");
+    
+    // 如果有變形註解 (note)，就產生帶有微紅底色的提示框
+    const noteHtml = v.note 
+      ? `<div style="font-size: 0.85rem; color: #b91c1c; background: #fee2e2; padding: 6px 10px; border-radius: 6px; display: inline-block; margin-top: 8px; font-weight: 500;">${v.note}</div>` 
+      : '';
+
     return `
       <div class="vocab-item-card" style="border-left: 4px solid ${data.themeColor}; margin-bottom: 12px;">
         <div class="vocab-item-header">
@@ -245,6 +249,10 @@ function openNumLibDetail(type) {
         <div class="vocab-item-meta" style="margin-top: 4px;">
           <span class="vocab-item-zh" style="font-weight:bold;">${v.zh}</span>
         </div>
+        
+        <!-- 變形提示區塊 -->
+        ${noteHtml}
+        
         <div class="vocab-item-example" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border, #E5E7EB);">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
             <div>
