@@ -6,7 +6,7 @@
   ],
   "vocabularies": [
     { "id": "v101", "lessonId": "lesson-1", "kr": "선생님", "zh": "老師", "category": "稱謂" },
-    { "id": "v102", "lessonId": "lesson-1", "kr": "이름", "pron": "이름", "zh": "名字", "category": "基本" },
+    { "id": "v102", "lessonId": "lesson-1", "kr": "이름", "zh": "名字", "category": "基本" },
     { "id": "v103", "lessonId": "lesson-1", "kr": "친구", "zh": "朋友", "category": "稱謂" },
     { "id": "v104", "lessonId": "lesson-1", "kr": "나라", "zh": "國家", "category": "名詞" },
     { "id": "v105", "lessonId": "lesson-1", "kr": "사람", "zh": "人", "category": "名詞" },
@@ -71,12 +71,16 @@
     { "id": "v229", "lessonId": "lesson-2", "kr": "화장실", "zh": "化妝室 / 廁所", "category": "場所" },
     { "id": "v230", "lessonId": "lesson-2", "kr": "백화점", "pron": "배콰점", "zh": "百貨公司", "category": "場所" },
     { "id": "v231", "lessonId": "lesson-2", "kr": "지하철역", "pron": "지하철력", "zh": "捷運站 / 地鐵站", "category": "場所" },
-    { "id": "v232", "lessonId": "lesson-2", "kr": "앞", "pron": "압", "zh": "前面", "category": "位置" },
-    { "id": "v233", "lessonId": "lesson-2", "kr": "뒤", "zh": "後面", "category": "位置" },
-    { "id": "v234", "lessonId": "lesson-2", "kr": "위", "zh": "上面", "category": "位置" },
-    { "id": "v235", "lessonId": "lesson-2", "kr": "아래", "zh": "下面", "category": "位置" },
-    { "id": "v236", "lessonId": "lesson-2", "kr": "옆", "pron": "엽", "zh": "旁邊", "category": "位置" },
-    { "id": "v237", "lessonId": "lesson-2", "kr": "근처", "zh": "附近", "category": "位置" }
+
+    { "id": "v232", "lessonId": "lesson-2", "kr": "앞에", "pron": "아페", "zh": "在前面", "category": "方位" },
+    { "id": "v233", "lessonId": "lesson-2", "kr": "뒤에", "zh": "在後面", "category": "方位" },
+    { "id": "v234", "lessonId": "lesson-2", "kr": "위에", "zh": "在上面", "category": "方位" },
+    { "id": "v235", "lessonId": "lesson-2", "kr": "아래에", "zh": "在下面", "category": "方位" },
+    { "id": "v236", "lessonId": "lesson-2", "kr": "밑에", "pron": "미테", "zh": "在底下", "category": "方位" },
+    { "id": "v237", "lessonId": "lesson-2", "kr": "옆에", "pron": "여페", "zh": "在旁邊", "category": "方位" },
+    { "id": "v238", "lessonId": "lesson-2", "kr": "안에", "pron": "아네", "zh": "在裡面", "category": "方位" },
+    { "id": "v239", "lessonId": "lesson-2", "kr": "밖에", "pron": "바께", "zh": "在外面", "category": "方位" },
+    { "id": "v240", "lessonId": "lesson-2", "kr": "근처에", "zh": "在附近", "category": "方位" }
   ],
   "questions": [
     {
@@ -325,7 +329,7 @@
       "title": "特殊變化 ⑩：ㅅ 不規則變化",
       "formula": "尾音 ㅅ + 母音語尾 ➔ 尾音 ㅅ 直接脫落",
       "explanation": "動詞/形容詞尾音為 <b>ㅅ</b> 時，遇到母音語尾，尾音 <b>ㅅ</b> 脫落，但前後母音不縮合。",
-      "exampleKr": "【有尾音 (不規則)】：낫다 ➔ 나<span class=\"hl-red\">아요</span> (痊癒/更好) | 짓다 ➔ 지<span class=\"hl-red\">어요</span> (做飯/蓋房子) | 붓다 ➔ 부<span class=\"hl-red\">어요</span> (倒水/腫脹) | 젓다 ➔ 저<span class=\"hl-red\">어요</span> (攪拌)<br>【有尾音 (規則特例)】：웃다 ➔ 웃<span class=\"hl-red\">어요</span> (笑) | 벗다 ➔ 벗<span class=\"hl-red\">어요</span> (脫衣服) | 씻다 ➔ 씻<span class=\"hl-red\">어요</span> (洗手/洗臉)"
+      "exampleKr": "【有尾音 (不規則)】：낫다 ➔ 나<span class=\"hl-red\">아요</span> (痊癒/更好) | 짓다 ➔ 지<span class=\"hl-red\">어요</span> (做飯/蓋房子) | 붓다 ➔ 부<span class=\"hl-red\">어요</span> (倒水/腫脹) | 젓다 ➔ 저<span class=\"hl-red\">어요</span> (攪拌)<br>【有尾音 (規則特例)】：웃다 ➔ 웃<span class=\"hl-red\">어요</span> (笑) | 벗다 ➔ 벗<span class=\"hl-red\">아요</span> (脫衣服) | 씻다 ➔ 씻<span class=\"hl-red\">어요</span> (洗手/洗臉)"
     }
   ]
 }
