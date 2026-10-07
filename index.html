@@ -132,12 +132,14 @@
     </div>
   </div>
 
-    <!-- 👇 4. 數字工具區 (轉換器 + 極限特訓) -->
+      <!-- 👇 4. 數字工具區 (轉換器 + 特訓測驗 + 數字單字庫) -->
   <div id="numbersView" class="view-section">
     <!-- 子選單切換 -->
     <div class="sub-tabs">
-      <button class="sub-btn active" id="btnSubConverter" onclick="switchNumberSubView('converter')">🧮 數字轉換器</button>
-      <button class="sub-btn" id="btnSubNumQuiz" onclick="switchNumberSubView('quiz')">⏳ 極限特訓測驗</button>
+      <button class="sub-btn active" id="btnSubConverter" onclick="switchNumberSubView('converter')">🧮 轉換器</button>
+      <button class="sub-btn" id="btnSubNumQuiz" onclick="switchNumberSubView('quiz')">⏳ 極限特訓</button>
+      <!-- 新增第三個按鈕：數字單字庫 -->
+      <button class="sub-btn" id="btnSubNumLib" onclick="switchNumberSubView('library')">📖 數字單字庫</button>
     </div>
 
     <!-- A. 轉換器視圖 -->
@@ -166,18 +168,51 @@
           <span style="font-size:0.9rem; color:var(--text-sub);">🔥 挑戰數字直覺反射！</span>
           <span id="numQuizScore" style="font-weight:bold; color:var(--primary); font-size: 1.1rem;">得分：0</span>
         </div>
-        
         <div class="prompt-box" style="justify-content: center; min-height: 80px; text-align: center; flex-direction: column;">
           <div class="vocab-quiz-q" id="numQuizPrompt" style="font-size: 1.6rem; color:#1e293b;">-</div>
           <button class="btn-audio" id="numQuizAudioBtn" style="display:none; margin-top: 12px; align-self: center;">🔊 聽正確發音</button>
         </div>
-        
         <div class="quiz-options" id="numQuizOptions" style="margin-top: 16px;"></div>
         <div class="message" id="numQuizMessage" style="margin-top: 16px; text-align: center;"></div>
         <button class="btn btn-submit" id="numQuizNextBtn" style="display:none; width:100%; margin-top: 16px;" onclick="nextNumQuiz()">下一題 ➔</button>
       </div>
     </div>
+
+    <!-- 👇 C. 數字單字庫視圖 (全新加入) -->
+    <div id="numLibrarySubView" style="display: none; margin-top: 16px;">
+      
+      <!-- 階層 1：路線選擇選單 -->
+      <div id="numLibMenu">
+        <h3 style="text-align:center; color:#1e293b; margin-bottom: 24px;">請選擇要學習的數字系統</h3>
+        <div style="display:flex; flex-direction:column; gap: 16px;">
+          <!-- 藍色按鈕：固有詞 -->
+          <button class="btn btn-submit" style="background:#2563eb; padding:24px; font-size:1.3rem; border-radius:12px; border:none; display:flex; flex-direction:column; align-items:center; gap:8px;" onclick="openNumLibDetail('native')">
+            🌸 韓式數字 (固有詞)
+            <span style="font-size:0.9rem; font-weight:normal; opacity:0.9;">用於數量 (個/杯/瓶)、年齡、點鐘</span>
+          </button>
+          <!-- 紅色按鈕：漢字音 -->
+          <button class="btn btn-submit" style="background:#dc2626; padding:24px; font-size:1.3rem; border-radius:12px; border:none; display:flex; flex-direction:column; align-items:center; gap:8px;" onclick="openNumLibDetail('sino')">
+            🈴 漢字音數字
+            <span style="font-size:0.9rem; font-weight:normal; opacity:0.9;">用於金額、日期、分鐘、號碼</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 階層 2：單字清單詳細頁 (套用原本單字卡樣式) -->
+      <div id="numLibDetail" style="display: none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <button class="btn-reset" style="padding:6px 12px; border-radius:8px; cursor:pointer;" onclick="backToNumLibMenu()">⬅️ 返回</button>
+          <h3 id="numLibDetailTitle" style="margin:0; color:#1e293b;">-</h3>
+          <div style="width: 70px;"></div> <!-- 排版對齊用 -->
+        </div>
+        <!-- 這裡將由 JS 動態塞入跟原本單字一樣的卡片 -->
+        <div id="numLibListContainer"></div>
+      </div>
+
+    </div>
+
   </div>
+
 
 
 </div>
