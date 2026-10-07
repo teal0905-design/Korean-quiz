@@ -74,6 +74,26 @@
 
   <!-- 3. 學習資料庫 -->
   <div id="bankView" class="view-section">
+        <!-- 🔢 韓文數字轉換器 -->
+    <div class="number-converter-card">
+      <div class="converter-header">
+        <h3>🔢 韓文數字自動轉換器</h3>
+        <button class="btn-audio" onclick="alert('💡 小提示：\\n1, 2, 3, 4, 20 遇到單位會縮寫喔！\\n하나 ➔ 한\\n둘 ➔ 두\\n셋 ➔ 세\\n넷 ➔ 네\\n스물 ➔ 스무')">💡 變形速查表</button>
+      </div>
+      <div class="converter-tabs">
+        <button class="tab-btn active" id="tabTime" onclick="switchConverter('time')">🕒 時間</button>
+        <button class="tab-btn" id="tabCount" onclick="switchConverter('count')">🛍️ 購物</button>
+        <button class="tab-btn" id="tabDate" onclick="switchConverter('date')">📅 日期</button>
+      </div>
+      <div class="converter-body" id="converterBody">
+         <!-- 輸入框將由 JS 動態產生 -->
+      </div>
+      <div class="converter-result" id="converterResult">
+         <div style="color: #94a3b8;">請輸入數字，即可產生韓文與發音</div>
+      </div>
+    </div>
+    <!-- 轉換器結束 -->
+
     <div class="sub-tabs">
       <button class="sub-btn active" id="btnSubGrammar" onclick="switchBankSubView('grammar')">📖 文法資料庫</button>
       <button class="sub-btn" id="btnSubVocab" onclick="switchBankSubView('vocab')">🎴 單字學習與測驗</button>
@@ -136,6 +156,7 @@
   <script src="app.js"></script>
   <script src="quiz.js"></script>
   <script src="bank.js"></script>
+  <script src="numbers.js"></script>
 </body>
 </html>
 
