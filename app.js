@@ -4,16 +4,35 @@ let vocabQuizList = [], vocabQuizIdx = 0, vocabQuizScore = 0, currentVocabQuesti
 let filteredVocabList = [], vocabCardIdx = 0, isAnimating = false;
 let isPronHidden = false; // 連音標記遮蔽狀態
 
+// 定義教材資料檔案清單（未來新增 6~10 課只需在此清單加入檔名）
+const DATA_FILES = [
+  'data_1_5.json',
+  'data_special.json'
+];
+
 async function initApp() {
   try {
-    const res = await fetch('data.json');
-    appData = await res.json();
+    const responses = await Promise.all(DATA_FILES.map(file => fetch(file)));
+    const dataList = await Promise.all(responses.map(res => res.json()));
+
+    // 初始化重置資料容器
+    appData = { lessons: [], questions: [], grammars: [], vocabularies: [] };
+
+    // 自動合併所有模組內容
+    dataList.forEach(data => {
+      if (data.lessons) appData.lessons.push(...data.lessons);
+      if (data.vocabularies) appData.vocabularies.push(...data.vocabularies);
+      if (data.questions) appData.questions.push(...data.questions);
+      if (data.grammars) appData.grammars.push(...data.grammars);
+    });
+
     populateLessonDropdowns();
     initSentenceQuiz();
     startVocabQuiz();
     filterBankData();
   } catch (e) {
-    document.getElementById('promptText').innerText = "載入 data.json 失敗，請確認檔案格式！";
+    console.error(e);
+    document.getElementById('promptText').innerText = "載入教材資料失敗，請確認檔案格式！";
   }
 }
 
@@ -275,7 +294,6 @@ function switchBankSubView(sub) {
   }
 }
 
-/* 單字檢視模式切換：清單預覽 vs 3D翻牌 */
 function switchVocabMode(mode) {
   const isList = (mode === 'list');
   document.getElementById('btnVocabModeList').classList.toggle('active', isList);
@@ -327,7 +345,6 @@ function filterBankData() {
   }
 }
 
-/* 渲染單字清單（含智慧匹配例句） */
 function renderVocabList() {
   const container = document.getElementById('vocabListContainer');
   if (!filteredVocabList || filteredVocabList.length === 0) {
@@ -341,7 +358,7 @@ function renderVocabList() {
     if (matchedQ) {
       exampleHtml = `<div class="vocab-item-example"><b>實戰例句：</b> ${matchedQ.correctOrder.join(' ')} <span style="color:var(--text-sub);">(${matchedQ.translation})</span></div>`;
     } else {
-      exampleHtml = `<div class="vocab-item-example" style="color:var(--text-sub); font-style:italic;">基礎核心單字，可透過 3D 翻牌進行測驗複習。</div>`;
+      exampleHtml = `<div class="vocab-item-example" style="color:var(--text-sub); font-style:italic;">核心單字，可透過 3D 翻牌進行測驗複習。</div>`;
     }
 
     const pronText = v.pron ? `[ ${v.pron} ]` : '';
@@ -387,7 +404,6 @@ function updateVocabCardUI() {
   document.getElementById('vocabProgress').innerText = `${vocabCardIdx + 1} / ${filteredVocabList.length}`;
 }
 
-/* 連音顯示/隱藏切換（同步支援清單與卡片） */
 function togglePronVisibility() {
   isPronHidden = !isPronHidden;
   const pronEl = document.getElementById('vocabPronDisplay');
@@ -397,7 +413,6 @@ function togglePronVisibility() {
     if (pronEl) pronEl.classList.remove('hidden');
   }
   
-  // 同步清單模式中的連音狀態
   document.querySelectorAll('[id^="listPron_"]').forEach(el => {
     if (isPronHidden) el.classList.add('hidden');
     else el.classList.remove('hidden');
@@ -444,7 +459,6 @@ function shuffleVocabCards() {
   updateVocabCardUI();
 }
 
-// 支援觸控滑動手勢
 let startX = 0;
 const vp = document.querySelector('.slider-viewport');
 if (vp) {
