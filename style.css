@@ -471,3 +471,54 @@ select {
 .opt-btn:active { transform: scale(0.98); }
 .opt-btn.correct { background: #ECFDF5; border-color: var(--success); color: var(--success); }
 .opt-btn.wrong { background: #FEF2F2; border-color: var(--error); color: var(--error); }
+/* =========================================
+   📱 手機端排版修復：選單防擠壓 + 頂部選項固定
+   ========================================= */
+
+/* 1. 修復題數選項被擠出螢幕的問題 */
+.filter-bar {
+  display: flex !important;
+  gap: 8px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* 課程下拉選單：自動填滿剩餘空間，文字過長時自動顯示省略號 (...)，不再撐爆容器 */
+.filter-bar select:first-child {
+  flex: 1 !important;
+  min-width: 0 !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+}
+
+/* 題數選單 (5題/10題/15題)：給定緊湊固定寬度，永遠穩固留在畫面右側 */
+#sentenceCountSelect,
+#vocabQuizCountSelect {
+  flex: 0 0 85px !important;
+  width: 85px !important;
+  min-width: 85px !important;
+  text-align: center;
+}
+
+/* 2. 固定頂部紅框選項，讓文法與單字清單在下方獨立平滑滑動 */
+#grammarList,
+#vocabListContainer {
+  /* 自動依據手機螢幕動態高度計算，把空間留給清單內部滑動 */
+  max-height: calc(100dvh - 240px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* 啟用 iOS 慣性流暢滑動 */
+  padding-right: 4px;
+  padding-bottom: 20px;
+}
+
+/* 美化內部滾動條 (讓視覺更乾淨俐落) */
+#grammarList::-webkit-scrollbar,
+#vocabListContainer::-webkit-scrollbar {
+  width: 4px;
+}
+#grammarList::-webkit-scrollbar-thumb,
+#vocabListContainer::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 4px;
+}
