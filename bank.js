@@ -150,16 +150,33 @@ function updateVocabCardUI() {
 
 function togglePronVisibility() {
   isPronHidden = !isPronHidden;
+  
+  // 1. 隱藏/顯示 單字卡上的連音
   const pronEl = document.getElementById('vocabPronDisplay');
   if (pronEl) {
     if (isPronHidden) pronEl.classList.add('hidden');
     else pronEl.classList.remove('hidden');
   }
+  
+  // 2. 隱藏/顯示 列表上的連音
   document.querySelectorAll('[id^="listPron_"]').forEach(el => {
     if (isPronHidden) el.classList.add('hidden');
     else el.classList.remove('hidden');
   });
+
+  // 👇 3. 新增：動態切換按鈕的圖示與文字
+  const btn = document.getElementById('btnTogglePron');
+  if (btn) {
+    if (isPronHidden) {
+      btn.innerText = '🙈 連音隱藏';
+      btn.classList.remove('active'); // 移除變色狀態
+    } else {
+      btn.innerText = '👁️ 連音顯示';
+      btn.classList.add('active'); // 加上變色狀態
+    }
+  }
 }
+
 
 function toggleCardFlip() {
   document.getElementById('vocabCardWrapper').classList.toggle('flipped');
