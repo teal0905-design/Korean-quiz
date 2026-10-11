@@ -129,8 +129,8 @@ function handleSentenceSubmit() {
     isSentenceCorrect = true;
     playCurrentSentenceAudio();
 
-    // 答對時，秀出本課文法解析
-    showGrammarExplanation(q.lessonId);
+    // 答對時，只秀出該題專屬的文法解析
+    showGrammarExplanation(q.grammarId);
 
   } else {
     zone.classList.remove('shake', 'bounce-success');
@@ -147,18 +147,23 @@ function playCurrentSentenceAudio() {
   }
 }
 
-// 動態顯示文法解析區塊
-function showGrammarExplanation(lessonId) {
-  // 找出這一課對應的所有文法
-  const lessonGrammars = appData.grammars.filter(g => g.lessonId === lessonId);
-  if(lessonGrammars.length === 0) return;
+// 動態顯示文法解析區塊 (精準打擊版：只顯示該題對應的文法)
+function showGrammarExplanation(grammarId) {
+  if (!grammarId) return; // 如果這題沒有綁定文法，就不顯示
+
+  // 支援單一 ID 字串，或多個 ID 的陣列
+  const ids = Array.isArray(grammarId) ? grammarId : [grammarId];
+  
+  // 只抓取符合 ID 的文法卡片
+  const targetGrammars = appData.grammars.filter(g => ids.includes(g.id));
+  if(targetGrammars.length === 0) return;
 
   let grammarHtml = `<div id="grammarExplain" style="margin-top: 24px; text-align: left; background: #F8FAFC; padding: 16px; border-radius: 12px; border: 1px solid #CBD5E1; animation: fadeIn 0.5s ease;">
       <h4 style="color: #334155; margin-top:0; margin-bottom: 12px; display:flex; align-items:center; gap:6px;">
-        💡 <span>本課文法重點回顧</span>
+        💡 <span>本題文法解析</span>
       </h4>`;
   
-  lessonGrammars.forEach(g => {
+  targetGrammars.forEach(g => {
     // 套用高亮標籤 (若有)
     const formattedEx = g.exampleKr
       .replace(/【有尾音[^】]*】/g, '<span class="badge badge-has">有尾音</span>')
