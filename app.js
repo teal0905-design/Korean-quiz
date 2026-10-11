@@ -6,8 +6,11 @@ const DATA_FILES = [
   'data_1_2.json', 'quiz_1_2.json',
   'data_3_4.json', 'quiz_3_4.json',
   'data_5_6.json', 'quiz_5_6.json',
+  'data_7_8.json', 'quiz_7_8.json',
+  'data_9_10.json', 'quiz_9_10.json',
   'data_special.json'
 ];
+
 
 async function initApp() {
   try {
