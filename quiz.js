@@ -1,5 +1,5 @@
-// 測驗專用變數
-let currentSentenceList = [], sentenceIdx = 0, availableCards = [], selectedCards = [], isSentenceCorrect = false;
+// 測驗專用變數 (新增 initialShuffledCards)
+let currentSentenceList = [], sentenceIdx = 0, initialShuffledCards = [], selectedCards = [], isSentenceCorrect = false;
 let vocabQuizList = [], vocabQuizIdx = 0, vocabQuizScore = 0, currentVocabQuestion = null;
 
 /* =========================================
@@ -25,6 +25,11 @@ function updateSentenceProgress() {
 
 function loadSentenceQuestion() {
   updateSentenceProgress();
+  
+  // 換題時，清空上題的文法解析區塊
+  const oldGrammar = document.getElementById('grammarExplain');
+  if (oldGrammar) oldGrammar.remove();
+
   if (currentSentenceList.length === 0) {
     document.getElementById('promptText').innerText = "本單元暫無題目。";
     document.getElementById('answerZone').innerHTML = '';
@@ -35,8 +40,10 @@ function loadSentenceQuestion() {
   document.getElementById('submitBtn').innerText = '檢查答案';
   const q = currentSentenceList[sentenceIdx];
   document.getElementById('promptText').innerText = `(${sentenceIdx + 1}/${currentSentenceList.length}) ${q.translation}`;
+  
+  // 記住最初打亂的順序，用來當作定點佔位
   const shuffled = [...q.options].sort(() => Math.random() - 0.5);
-  availableCards = shuffled.map((text, idx) => ({ id: idx, text }));
+  initialShuffledCards = shuffled.map((text, idx) => ({ id: idx, text }));
   selectedCards = [];
   renderSentenceQuiz();
 }
@@ -44,24 +51,43 @@ function loadSentenceQuestion() {
 function renderSentenceQuiz() {
   const zone = document.getElementById('answerZone');
   const bank = document.getElementById('wordBank');
+  
   if (!isSentenceCorrect) {
     zone.className = 'answer-zone';
     document.getElementById('message').innerText = '';
   }
+  
+  // 1. 渲染上方作答區
   zone.innerHTML = '';
-  selectedCards.forEach(c => zone.appendChild(createCard(c.text, () => {
-    if (isSentenceCorrect) return;
-    selectedCards = selectedCards.filter(x => x.id !== c.id);
-    availableCards.push(c);
-    renderSentenceQuiz();
-  })));
+  selectedCards.forEach(c => {
+    zone.appendChild(createCard(c.text, () => {
+      if (isSentenceCorrect) return; // 答對後鎖定
+      selectedCards = selectedCards.filter(x => x.id !== c.id);
+      renderSentenceQuiz(); // 點擊退回下方
+    }));
+  });
+  
+  // 2. 渲染下方選項區 (定點不移位邏輯)
   bank.innerHTML = '';
-  availableCards.forEach(c => bank.appendChild(createCard(c.text, () => {
-    if (isSentenceCorrect) return;
-    availableCards = availableCards.filter(x => x.id !== c.id);
-    selectedCards.push(c);
-    renderSentenceQuiz();
-  })));
+  initialShuffledCards.forEach(c => {
+    // 檢查這張卡片是否已經被選到上面去了
+    const isSelected = selectedCards.some(x => x.id === c.id);
+    
+    if (isSelected) {
+      // 如果被選了，就在原地留一個灰色佔位符
+      const placeholder = document.createElement('div');
+      placeholder.className = 'card placeholder';
+      placeholder.innerText = c.text;
+      bank.appendChild(placeholder);
+    } else {
+      // 如果還沒被選，就是正常可點擊的卡片
+      bank.appendChild(createCard(c.text, () => {
+        if (isSentenceCorrect) return; // 答對後鎖定
+        selectedCards.push(c);
+        renderSentenceQuiz(); // 點擊移動到上方
+      }));
+    }
+  });
 }
 
 function createCard(txt, fn) {
@@ -86,11 +112,14 @@ function handleSentenceSubmit() {
     }
     return;
   }
+  
   const q = currentSentenceList[sentenceIdx];
   const userAns = selectedCards.map(c => c.text);
   const ok = userAns.length === q.correctOrder.length && userAns.every((v, i) => v === q.correctOrder[i]);
+  
   const zone = document.getElementById('answerZone');
   const msg = document.getElementById('message');
+  
   if (ok) {
     zone.classList.remove('incorrect', 'shake');
     zone.classList.add('correct', 'bounce-success');
@@ -99,6 +128,10 @@ function handleSentenceSubmit() {
     document.getElementById('submitBtn').innerText = '下一題 ➔';
     isSentenceCorrect = true;
     playCurrentSentenceAudio();
+
+    // 答對時，秀出本課文法解析
+    showGrammarExplanation(q.lessonId);
+
   } else {
     zone.classList.remove('shake', 'bounce-success');
     void zone.offsetWidth;
@@ -113,6 +146,40 @@ function playCurrentSentenceAudio() {
     speakKorean(currentSentenceList[sentenceIdx].correctOrder.join(' '), 'sentenceAudioBtn');
   }
 }
+
+// 動態顯示文法解析區塊
+function showGrammarExplanation(lessonId) {
+  // 找出這一課對應的所有文法
+  const lessonGrammars = appData.grammars.filter(g => g.lessonId === lessonId);
+  if(lessonGrammars.length === 0) return;
+
+  let grammarHtml = `<div id="grammarExplain" style="margin-top: 24px; text-align: left; background: #F8FAFC; padding: 16px; border-radius: 12px; border: 1px solid #CBD5E1; animation: fadeIn 0.5s ease;">
+      <h4 style="color: #334155; margin-top:0; margin-bottom: 12px; display:flex; align-items:center; gap:6px;">
+        💡 <span>本課文法重點回顧</span>
+      </h4>`;
+  
+  lessonGrammars.forEach(g => {
+    // 套用高亮標籤 (若有)
+    const formattedEx = g.exampleKr
+      .replace(/【有尾音[^】]*】/g, '<span class="badge badge-has">有尾音</span>')
+      .replace(/【無尾音[^】]*】/g, '<span class="badge badge-none">無尾音</span>');
+      
+    grammarHtml += `
+      <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed #E2E8F0;">
+          <strong style="color: #2563EB; font-size: 1.05rem;">${g.title}</strong>
+          <div style="font-size: 0.9rem; color: #475569; margin-top: 4px;">${g.explanation}</div>
+          <div style="font-size: 0.9rem; color: #1E293B; margin-top: 6px; background: #FFFFFF; padding: 8px; border-radius: 6px; border: 1px solid #E2E8F0;">
+              ${formattedEx}
+          </div>
+      </div>`;
+  });
+  grammarHtml += `</div>`;
+
+  // 將解析區塊安插在 message 訊息的下方
+  const msgEl = document.getElementById('message');
+  msgEl.insertAdjacentHTML('afterend', grammarHtml);
+}
+
 
 /* =========================================
    2. 單字選擇測驗 (Vocab Quiz)
