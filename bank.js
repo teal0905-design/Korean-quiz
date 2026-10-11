@@ -164,18 +164,25 @@ function togglePronVisibility() {
     else el.classList.remove('hidden');
   });
 
-  // 👇 3. 新增：動態切換按鈕的圖示與文字
-  const btn = document.getElementById('btnTogglePron');
-  if (btn) {
+  // 👇 3. 同步更新「清單」與「卡片」兩個視圖的按鈕
+  const btnList = document.getElementById('togglePronBtnList');
+  const btnCard = document.getElementById('togglePronBtnCard');
+  
+  const updateBtnState = (btn) => {
+    if (!btn) return;
     if (isPronHidden) {
       btn.innerText = '🙈 連音隱藏';
-      btn.classList.remove('active'); // 移除變色狀態
+      btn.classList.remove('active');
     } else {
       btn.innerText = '👁️ 連音顯示';
-      btn.classList.add('active'); // 加上變色狀態
+      btn.classList.add('active');
     }
-  }
+  };
+
+  updateBtnState(btnList);
+  updateBtnState(btnCard);
 }
+
 
 
 function toggleCardFlip() {
