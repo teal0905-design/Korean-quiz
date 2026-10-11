@@ -1,34 +1,101 @@
 {
   "lessons": [
-    { "id": "lesson7", "title": "第7課：交通 (교통)" },
-    { "id": "lesson8", "title": "第8課：電話 (전화)" }
+    { "id": "lesson-7", "title": "제7과 교통 (第七課：交通)" },
+    { "id": "lesson-8", "title": "제8과 전화 (第八課：電話)" }
   ],
   "vocabularies": [
-    { "id": "v7_1", "lessonId": "lesson7", "kr": "오른쪽 / 왼쪽", "pron": "o-reun-jjok / oen-jjok", "zh": "右邊 / 左邊", "category": "方向" },
-    { "id": "v7_2", "lessonId": "lesson7", "kr": "건너편", "pron": "geon-neo-pyeon", "zh": "對面", "category": "方向" },
-    { "id": "v7_3", "lessonId": "lesson7", "kr": "횡단보도", "pron": "hoeng-dan-bo-do", "zh": "斑馬線", "category": "交通設施" },
-    { "id": "v7_4", "lessonId": "lesson7", "kr": "지하철", "pron": "ji-ha-cheol", "zh": "地鐵", "category": "交通工具" },
-    { "id": "v7_5", "lessonId": "lesson7", "kr": "갈아타다", "pron": "ga-ra-ta-da", "zh": "轉乘 / 換車", "category": "動詞" },
-    { "id": "v7_6", "lessonId": "lesson7", "kr": "정류장", "pron": "jeong-ryu-jang", "zh": "公車站", "category": "交通設施" },
-    { "id": "v7_7", "lessonId": "lesson7", "kr": "직진 / 좌회전 / 우회전", "pron": "jik-jin / jwa-hoe-jeon / u-hoe-jeon", "zh": "直行 / 左轉 / 右轉", "category": "方向" },
-    { "id": "v8_1", "lessonId": "lesson8", "kr": "휴대전화", "pron": "hyu-dae-jeon-hwa", "zh": "手機", "category": "通訊" },
-    { "id": "v8_2", "lessonId": "lesson8", "kr": "통화 중이다", "pron": "tong-hwa-jung-i-da", "zh": "通話中", "category": "通訊" },
-    { "id": "v8_3", "lessonId": "lesson8", "kr": "잘못 걸다", "pron": "jal-mot-geol-da", "zh": "打錯電話", "category": "通訊" },
-    { "id": "v8_4", "lessonId": "lesson8", "kr": "문자메시지를 보내다", "pron": "mun-ja-me-si-ji-reul bo-nae-da", "zh": "傳簡訊", "category": "通訊" },
-    { "id": "v8_5", "lessonId": "lesson8", "kr": "바꾸다", "pron": "ba-kku-da", "zh": "轉接(電話) / 換", "category": "動詞" },
-    { "id": "v8_6", "lessonId": "lesson8", "kr": "약속을 지키다 / 어기다", "pron": "yak-so-geul ji-ki-da / eo-gi-da", "zh": "遵守約定 / 違背約定", "category": "約定" }
+    { "id": "v701", "lessonId": "lesson-7", "kr": "지하철", "zh": "地鐵", "category": "交通", "example": { "kr": "지하철로 사십 분쯤 걸립니다.", "zh": "搭地鐵大約花40分鐘。" } },
+    { "id": "v702", "lessonId": "lesson-7", "kr": "버스", "zh": "公車", "category": "交通", "example": { "kr": "버스는 시간이 많이 걸립니다.", "zh": "公車會花很多時間。" } },
+    { "id": "v703", "lessonId": "lesson-7", "kr": "오른쪽", "zh": "右邊", "category": "方向", "example": { "kr": "오른쪽으로 가세요.", "zh": "請向右走。" } },
+    { "id": "v704", "lessonId": "lesson-7", "kr": "왼쪽", "zh": "左邊", "category": "方向", "example": { "kr": "왼쪽으로 가세요.", "zh": "請向左走。" } },
+    { "id": "v705", "lessonId": "lesson-7", "kr": "건너편", "zh": "對面", "category": "方向", "example": { "kr": "편의점은 건너편에 있습니다.", "zh": "便利商店在對面。" } },
+    { "id": "v706", "lessonId": "lesson-7", "kr": "갈아타다", "zh": "轉乘 / 換車", "category": "動詞", "example": { "kr": "서울역에서 갈아타세요.", "zh": "請在首爾站轉乘。" } },
+    { "id": "v801", "lessonId": "lesson-8", "kr": "전화번호", "zh": "電話號碼", "category": "通訊", "example": { "kr": "전화번호 좀 가르쳐 주세요.", "zh": "請告訴我電話號碼。" } },
+    { "id": "v802", "lessonId": "lesson-8", "kr": "휴대전화", "zh": "手機", "category": "通訊", "example": { "kr": "웨이 씨의 휴대전화 번호입니다.", "zh": "這是王偉的手機號碼。" } },
+    { "id": "v803", "lessonId": "lesson-8", "kr": "통화 중이다", "zh": "通話中", "category": "通訊", "example": { "kr": "지금은 통화 중이었습니다.", "zh": "剛才正在通話中。" } },
+    { "id": "v804", "lessonId": "lesson-8", "kr": "바꾸다", "zh": "轉接(電話) / 換", "category": "動詞", "example": { "kr": "웨이 씨 좀 바꿔 주세요.", "zh": "請幫我轉接王偉。" } },
+    { "id": "v805", "lessonId": "lesson-8", "kr": "약속하다", "zh": "約定", "category": "動詞", "example": { "kr": "두 사람은 약속을 했습니다.", "zh": "兩個人約定好了。" } }
   ],
   "grammars": [
-    { "id": "g7_1", "lessonId": "lesson7", "title": "-(으)로 (方向/手段/工具)", "formula": "名詞 + (으)로", "explanation": "表示移動的方向（往哪裡），或是搭乘的交通工具、使用的方法。", "exampleKr": "오른쪽으로 가세요.\n지하철로 40분쯤 걸립니다." },
-    { "id": "g7_2", "lessonId": "lesson7", "title": "-에서 ~까지 (從~到~)", "formula": "場所 + 에서 + 場所 + 까지", "explanation": "表示空間上的起點與終點。", "exampleKr": "여기서 잠실까지 얼마나 걸려요?" },
-    { "id": "g7_3", "lessonId": "lesson7", "title": "-어서/아서/여서 (動作先後順序/原因)", "formula": "動詞/形容詞 + 아/어/여서", "explanation": "表示前一個動作發生後，接著發生後一個動作（有連貫性）；或表示原因。", "exampleKr": "잠실역 6번 출구로 나가서 왼쪽으로 가세요.\n배가 아파서 약을 먹었습니다." },
-    { "id": "g7_4", "lessonId": "lesson7", "title": "-(으)니까 (原因與理由)", "formula": "動詞/形容詞 + (으)니까", "explanation": "表示原因，通常後句會接命令句 (-으세요) 或勸誘句 (-읍시다)。", "exampleKr": "사람이 많으니까 조심하세요." },
-    { "id": "g7_5", "lessonId": "lesson7", "title": "-지 말다 (禁止 / 不要...)", "formula": "動詞語幹 + 지 말다", "explanation": "構成命令句或勸誘句的否定形式，表示「請不要做某事」。", "exampleKr": "여기 앉지 마세요.\n도서관에서 떠들지 마세요." },
-    { "id": "g7_6", "lessonId": "lesson7", "title": "ㄷ / 르 불규칙 (不規則變化)", "formula": "듣다 ➔ 들어요 / 빠르다 ➔ 빨라요", "explanation": "ㄷ遇到母音會變成ㄹ (如: 걷다➔걸어서)。르遇到母音會多出ㄹ (如: 모르다➔몰라서)。", "exampleKr": "집에서 학교까지 걸어서 10분 걸립니다.\n지하철이 버스보다 더 빨라요." },
-    { "id": "g8_1", "lessonId": "lesson8", "title": "-(으)ㄹ게요 (承諾 / 我會...)", "formula": "動詞語幹 + (으)ㄹ게요", "explanation": "向對方表達自己的意願或承諾，主詞只能是第一人稱。", "exampleKr": "늦으면 전화할게요." },
-    { "id": "g8_2", "lessonId": "lesson8", "title": "-(이)나 (選擇 / 或)", "formula": "名詞 + (이)나", "explanation": "列舉兩個以上的事物，表示從中選擇其一。", "exampleKr": "3시나 4시쯤에 전화할게요." },
-    { "id": "g8_3", "lessonId": "lesson8", "title": "-는데요 / -은데요/ㄴ데요 (語氣柔和/期待回應)", "formula": "動詞+는데요 / 形容詞+(으)ㄴ데요", "explanation": "表達某種情況或背景，語氣較委婉，並暗示期待對方回應。", "exampleKr": "바로 전데요. 누구세요?" },
-    { "id": "g8_4", "lessonId": "lesson8", "title": "에게서 / 한테서 (從...那裡)", "formula": "人物名詞 + 에게서/한테서", "explanation": "表示動作的來源，常跟聽(듣다)、收到(받다)、借(빌리다)連用。", "exampleKr": "웨이 씨한테서 전화 받았어요?" },
-    { "id": "g8_5", "lessonId": "lesson8", "title": "-(으)면 (假設 / 如果)", "formula": "動詞/形容詞 + (으)면", "explanation": "表示假設或條件的「如果」。", "exampleKr": "바쁘지 않으면 내일 만날까요?" }
+    {
+      "id": "g_l7_1",
+      "lessonId": "lesson-7",
+      "title": "-(으)로 (方向/手段/工具)",
+      "formula": "名詞 + -(으)로",
+      "explanation": "表示移動的方向（往哪裡），或是搭乘的交通工具、使用的方法。",
+      "exampleKr": "오른쪽<span class=\"hl-red\">으로</span> 가세요. (請向右走。)<br>지하철<span class=\"hl-red\">로</span> 갑니다. (搭地鐵去。)"
+    },
+    {
+      "id": "g_l7_2",
+      "lessonId": "lesson-7",
+      "title": "-에서 ~까지 (起點到終點)",
+      "formula": "場所 + -에서 + 場所 + -까지",
+      "explanation": "表示空間上的起點與終點（「從...到...」）。",
+      "exampleKr": "여기<span class=\"hl-red\">서</span> 잠실<span class=\"hl-red\">까지</span> 얼마나 걸려요? (從這裡到蠶室要多久？)"
+    },
+    {
+      "id": "g_l7_3",
+      "lessonId": "lesson-7",
+      "title": "-어서/아서/여서 (順序/原因)",
+      "formula": "動詞/形容詞語幹 + -아/어/여서",
+      "explanation": "表示前一個動作發生後，接著發生後一個動作（有連貫性）；或表示原因。",
+      "exampleKr": "나가<span class=\"hl-red\">서</span> 왼쪽으로 가세요. (出去後往左走。)"
+    },
+    {
+      "id": "g_l7_4",
+      "lessonId": "lesson-7",
+      "title": "-(으)니까 (原因與理由)",
+      "formula": "動詞/形容詞語幹 + -(으)니까",
+      "explanation": "表示原因，通常後句會接命令句 (-으세요) 或勸誘句 (-읍시다)。",
+      "exampleKr": "사람이 많<span class=\"hl-red\">으니까</span> 조심하세요. (因為人多，請小心。)"
+    },
+    {
+      "id": "g_l7_5",
+      "lessonId": "lesson-7",
+      "title": "-지 말다 (禁止 / 不要...)",
+      "formula": "動詞語幹 + -지 말다",
+      "explanation": "構成命令句或勸誘句的否定形式，表示「請不要做某事」。",
+      "exampleKr": "여기 앉<span class=\"hl-red\">지 마세요</span>. (請不要坐在這裡。)"
+    },
+    {
+      "id": "g_l8_1",
+      "lessonId": "lesson-8",
+      "title": "-(으)ㄹ게요 (承諾 / 我會...)",
+      "formula": "動詞語幹 + -(으)ㄹ게요",
+      "explanation": "向對方表達自己的意願或承諾，主詞只能是第一人稱。",
+      "exampleKr": "이따가 전화할<span class=\"hl-red\">게요</span>. (我待會打電話。)"
+    },
+    {
+      "id": "g_l8_2",
+      "lessonId": "lesson-8",
+      "title": "-(이)나 (選擇 / 或)",
+      "formula": "名詞 + -(이)나",
+      "explanation": "列舉兩個以上的事物，表示從中選擇其一。",
+      "exampleKr": "세 시<span class=\"hl-red\">나</span> 네 시쯤에 전화할게요. (我三點或四點左右打電話。)"
+    },
+    {
+      "id": "g_l8_3",
+      "lessonId": "lesson-8",
+      "title": "-는데요 / -은/ㄴ데요 (語氣柔和)",
+      "formula": "動詞+-는데요 / 形容詞+-(으)ㄴ데요",
+      "explanation": "表達某種情況或背景，語氣較委婉，並暗示期待對方回應。",
+      "exampleKr": "바로 전<span class=\"hl-red\">데요</span>. (我就是。)"
+    },
+    {
+      "id": "g_l8_4",
+      "lessonId": "lesson-8",
+      "title": "에게서 / 한테서 (從...那裡)",
+      "formula": "人物名詞 + 에게서 / 한테서",
+      "explanation": "表示動作的來源，常跟聽(듣다)、收到(받다)、借(빌리다)連用。",
+      "exampleKr": "웨이 씨<span class=\"hl-red\">한테서</span> 전화 받았어요? (接到王偉打來的電話了嗎？)"
+    },
+    {
+      "id": "g_l8_5",
+      "lessonId": "lesson-8",
+      "title": "-(으)면 (假設 / 如果)",
+      "formula": "動詞/形容詞語幹 + -(으)면",
+      "explanation": "表示假設或條件的「如果」。",
+      "exampleKr": "조금 늦으<span class=\"hl-red\">면</span> 전화할게요. (如果會晚一點，我會打電話。)"
+    }
   ]
 }
