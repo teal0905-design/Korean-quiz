@@ -1,0 +1,37 @@
+{
+  "lessons": [
+    { "id": "lesson9", "title": "第9課：天氣與季節 (날씨와 계절)" },
+    { "id": "lesson10", "title": "第10課：休假與興趣 (휴일과 방학)" }
+  ],
+  "vocabularies": [
+    { "id": "v9_1", "lessonId": "lesson9", "kr": "봄 / 여름 / 가을 / 겨울", "pron": "bom / yeo-reum / ga-eul / gyeo-ul", "zh": "春 / 夏 / 秋 / 冬", "category": "季節" },
+    { "id": "v9_2", "lessonId": "lesson9", "kr": "맑다 / 흐리다 / 개다", "pron": "mak-da / heu-ri-da / gae-da", "zh": "晴朗 / 陰天 / 放晴", "category": "天氣" },
+    { "id": "v9_3", "lessonId": "lesson9", "kr": "구름이 끼다", "pron": "gu-reum-i kki-da", "zh": "多雲", "category": "天氣" },
+    { "id": "v9_4", "lessonId": "lesson9", "kr": "덥다 / 따뜻하다 / 선선하다 / 춥다", "pron": "deop-da / tta-tteu-tha-da / seon-seon-ha-da / chup-da", "zh": "熱 / 溫暖 / 涼爽 / 冷", "category": "溫度" },
+    { "id": "v9_5", "lessonId": "lesson9", "kr": "단풍 구경을 가다", "pron": "dan-pung gu-gyeong-eul ga-da", "zh": "去賞楓", "category": "活動" },
+    { "id": "v10_1", "lessonId": "lesson10", "kr": "방학 / 휴가 / 연휴", "pron": "bang-hak / hyu-ga / yeon-hyu", "zh": "學校假期 / 公司休假 / 連假", "category": "假期" },
+    { "id": "v10_2", "lessonId": "lesson10", "kr": "계획을 세우다", "pron": "gye-hoe-geul se-u-da", "zh": "制定計畫", "category": "活動" },
+    { "id": "v10_3", "lessonId": "lesson10", "kr": "사진 찍기", "pron": "sa-jin jjig-gi", "zh": "攝影 / 拍照", "category": "興趣" },
+    { "id": "v10_4", "lessonId": "lesson10", "kr": "예매하다", "pron": "ye-mae-ha-da", "zh": "預購 / 訂票", "category": "動詞" },
+    { "id": "v10_5", "lessonId": "lesson10", "kr": "축구(하다) / 야구(하다)", "pron": "chuk-gu / ya-gu", "zh": "足球 / 棒球 (搭配 하다)", "category": "運動" },
+    { "id": "v10_6", "lessonId": "lesson10", "kr": "탁구(치다) / 테니스(치다)", "pron": "tak-gu / te-ni-seu", "zh": "桌球 / 網球 (搭配 치다)", "category": "運動" },
+    { "id": "v10_7", "lessonId": "lesson10", "kr": "스키(타다) / 자전거(타다)", "pron": "seu-ki / ja-jeon-geo", "zh": "滑雪 / 腳踏車 (搭配 타다)", "category": "運動" }
+  ],
+  "grammars": [
+    { "id": "g9_1", "lessonId": "lesson9", "title": "-는데 / -은데/ㄴ데 (轉折/背景對比)", "formula": "動詞+는데 / 形容詞+(으)ㄴ데", "explanation": "表示對前一子句的事實，後一子句表現出相反或對比的情況。", "exampleKr": "여름은 더운데 겨울은 춥습니다." },
+    { "id": "g9_2", "lessonId": "lesson9", "title": "-(으)ㄹ 수 있다/없다 (能力/可能性)", "formula": "動詞語幹 + (으)ㄹ 수 있다", "explanation": "表示有做某種行為的能力，或是具備可能性。", "exampleKr": "저는 스키를 탈 수 있는 겨울이 좋아요." },
+    { "id": "g9_3", "lessonId": "lesson9", "title": "-(으)ㄴ 후에 (在...之後)", "formula": "動詞語幹 + (으)ㄴ 후에", "explanation": "表示前一個動作結束後，接著發生後一個動作。名詞則直接加 후에。", "exampleKr": "비가 온 후에는 날씨가 맑겠지요?\n30분 후에 다시 걸겠습니다." },
+    { "id": "g9_4", "lessonId": "lesson9", "title": "-겠- (推測)", "formula": "動詞/形容詞 + 겠", "explanation": "根據目前的情況和狀態，做出的假設或推測（看起來會...）。", "exampleKr": "주말이라서 교통이 복잡하겠어요." },
+    { "id": "g9_5", "lessonId": "lesson9", "title": "보다 (比...更...)", "formula": "名詞 + 보다 + (더)", "explanation": "用於比較兩個事物，接在「被比較」的對象後面。", "exampleKr": "오늘보다 따뜻할 것 같아요." },
+    { "id": "g9_6", "lessonId": "lesson9", "title": "-(으)ㄹ 것 같다 (推測/似乎)", "formula": "動詞/形容詞 + (으)ㄹ 것 같다", "explanation": "表示對將來的動作或狀態的推測（好像會...）。", "exampleKr": "곧 비가 올 것 같아요." },
+    { "id": "g9_7", "lessonId": "lesson9", "title": "-는군요 / -군요 (感嘆)", "formula": "動詞+는군요 / 形容詞+군요", "explanation": "表示說話時對新發現的事物的感嘆。", "exampleKr": "산책하는 사람이 많군요." },
+    { "id": "g9_8", "lessonId": "lesson9", "title": "-고 있다 (正在進行)", "formula": "動詞語幹 + 고 있다", "explanation": "表示動作正在進行或持續中。", "exampleKr": "저기에서 사람들이 운동을 하고 있어요." },
+    { "id": "g10_1", "lessonId": "lesson10", "title": "-(으)려고 하다 (打算/計畫)", "formula": "動詞語幹 + (으)려고 하다", "explanation": "表示計畫或意圖要做某件事情。", "exampleKr": "이번 방학에는 설악산에 가려고 해요." },
+    { "id": "g10_2", "lessonId": "lesson10", "title": "동안 (期間)", "formula": "時間名詞 + 동안", "explanation": "表示一段時間的「期間」。", "exampleKr": "2주 동안 방학이에요." },
+    { "id": "g10_3", "lessonId": "lesson10", "title": "-(으)ㄹ 때 (當...的時候)", "formula": "動詞/形容詞 + (으)ㄹ 때", "explanation": "表示動作發生的時間點。名詞則直接加 때。", "exampleKr": "시간이 있을 때는 여행을 가요.\n방학 때" },
+    { "id": "g10_4", "lessonId": "lesson10", "title": "중에서 (在...之中)", "formula": "名詞 + 중에서", "explanation": "在多個對象或範圍中做選擇，常跟 제일 (最) 連用。", "exampleKr": "여행하신 곳 중에서 어디가 제일 좋았어요?" },
+    { "id": "g10_5", "lessonId": "lesson10", "title": "에 ~쯤 (大約/每)", "formula": "時間單位 + 에 + 數量 + 쯤", "explanation": "對時間基準的頻率估計（例如：一個月大約兩次）。", "exampleKr": "한 달에 한 번쯤 가요." },
+    { "id": "g10_6", "lessonId": "lesson10", "title": "-기 전에 (在...之前)", "formula": "動詞語幹 + 기 전에", "explanation": "表示在做某個動作之前。名詞則直接加 전에。", "exampleKr": "탁구를 배우기 전에는 별로 안 했어요.\n10분 전에" },
+    { "id": "g10_7", "lessonId": "lesson10", "title": "못 / -지 못하다 (不能/無法)", "formula": "못 + 動詞 / 動詞+지 못하다", "explanation": "表示「沒有能力」或「客觀條件不允許」做到某事。", "exampleKr": "바빠서 극장에 자주 못 가요.\n저는 잘 치지 못하는데 좀 가르쳐 주세요." }
+  ]
+}
