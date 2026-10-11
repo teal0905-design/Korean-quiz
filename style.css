@@ -196,6 +196,22 @@ select {
 
 .card:active { transform: scale(0.94); }
 
+/* 👇 新增：句子測驗中，已被選取的單字佔位符 (定點不移位) */
+.card.placeholder {
+  background-color: #f1f5f9;
+  color: #cbd5e1;
+  border: 1px dashed #cbd5e1;
+  cursor: default;
+  box-shadow: none;
+  transform: none !important;
+}
+
+.card.placeholder:hover, 
+.card.placeholder:active {
+  transform: none;
+  box-shadow: none;
+}
+
 .controls { display: flex; gap: 10px; }
 .btn {
   flex: 1;
@@ -212,15 +228,6 @@ select {
 .btn-submit { background: var(--primary); color: white; }
 .btn-reset { background: #E5E7EB; color: #4B5563; }
 .message { margin-top: 12px; font-weight: 600; text-align: center; min-height: 24px; }
-
-/* 答錯晃動特效 (Shake) */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-6px); }
-  40%, 80% { transform: translateX(6px); }
-}
-
-.shake { animation: shake 0.35s ease-in-out; }
 
 /* 文法資料庫樣式 */
 .sub-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
@@ -471,11 +478,11 @@ select {
 .opt-btn:active { transform: scale(0.98); }
 .opt-btn.correct { background: #ECFDF5; border-color: var(--success); color: var(--success); }
 .opt-btn.wrong { background: #FEF2F2; border-color: var(--error); color: var(--error); }
+
 /* =========================================
    📱 手機端排版修復：選單防擠壓 + 頂部選項固定
    ========================================= */
 
-/* 1. 修復題數選項被擠出螢幕的問題 */
 .filter-bar {
   display: flex !important;
   gap: 8px !important;
@@ -483,7 +490,6 @@ select {
   box-sizing: border-box !important;
 }
 
-/* 課程下拉選單：自動填滿剩餘空間，文字過長時自動顯示省略號 (...)，不再撐爆容器 */
 .filter-bar select:first-child {
   flex: 1 !important;
   min-width: 0 !important;
@@ -492,7 +498,6 @@ select {
   overflow: hidden !important;
 }
 
-/* 題數選單 (5題/10題/15題)：給定緊湊固定寬度，永遠穩固留在畫面右側 */
 #sentenceCountSelect,
 #vocabQuizCountSelect {
   flex: 0 0 85px !important;
@@ -501,18 +506,15 @@ select {
   text-align: center;
 }
 
-/* 2. 固定頂部紅框選項，讓文法與單字清單在下方獨立平滑滑動 */
 #grammarList,
 #vocabListContainer {
-  /* 自動依據手機螢幕動態高度計算，把空間留給清單內部滑動 */
   max-height: calc(100dvh - 240px);
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* 啟用 iOS 慣性流暢滑動 */
+  -webkit-overflow-scrolling: touch; 
   padding-right: 4px;
   padding-bottom: 20px;
 }
 
-/* 美化內部滾動條 (讓視覺更乾淨俐落) */
 #grammarList::-webkit-scrollbar,
 #vocabListContainer::-webkit-scrollbar {
   width: 4px;
@@ -522,6 +524,7 @@ select {
   background: #D1D5DB;
   border-radius: 4px;
 }
+
 /* =========================================
    數字轉換器專屬樣式
 ========================================= */
@@ -606,7 +609,12 @@ select {
   font-weight: bold;
   margin-bottom: 12px;
 }
-/* 藍色代表固有詞 (하나, 둘...) / 紅色代表漢字音 (일, 이...) */
 .text-native { color: #2563eb; }
 .text-sino { color: #dc2626; }
 .text-unit { color: #475569; }
+
+/* 👇 新增：答對後文法解析區塊的淡入特效 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
