@@ -11,7 +11,6 @@ const DATA_FILES = [
   'data_special.json'
 ];
 
-
 async function initApp() {
   try {
     appData = { lessons: [], questions: [], grammars: [], vocabularies: [] };
@@ -19,37 +18,40 @@ async function initApp() {
     const fetchPromises = DATA_FILES.map(async (file) => {
       try {
         const res = await fetch(file);
-        if (!res.ok) return null;
+        if (!res.ok) {
+          console.warn(`⚠️ 檔案無法載入: ${file} (狀態碼: ${res.status})`);
+          return null;
+        }
         return await res.json();
       } catch (err) {
+        console.error(`❌ JSON 格式錯誤或解析失敗 (${file}):`, err);
         return null;
       }
     });
 
     const dataList = await Promise.all(fetchPromises);
 
-    dataList.forEach(data => {
+    dataList.forEach((data, index) => {
       if (!data) return;
       if (data.lessons) appData.lessons.push(...data.lessons);
       if (data.vocabularies) appData.vocabularies.push(...data.vocabularies);
       if (data.grammars) appData.grammars.push(...data.grammars);
 
-      // 自動解析題庫：支援極簡格式 (kr + extra) 與舊格式
+      // 自動解析題庫
       if (data.questions) {
         const parsedQuestions = data.questions.map(q => {
-                    if (q.kr) {
+          if (q.kr) {
             const correctOrder = q.kr.trim().split(/\s+/);
             const extra = q.extra || [];
             return {
               id: q.id,
               lessonId: q.lessonId,
-              grammarId: q.grammarId, // 👈 關鍵：把文法 ID 抓進來！
+              grammarId: q.grammarId, // 保留文法 ID
               translation: q.zh || q.translation,
               correctOrder: correctOrder,
               options: [...correctOrder, ...extra]
             };
           }
-
           return q;
         });
         appData.questions.push(...parsedQuestions);
@@ -62,7 +64,6 @@ async function initApp() {
     }
 
     populateLessonDropdowns();
-    // 呼叫其他模組的初始化功能
     if (typeof initSentenceQuiz === 'function') initSentenceQuiz();
     if (typeof startVocabQuiz === 'function') startVocabQuiz();
     if (typeof filterBankData === 'function') filterBankData();
@@ -72,6 +73,7 @@ async function initApp() {
     document.getElementById('promptText').innerText = "載入教材資料發生錯誤，請確認檔案格式！";
   }
 }
+
 
 function populateLessonDropdowns() {
   const normalLessons = appData.lessons.filter(l => l.id !== 'special');
