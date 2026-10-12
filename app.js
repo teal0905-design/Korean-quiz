@@ -37,17 +37,19 @@ async function initApp() {
       // 自動解析題庫：支援極簡格式 (kr + extra) 與舊格式
       if (data.questions) {
         const parsedQuestions = data.questions.map(q => {
-          if (q.kr) {
+                    if (q.kr) {
             const correctOrder = q.kr.trim().split(/\s+/);
             const extra = q.extra || [];
             return {
               id: q.id,
               lessonId: q.lessonId,
+              grammarId: q.grammarId, // 👈 關鍵：把文法 ID 抓進來！
               translation: q.zh || q.translation,
               correctOrder: correctOrder,
               options: [...correctOrder, ...extra]
             };
           }
+
           return q;
         });
         appData.questions.push(...parsedQuestions);
