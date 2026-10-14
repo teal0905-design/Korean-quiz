@@ -1,4 +1,4 @@
-// 測驗專用變數 (新增 initialShuffledCards)
+// 測驗專用變數 (包含定點佔位與狀態)
 let currentSentenceList = [], sentenceIdx = 0, initialShuffledCards = [], selectedCards = [], isSentenceCorrect = false;
 let vocabQuizList = [], vocabQuizIdx = 0, vocabQuizScore = 0, currentVocabQuestion = null;
 
@@ -8,10 +8,39 @@ let vocabQuizList = [], vocabQuizIdx = 0, vocabQuizScore = 0, currentVocabQuesti
 function initSentenceQuiz() {
   const val = document.getElementById('sentenceLessonSelect').value;
   const cnt = document.getElementById('sentenceCountSelect');
-  let pool = (val === 'all') ? [...appData.questions] : appData.questions.filter(q => q.lessonId === val);
-  cnt.style.display = (val === 'all') ? 'inline-block' : 'none';
+  const isRange = val.startsWith('range_');
+  const isMultiLesson = (val === 'all' || isRange);
+
+  // 1. 根據全範圍、進度累積範圍、或單課篩選題目池
+  let pool = [];
+  if (val === 'all') {
+    pool = [...appData.questions];
+  } else if (isRange) {
+    const parts = val.split('_');
+    const startNum = parseInt(parts[1], 10);
+    const endNum = parseInt(parts[2], 10);
+    pool = appData.questions.filter(q => {
+      const num = parseInt((q.lessonId || '').replace('lesson-', ''), 10);
+      return num >= startNum && num <= endNum;
+    });
+  } else {
+    pool = appData.questions.filter(q => q.lessonId === val);
+  }
+
+  // 2. 全範圍或累積範圍時顯示題數選單，單課時隱藏
+  cnt.style.display = isMultiLesson ? 'inline-block' : 'none';
+
+  // 3. 隨機打亂題目順序
   pool.sort(() => Math.random() - 0.5);
-  if (val === 'all') pool = pool.slice(0, parseInt(cnt.value));
+
+  // 4. 若為多課範圍，依選擇的題數進行切片
+  if (isMultiLesson && cnt) {
+    const countLimit = parseInt(cnt.value, 10);
+    if (!isNaN(countLimit) && countLimit > 0) {
+      pool = pool.slice(0, countLimit);
+    }
+  }
+
   currentSentenceList = pool;
   sentenceIdx = 0;
   loadSentenceQuestion();
@@ -70,17 +99,16 @@ function renderSentenceQuiz() {
   // 2. 渲染下方選項區 (定點不移位邏輯)
   bank.innerHTML = '';
   initialShuffledCards.forEach(c => {
-    // 檢查這張卡片是否已經被選到上面去了
     const isSelected = selectedCards.some(x => x.id === c.id);
     
     if (isSelected) {
-      // 如果被選了，就在原地留一個灰色佔位符
+      // 被選後在原地留下灰色佔位符
       const placeholder = document.createElement('div');
       placeholder.className = 'card placeholder';
       placeholder.innerText = c.text;
       bank.appendChild(placeholder);
     } else {
-      // 如果還沒被選，就是正常可點擊的卡片
+      // 未被選取的正常卡片
       bank.appendChild(createCard(c.text, () => {
         if (isSentenceCorrect) return; // 答對後鎖定
         selectedCards.push(c);
@@ -149,14 +177,11 @@ function playCurrentSentenceAudio() {
 
 // 動態顯示文法解析區塊 (精準打擊版：只顯示該題對應的文法)
 function showGrammarExplanation(grammarId) {
-  if (!grammarId) return; // 如果這題沒有綁定文法，就不顯示
+  if (!grammarId) return;
 
-  // 支援單一 ID 字串，或多個 ID 的陣列
   const ids = Array.isArray(grammarId) ? grammarId : [grammarId];
-  
-  // 只抓取符合 ID 的文法卡片
   const targetGrammars = appData.grammars.filter(g => ids.includes(g.id));
-  if(targetGrammars.length === 0) return;
+  if (targetGrammars.length === 0) return;
 
   let grammarHtml = `<div id="grammarExplain" style="margin-top: 24px; text-align: left; background: #F8FAFC; padding: 16px; border-radius: 12px; border: 1px solid #CBD5E1; animation: fadeIn 0.5s ease;">
       <h4 style="color: #334155; margin-top:0; margin-bottom: 12px; display:flex; align-items:center; gap:6px;">
@@ -164,8 +189,7 @@ function showGrammarExplanation(grammarId) {
       </h4>`;
   
   targetGrammars.forEach(g => {
-    // 套用高亮標籤 (若有)
-    const formattedEx = g.exampleKr
+    const formattedEx = (g.exampleKr || '')
       .replace(/【有尾音[^】]*】/g, '<span class="badge badge-has">有尾音</span>')
       .replace(/【無尾音[^】]*】/g, '<span class="badge badge-none">無尾音</span>');
       
@@ -180,9 +204,8 @@ function showGrammarExplanation(grammarId) {
   });
   grammarHtml += `</div>`;
 
-  // 將解析區塊安插在 message 訊息的下方
   const msgEl = document.getElementById('message');
-  msgEl.insertAdjacentHTML('afterend', grammarHtml);
+  if (msgEl) msgEl.insertAdjacentHTML('afterend', grammarHtml);
 }
 
 
@@ -191,13 +214,30 @@ function showGrammarExplanation(grammarId) {
 ========================================= */
 function startVocabQuiz() {
   const val = document.getElementById('vocabQuizLessonSelect').value;
-  const cnt = parseInt(document.getElementById('vocabQuizCountSelect').value);
-  let pool = (val === 'all') ? [...appData.vocabularies] : appData.vocabularies.filter(v => v.lessonId === val);
+  const cnt = parseInt(document.getElementById('vocabQuizCountSelect').value, 10);
+  const isRange = val.startsWith('range_');
+
+  let pool = [];
+  if (val === 'all') {
+    pool = [...appData.vocabularies];
+  } else if (isRange) {
+    const parts = val.split('_');
+    const startNum = parseInt(parts[1], 10);
+    const endNum = parseInt(parts[2], 10);
+    pool = appData.vocabularies.filter(v => {
+      const num = parseInt((v.lessonId || '').replace('lesson-', ''), 10);
+      return num >= startNum && num <= endNum;
+    });
+  } else {
+    pool = appData.vocabularies.filter(v => v.lessonId === val);
+  }
+
   if (pool.length < 4) {
     document.getElementById('vocabQuizWord').innerText = "單字不足以組成選擇題";
     document.getElementById('vocabQuizOptions').innerHTML = '';
     return;
   }
+
   pool.sort(() => Math.random() - 0.5);
   vocabQuizList = pool.slice(0, Math.min(cnt, pool.length));
   vocabQuizIdx = 0;
