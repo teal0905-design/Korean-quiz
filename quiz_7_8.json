@@ -16,6 +16,15 @@
     { "id": 714, "lessonId": "lesson-7", "grammarId": ["g_l7_1", "g_l7_4"], "zh": "因為路況擁擠，請搭地鐵去。", "kr": "길이 복잡하니까 지하철로 가세요", "extra": ["복잡해서", "지하철이"] },
     { "id": 715, "lessonId": "lesson-7", "grammarId": "g_l7_5", "zh": "請不要坐在這裡。", "kr": "여기 앉지 마세요", "extra": ["앉으세요", "여기에"] },
     { "id": 716, "lessonId": "lesson-7", "grammarId": "g_l7_5", "zh": "請不要在車廂裡奔跑。", "kr": "지하철 안에서 뛰지 마세요", "extra": ["뛰세요", "밖에서"] },
+    { "id": 717, "lessonId": "lesson-7", "grammarId": "g_l7_3", "zh": "從這裡到地鐵站走路去。", "kr": "여기서 지하철역까지 걸어서 가요", "extra": ["뛰어서", "걸어가요"] },
+    { "id": 718, "lessonId": "lesson-7", "grammarId": "g_l7_4", "zh": "因為地鐵比較快，請搭地鐵。", "kr": "지하철이 더 빠르니까 지하철을 타세요", "extra": ["느리니까", "버스를"] },
+    { "id": 719, "lessonId": "lesson-7", "grammarId": "g_l7_1", "zh": "請刷交通卡搭乘。", "kr": "교통카드로 찍고 타세요", "extra": ["현금으로", "내리세요"] },
+    { "id": 720, "lessonId": "lesson-7", "grammarId": ["g_l7_1", "g_l7_2"], "zh": "從明洞到東大門搭計程車去。", "kr": "명동에서 동대문까지 택시로 가요", "extra": ["동대문에서", "버스를"] },
+    { "id": 721, "lessonId": "lesson-7", "grammarId": "g_l7_3", "zh": "買了交通卡後上了公車。", "kr": "교통카드를 사서 버스를 탔어요", "extra": ["사고", "내렸어요"] },
+    { "id": 722, "lessonId": "lesson-7", "grammarId": ["g_l7_4", "g_l7_5"], "zh": "因為路上太塞了，請不要搭計程車。", "kr": "길이 많이 막히니까 택시를 타지 마세요", "extra": ["복잡해서", "타세요"] },
+    { "id": 723, "lessonId": "lesson-7", "grammarId": "g_l7_5", "zh": "開車時請不要看手機。", "kr": "운전 중에 휴대전화를 보지 마세요", "extra": ["보세요", "음악을"] },
+    { "id": 724, "lessonId": "lesson-7", "grammarId": ["g_l7_1", "g_l7_3"], "zh": "從二號出口出去後請右轉。", "kr": "이 번 출구로 나가서 우회전하세요", "extra": ["일 번", "좌회전하세요"] },
+    { "id": 725, "lessonId": "lesson-7", "grammarId": "g_l7_4", "zh": "因為時間晚了，我們快步走過去吧。", "kr": "시간이 늦었으니까 빨리 걸어갑시다", "extra": ["이르니까", "걸었어요"] },
 
     { "id": 801, "lessonId": "lesson-8", "grammarId": "g_l8_1", "zh": "我稍後會再打電話。", "kr": "이따가 다시 전화할게요", "extra": ["전화했어요", "내일"] },
     { "id": 802, "lessonId": "lesson-8", "grammarId": "g_l8_1", "zh": "我會傳簡訊給您。", "kr": "제가 문자메시지를 보낼게요", "extra": ["보냈어요", "친구가"] },
@@ -32,6 +41,15 @@
     { "id": 813, "lessonId": "lesson-8", "grammarId": ["g_l8_1", "g_l8_5"], "zh": "如果會晚一點，我會打電話。", "kr": "조금 늦으면 전화할게요", "extra": ["늦으니까", "전화했어요"] },
     { "id": 814, "lessonId": "lesson-8", "grammarId": "g_l8_5", "zh": "如果明天有時間的話，一起吃飯吧。", "kr": "내일 시간 있으면 같이 밥 먹어요", "extra": ["있으니까", "먹읍시다"] },
     { "id": 815, "lessonId": "lesson-8", "grammarId": "g_l8_5", "zh": "如果違背約定的話是不行的。", "kr": "약속을 어기면 안 돼요", "extra": ["지키면", "돼요"] },
-    { "id": 816, "lessonId": "lesson-8", "grammarId": "g_l8_5", "zh": "如果不知道電話號碼，請問一下。", "kr": "전화번호를 모르면 물어보세요", "extra": ["몰라서", "가르쳐요"] }
+    { "id": 816, "lessonId": "lesson-8", "grammarId": "g_l8_5", "zh": "如果不知道電話號碼，請問一下。", "kr": "전화번호를 모르면 물어보세요", "extra": ["몰라서", "가르쳐요"] },
+    { "id": 817, "lessonId": "lesson-8", "grammarId": "g_l8_3", "zh": "我不太清楚那個號碼呢。", "kr": "그 번호를 잘 모르겠는데요", "extra": ["알겠는데요", "주소를"] },
+    { "id": 818, "lessonId": "lesson-8", "grammarId": "g_l8_1", "zh": "到家後我會用 KakaoTalk 傳訊息給您。", "kr": "집에 도착해서 카톡 보낼게요", "extra": ["보냈어요", "전화로"] },
+    { "id": 819, "lessonId": "lesson-8", "grammarId": "g_l8_5", "zh": "如果手機沒電了，請借我充電器。", "kr": "배터리가 없으면 충전기 좀 빌려주세요", "extra": ["있으면", "사주세요"] },
+    { "id": 820, "lessonId": "lesson-8", "grammarId": "g_l8_3", "zh": "現在通話有點困難呢。", "kr": "지금은 통화하기가 조금 어려운데요", "extra": ["쉬운데요", "좋은데요"] },
+    { "id": 821, "lessonId": "lesson-8", "grammarId": ["g_l8_1", "g_l8_5"], "zh": "如果現在很忙的話，我待會再打。", "kr": "지금 많이 바쁘면 이따가 전화할게요", "extra": ["한가하면", "걸었어요"] },
+    { "id": 822, "lessonId": "lesson-8", "grammarId": "g_l8_2", "zh": "請傳簡訊或用 KakaoTalk 聯絡。", "kr": "문자나 카톡으로 연락해 주세요", "extra": ["전화나", "만나요"] },
+    { "id": 823, "lessonId": "lesson-8", "grammarId": "g_l8_4", "zh": "從朋友那裡收到了生日禮物。", "kr": "친구한테서 생일 선물을 받았어요", "extra": ["선물에", "주었어요"] },
+    { "id": 824, "lessonId": "lesson-8", "grammarId": "g_l8_3", "zh": "剛剛沒聽清楚呢，請再說一次。", "kr": "잘 못 들었는데요 다시 말씀해 주세요", "extra": ["들었는데요", "보세요"] },
+    { "id": 825, "lessonId": "lesson-8", "grammarId": "g_l8_1", "zh": "散步後我一定會打電話給您。", "kr": "산책한 후에 꼭 전화할게요", "extra": ["전에", "문자할게요"] }
   ]
 }
