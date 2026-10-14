@@ -1,6 +1,7 @@
 /**
- * 填充測驗核心邏輯 (支援多空格依序作答)
+ * 語法填充測驗核心邏輯 (修復衝突與高容錯版)
  */
+
 let fillDataCache = {
   basic: null,        // fill_quiz_1_4.json
   intermediate: null, // fill_quiz_5_7.json
@@ -10,18 +11,63 @@ let fillDataCache = {
 let currentFillQuestions = [];
 let currentFillIndex = 0;
 let currentQuestionObj = null;
-let currentBlankSlot = 0; // 當前正在作答第幾格 (0, 1, 2...)
+let currentBlankSlot = 0;
 let isCurrentQuestionDone = false;
 
-// 頁面主切換支援
-function switchMainView(viewId) {
-  document.querySelectorAll('.view-section').forEach(sec => sec.style.display = 'none');
-  const target = document.getElementById(viewId);
-  if (target) target.style.display = 'block';
+// 1. 智慧攔截並保留 app.js 原本的分頁切換邏輯
+(function setupViewHook() {
+  const originalSwitch = window.switchMainView;
 
-  if (viewId === 'fillQuizView' && currentFillQuestions.length === 0) {
-    initFillQuiz();
-  }
+  window.switchMainView = function(viewName) {
+    // 執行原有 app.js 的切換
+    if (typeof originalSwitch === 'function') {
+      originalSwitch(viewName);
+    } else {
+      // 備用切換機制
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      const target = document.getElementById(viewName + 'View') || document.getElementById(viewName);
+      if (target) target.classList.add('active');
+    }
+
+    // 當點選語法填充時的特別處理
+    if (viewName === 'fillQuiz') {
+      const fillView = document.getElementById('fillQuizView');
+      if (fillView) {
+        // 清除任何行內 style 避免干擾 .active
+        fillView.style.display = '';
+        fillView.classList.add('active');
+      }
+
+      // 首次進入或尚未載入題目時，自動初始化抽題
+      if (currentFillQuestions.length === 0) {
+        initFillQuiz();
+      }
+    }
+  };
+})();
+
+// 2. 智慧 JSON 載入器 (同時相容根目錄或 data/ 目錄)
+async function fetchQuizFile(fileName) {
+  // 先嘗試 data/ 子目錄
+  try {
+    const resData = await fetch(`data/${fileName}`);
+    if (resData.ok) {
+      const json = await resData.json();
+      return json.questions || json;
+    }
+  } catch (e) {}
+
+  // 若失敗，再嘗試根目錄
+  try {
+    const resRoot = await fetch(fileName);
+    if (resRoot.ok) {
+      const json = await resRoot.json();
+      return json.questions || json;
+    }
+  } catch (e) {}
+
+  throw new Error(`找不到檔案 ${fileName}，請確認檔案已放置在根目錄或 data/ 目錄下。`);
 }
 
 // 根據難度階段載入題庫
@@ -30,16 +76,14 @@ async function loadFillQuizData(difficulty) {
 
   // 1~4 課資料
   if (!fillDataCache.basic) {
-    const res = await fetch('data/fill_quiz_1_4.json');
-    fillDataCache.basic = (await res.json()).questions;
+    fillDataCache.basic = await fetchQuizFile('fill_quiz_1_4.json');
   }
   pool = pool.concat(fillDataCache.basic);
 
   // 5~7 課資料
   if (difficulty === 'intermediate' || difficulty === 'advanced') {
     if (!fillDataCache.intermediate) {
-      const res = await fetch('data/fill_quiz_5_7.json');
-      fillDataCache.intermediate = (await res.json()).questions;
+      fillDataCache.intermediate = await fetchQuizFile('fill_quiz_5_7.json');
     }
     pool = pool.concat(fillDataCache.intermediate);
   }
@@ -47,8 +91,7 @@ async function loadFillQuizData(difficulty) {
   // 8~10 課資料
   if (difficulty === 'advanced') {
     if (!fillDataCache.advanced) {
-      const res = await fetch('data/fill_quiz_8_10.json');
-      fillDataCache.advanced = (await res.json()).questions;
+      fillDataCache.advanced = await fetchQuizFile('fill_quiz_8_10.json');
     }
     pool = pool.concat(fillDataCache.advanced);
   }
@@ -72,15 +115,23 @@ async function initFillQuiz() {
 
   try {
     const rawPool = await loadFillQuizData(difficulty);
-    // 隨機抽題
+    if (!rawPool || rawPool.length === 0) {
+      throw new Error('題庫中沒有題目。');
+    }
+
     const shuffled = [...rawPool].sort(() => Math.random() - 0.5);
     currentFillQuestions = shuffled.slice(0, targetCount);
     currentFillIndex = 0;
 
     renderFillQuestion();
   } catch (err) {
-    console.error('無法載入填充題庫：', err);
-    document.getElementById('fillPromptText').innerText = '載入題庫時發生錯誤，請確認 JSON 檔案是否存在。';
+    console.error('填充題庫載入失敗：', err);
+    document.getElementById('fillPromptText').innerHTML = `
+      <div style="color: #ef4444; font-size: 1rem; line-height: 1.6;">
+        ⚠️ 題庫載入失敗<br>
+        <span style="font-size: 0.85rem; color: #64748b;">${err.message}</span>
+      </div>
+    `;
   }
 }
 
@@ -89,18 +140,19 @@ function renderFillQuestion() {
   isCurrentQuestionDone = false;
   currentBlankSlot = 0;
 
-  // 清除先前的文法卡片與反饋
   const grammarBox = document.getElementById('fillGrammarCardContainer');
-  grammarBox.innerHTML = '';
+  if (grammarBox) grammarBox.innerHTML = '';
   document.getElementById('fillFeedback').innerText = '';
   document.getElementById('fillNextBtn').style.display = 'none';
 
   currentQuestionObj = currentFillQuestions[currentFillIndex];
 
-  // 更新進度條與提示文字
+  // 更新進度與題目文字
   const total = currentFillQuestions.length;
-  const progressPercent = ((currentFillIndex) / total) * 100;
-  document.getElementById('fillProgressBar').style.width = `${progressPercent}%`;
+  const progressPercent = (currentFillIndex / total) * 100;
+  const pBar = document.getElementById('fillProgressBar');
+  if (pBar) pBar.style.width = `${progressPercent}%`;
+
   document.getElementById('fillPromptText').innerText = `(${currentFillIndex + 1}/${total}) ${currentQuestionObj.zh}`;
 
   // 渲染句子碎塊與空格
@@ -115,7 +167,6 @@ function renderFillQuestion() {
       sentenceBox.appendChild(partSpan);
     }
 
-    // 在碎片間插入對應空格（最後一段不插空格）
     if (idx < currentQuestionObj.blanks.length) {
       const slotSpan = document.createElement('span');
       slotSpan.id = `fillSlot_${idx}`;
@@ -125,7 +176,6 @@ function renderFillQuestion() {
     }
   });
 
-  // 啟用第一個空格並渲染選項
   activateBlankSlot(0);
 }
 
@@ -134,7 +184,6 @@ function activateBlankSlot(slotIndex) {
   currentBlankSlot = slotIndex;
   const totalSlots = currentQuestionObj.blanks.length;
 
-  // 更新空格外觀狀態
   for (let i = 0; i < totalSlots; i++) {
     const slotEl = document.getElementById(`fillSlot_${i}`);
     if (!slotEl) continue;
@@ -150,15 +199,13 @@ function activateBlankSlot(slotIndex) {
     }
   }
 
-  // 更新提示文字
   const targetInfo = currentQuestionObj.blanks[slotIndex].target || '語法成分';
   document.getElementById('fillStageHint').innerText = `👉 請點選第 [ ${slotIndex + 1} ] 格：${targetInfo}`;
 
-  // 渲染選項按鈕
   renderSlotOptions(slotIndex);
 }
 
-// 渲染當前空格的 4 個選項按鈕
+// 渲染當前空格的選項按鈕
 function renderSlotOptions(slotIndex) {
   const optionsBox = document.getElementById('fillOptionsBox');
   optionsBox.innerHTML = '';
@@ -175,7 +222,7 @@ function renderSlotOptions(slotIndex) {
   });
 }
 
-// 選項點擊事件判定
+// 選項點擊判定
 function handleOptionSelection(selectedText, btnEl) {
   if (isCurrentQuestionDone) return;
 
@@ -183,22 +230,20 @@ function handleOptionSelection(selectedText, btnEl) {
   const feedbackEl = document.getElementById('fillFeedback');
 
   if (selectedText === currentBlank.answer) {
-    // 答對該格
     feedbackEl.innerText = '';
     const currentSlotEl = document.getElementById(`fillSlot_${currentBlankSlot}`);
-    currentSlotEl.innerText = selectedText;
-    currentSlotEl.className = 'fill-slot filled-correct';
+    if (currentSlotEl) {
+      currentSlotEl.innerText = selectedText;
+      currentSlotEl.className = 'fill-slot filled-correct';
+    }
 
     const nextSlot = currentBlankSlot + 1;
     if (nextSlot < currentQuestionObj.blanks.length) {
-      // 還有下一格：平滑進入下一格
       activateBlankSlot(nextSlot);
     } else {
-      // 全句所有空格填寫完畢
       finishQuestionSuccess();
     }
   } else {
-    // 答錯：晃動反饋
     btnEl.classList.add('wrong');
     feedbackEl.style.color = '#ef4444';
     feedbackEl.innerText = '❌ 助詞或變形不太對喔，請再試試看！';
@@ -206,7 +251,7 @@ function handleOptionSelection(selectedText, btnEl) {
   }
 }
 
-// 整道題目完全答對
+// 全句答對完成
 function finishQuestionSuccess() {
   isCurrentQuestionDone = true;
   document.getElementById('fillOptionsBox').innerHTML = '';
@@ -216,41 +261,13 @@ function finishQuestionSuccess() {
   feedbackEl.style.color = '#10b981';
   feedbackEl.innerText = '✨ 答對了！點擊下方可前往下一題。';
 
-  // 1. 播放完整句子自然韓文語音
+  // 1. 播放完整句子自然韓文發音
   if (typeof speakKorean === 'function' && currentQuestionObj.fullKr) {
     speakKorean(currentQuestionObj.fullKr);
   }
 
-  // 2. 展開精準文法說明卡片
-  if (currentQuestionObj.grammarId) {
-    renderGrammarCard(currentQuestionObj.grammarId);
-  }
-
-  // 3. 亮起下一題按鈕
+  // 2. 顯示下一題按鈕
   document.getElementById('fillNextBtn').style.display = 'inline-block';
-}
-
-// 顯示文法卡片
-function renderGrammarCard(grammarIds) {
-  const container = document.getElementById('fillGrammarCardContainer');
-  container.innerHTML = '';
-
-  const ids = Array.isArray(grammarIds) ? grammarIds : [grammarIds];
-  if (typeof getGrammarInfoById === 'function') {
-    ids.forEach(gid => {
-      const gInfo = getGrammarInfoById(gid);
-      if (gInfo) {
-        const card = document.createElement('div');
-        card.className = 'grammar-popup-card';
-        card.style.marginTop = '16px';
-        card.innerHTML = `
-          <div class="grammar-card-title">💡 相關文法：${gInfo.title || gInfo.kr}</div>
-          <div class="grammar-card-desc">${gInfo.desc || gInfo.explanation}</div>
-        `;
-        container.appendChild(card);
-      }
-    });
-  }
 }
 
 // 前進下一題
@@ -259,20 +276,20 @@ function nextFillQuestion() {
   if (currentFillIndex < currentFillQuestions.length) {
     renderFillQuestion();
   } else {
-    // 測驗結束
-    document.getElementById('fillProgressBar').style.width = '100%';
+    const pBar = document.getElementById('fillProgressBar');
+    if (pBar) pBar.style.width = '100%';
+
     document.getElementById('fillSentenceBox').innerHTML = '';
     document.getElementById('fillOptionsBox').innerHTML = '';
     document.getElementById('fillStageHint').innerText = '';
     document.getElementById('fillFeedback').innerText = '';
-    document.getElementById('fillGrammarCardContainer').innerHTML = '';
     document.getElementById('fillNextBtn').style.display = 'none';
 
     document.getElementById('fillPromptText').innerHTML = `
-      <div style="text-align: center; padding: 20px 0;">
-        <h2 style="color: #10b981; margin-bottom: 8px;">🎉 本次填充測驗完成！</h2>
-        <p style="color: #64748b;">所有的助詞與語尾都精準掌握了！</p>
-        <button class="primary-btn" onclick="initFillQuiz()" style="margin-top: 16px;">
+      <div style="text-align: center; padding: 16px 0;">
+        <h3 style="color: #10b981; margin-bottom: 8px;">🎉 本次填充測驗完成！</h3>
+        <p style="color: #64748b; font-size: 0.95rem;">所有的助詞與語尾都精準掌握了！</p>
+        <button class="btn btn-submit" onclick="initFillQuiz()" style="margin-top: 12px; width: auto; padding: 10px 24px;">
           🔄 再測驗一次
         </button>
       </div>
