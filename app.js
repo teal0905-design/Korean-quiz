@@ -63,50 +63,41 @@ async function initApp() {
       return;
     }
 
-    populateLessonDropdowns();
-    if (typeof initSentenceQuiz === 'function') initSentenceQuiz();
-    if (typeof startVocabQuiz === 'function') startVocabQuiz();
-    if (typeof filterBankData === 'function') filterBankData();
-
-  } catch (e) {
-    console.error("App 初始化失敗:", e);
-    document.getElementById('promptText').innerText = "載入教材資料發生錯誤，請確認檔案格式！";
-  }
-}
-
-
-function populateLessonDropdowns() {
+    function populateLessonDropdowns() {
   const normalLessons = appData.lessons.filter(l => l.id !== 'special');
-  const opts = `<option value="all">🎲 綜合測驗 (全範圍)</option>` + 
-               normalLessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('');
-  
-  document.getElementById('sentenceLessonSelect').innerHTML = opts;
-  document.getElementById('vocabQuizLessonSelect').innerHTML = opts;
-  
-  document.getElementById('bankLessonSelect').innerHTML = `
-    <option value="all">📚 全部課程內容</option>
-    <option value="special">✨ 特殊變化 (動詞與形容詞語尾)</option>
-    ${normalLessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('')}
-  `;
-}
 
-function switchMainView(view) {
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
-  if (view === 'quiz') {
-    document.querySelectorAll('.nav-btn')[0].classList.add('active');
-    document.getElementById('quizView').classList.add('active');
-  } else if (view === 'vocabQuiz') {
-    document.querySelectorAll('.nav-btn')[1].classList.add('active');
-    document.getElementById('vocabQuizView').classList.add('active');
-  } else if (view === 'bank') {
-    document.querySelectorAll('.nav-btn')[2].classList.add('active');
-    document.getElementById('bankView').classList.add('active');
-  } else if (view === 'numbers') {
-    document.querySelectorAll('.nav-btn')[3].classList.add('active');
-    document.getElementById('numbersView').classList.add('active');
+  // 1. 全範圍選項
+  let quizOpts = `<option value="all">🎲 綜合測驗 (全範圍 1~10 課)</option>`;
+
+  // 2. 累積進度範圍選項 (自動產生 第 1~2 課、第 1~3 課 ... 第 1~9 課)
+  quizOpts += `<optgroup label="── 📚 進度累積測驗 ──">`;
+  for (let i = 2; i < normalLessons.length; i++) {
+    quizOpts += `<option value="range_1_${i}">📖 第 1 ～ ${i} 課 綜合測驗</option>`;
+  }
+  quizOpts += `</optgroup>`;
+
+  // 3. 單課專屬選項 (第 1 課 到 第 10 課)
+  quizOpts += `<optgroup label="── 🎯 單課專屬測驗 ──">`;
+  quizOpts += normalLessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('');
+  quizOpts += `</optgroup>`;
+
+  // 套用到「造句測驗」與「單字測驗」選單
+  const sentenceSelect = document.getElementById('sentenceLessonSelect');
+  const vocabSelect = document.getElementById('vocabQuizLessonSelect');
+  if (sentenceSelect) sentenceSelect.innerHTML = quizOpts;
+  if (vocabSelect) vocabSelect.innerHTML = quizOpts;
+
+  // 教材資料庫選單保持原樣
+  const bankSelect = document.getElementById('bankLessonSelect');
+  if (bankSelect) {
+    bankSelect.innerHTML = `
+      <option value="all">📚 全部課程內容</option>
+      <option value="special">✨ 特殊變化 (動詞與形容詞語尾)</option>
+      ${normalLessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('')}
+    `;
   }
 }
+
 
 function speakKorean(text, activeBtnId = null) {
   if (!text || !('speechSynthesis' in window)) return;
