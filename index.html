@@ -15,8 +15,10 @@
   <div class="nav-tabs">
     <button class="nav-btn active" onclick="switchMainView('quiz')">🧩 句子測驗</button>
     <button class="nav-btn" onclick="switchMainView('vocabQuiz')">🔤 單字測驗</button>
+    <!-- 👇 新增的語法填充測驗按鈕 -->
+    <button class="nav-btn" onclick="switchMainView('fillQuiz')">✏️ 語法填充</button>
     <button class="nav-btn" onclick="switchMainView('bank')">📚 學習資料庫</button>
-    <!-- 👇 新增的第四個按鈕 -->
+    <!-- 數字工具按鈕 -->
     <button class="nav-btn" onclick="switchMainView('numbers')">🔢 數字工具</button>
   </div>
 
@@ -74,7 +76,58 @@
     <button class="btn btn-submit" id="vocabNextBtn" style="display:none; width:100%;" onclick="nextVocabQuizQuestion()">下一題 ➔</button>
   </div>
 
-  <!-- 3. 學習資料庫 -->
+  <!-- 3. 語法雙空格填充測驗 (全新加入) -->
+  <div id="fillQuizView" class="view-section" style="display: none;">
+    <!-- 頂部進度條 -->
+    <div class="progress-track">
+      <div class="progress-fill" id="fillProgressBar"></div>
+    </div>
+
+    <!-- 篩選列：三階段難度 + 題數選擇 -->
+    <div class="filter-bar">
+      <select id="fillDifficultySelect" onchange="initFillQuiz()">
+        <option value="basic">🟢 基礎地基 (1~4課)</option>
+        <option value="intermediate" selected>🟡 生活進階 (1~7課)</option>
+        <option value="advanced">🔴 完整綜合 (1~10課)</option>
+      </select>
+      <select id="fillCountSelect" onchange="initFillQuiz()">
+        <option value="5">5 題</option>
+        <option value="10" selected>10 題</option>
+        <option value="15">15 題</option>
+        <option value="20">20 題</option>
+      </select>
+      <button class="btn-audio" onclick="initFillQuiz()" title="重新抽題">🔄 重新抽題</button>
+    </div>
+
+    <!-- 題目提示區 -->
+    <div class="prompt-box" style="justify-content: center; text-align: center; flex-direction: column;">
+      <div class="prompt" id="fillPromptText">題目載入中...</div>
+    </div>
+
+    <!-- 句子挖空展示區（動態產生句子碎片與雙空格） -->
+    <div id="fillSentenceBox" class="fill-sentence-container"></div>
+
+    <!-- 當前作答階段提示（例如：👉 請點選第 [ 1 ] 格：場所助詞） -->
+    <div id="fillStageHint" class="fill-stage-hint"></div>
+
+    <!-- 選項按鈕區（依當前空格動態切換 4 個大卡片） -->
+    <div id="fillOptionsBox" class="fill-options-box"></div>
+
+    <!-- 回饋訊息 -->
+    <div class="message" id="fillFeedback" style="text-align: center; margin: 12px 0;"></div>
+
+    <!-- 文法說明卡片佔位區 -->
+    <div id="fillGrammarCardContainer"></div>
+
+    <!-- 下一題按鈕 -->
+    <div class="controls" style="margin-top: 16px;">
+      <button class="btn btn-submit" id="fillNextBtn" style="display: none; width: 100%;" onclick="nextFillQuestion()">
+        下一題 ➔
+      </button>
+    </div>
+  </div>
+
+  <!-- 4. 學習資料庫 -->
   <div id="bankView" class="view-section">
     <div class="sub-tabs">
       <button class="sub-btn active" id="btnSubGrammar" onclick="switchBankSubView('grammar')">📖 文法資料庫</button>
@@ -132,13 +185,12 @@
     </div>
   </div>
 
-      <!-- 👇 4. 數字工具區 (轉換器 + 特訓測驗 + 數字單字庫) -->
+  <!-- 5. 數字工具區 (轉換器 + 特訓測驗 + 數字單字庫) -->
   <div id="numbersView" class="view-section">
     <!-- 子選單切換 -->
     <div class="sub-tabs">
       <button class="sub-btn active" id="btnSubConverter" onclick="switchNumberSubView('converter')">🧮 轉換器</button>
       <button class="sub-btn" id="btnSubNumQuiz" onclick="switchNumberSubView('quiz')">⏳ 極限特訓</button>
-      <!-- 新增第三個按鈕：數字單字庫 -->
       <button class="sub-btn" id="btnSubNumLib" onclick="switchNumberSubView('library')">📖 數字單字庫</button>
     </div>
 
@@ -178,9 +230,8 @@
       </div>
     </div>
 
-    <!-- 👇 C. 數字單字庫視圖 (全新加入) -->
+    <!-- C. 數字單字庫視圖 -->
     <div id="numLibrarySubView" style="display: none; margin-top: 16px;">
-      
       <!-- 階層 1：路線選擇選單 -->
       <div id="numLibMenu">
         <h3 style="text-align:center; color:#1e293b; margin-bottom: 24px;">請選擇要學習的數字系統</h3>
@@ -198,22 +249,17 @@
         </div>
       </div>
 
-      <!-- 階層 2：單字清單詳細頁 (套用原本單字卡樣式) -->
+      <!-- 階層 2：單字清單詳細頁 -->
       <div id="numLibDetail" style="display: none;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
           <button class="btn-reset" style="padding:6px 12px; border-radius:8px; cursor:pointer;" onclick="backToNumLibMenu()">⬅️ 返回</button>
           <h3 id="numLibDetailTitle" style="margin:0; color:#1e293b;">-</h3>
-          <div style="width: 70px;"></div> <!-- 排版對齊用 -->
+          <div style="width: 70px;"></div>
         </div>
-        <!-- 這裡將由 JS 動態塞入跟原本單字一樣的卡片 -->
         <div id="numLibListContainer"></div>
       </div>
-
     </div>
-
   </div>
-
-
 
 </div>
 
@@ -221,7 +267,8 @@
   <script src="app.js"></script>
   <script src="quiz.js"></script>
   <script src="bank.js"></script>
-  <!-- 👇 引入數字邏輯 -->
   <script src="numbers.js"></script>
+  <!-- 👇 引入全新語法填充邏輯 -->
+  <script src="fillQuiz.js"></script>
 </body>
 </html>
