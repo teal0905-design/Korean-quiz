@@ -1,0 +1,535 @@
+{
+  "questions": [
+    {
+      "id": "fill_101",
+      "lessonId": "lesson-1",
+      "grammarId": ["g_l1_1", "g_l1_2"],
+      "zh": "我是台灣人。",
+      "fullKr": "저는 대만 사람입니다.",
+      "sentenceParts": ["저", "대만 사람", "."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "主題助詞 (無尾音)",
+          "answer": "는",
+          "options": ["는", "은", "이", "가"]
+        },
+        {
+          "slot": 2,
+          "target": "肯定陳述語尾 (-입니다)",
+          "answer": "입니다",
+          "options": ["입니다", "입니까", "아닙니다", "있습니다"]
+        }
+      ]
+    },
+    {
+      "id": "fill_102",
+      "lessonId": "lesson-1",
+      "grammarId": ["g_l1_1", "g_l1_2"],
+      "zh": "金民秀先生是學生嗎？",
+      "fullKr": "김민수 씨는 학생입니까?",
+      "sentenceParts": ["김민수 씨", "학생", "?"],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "主題助詞 (無尾音)",
+          "answer": "는",
+          "options": ["는", "은", "이", "을"]
+        },
+        {
+          "slot": 2,
+          "target": "肯定疑問語尾 (-입니까)",
+          "answer": "입니까",
+          "options": ["입니까", "입니다", "있습니까", "없습니까"]
+        }
+      ]
+    },
+    {
+      "id": "fill_103",
+      "lessonId": "lesson-1",
+      "grammarId": ["g_l1_2", "g_l1_3"],
+      "zh": "不，我不是上班族。",
+      "fullKr": "아니요, 저는 회사원이 아닙니다.",
+      "sentenceParts": ["아니요, 저는 회사원", "", "."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "主格助詞 (有尾音搭配否定)",
+          "answer": "이",
+          "options": ["이", "가", "은", "을"]
+        },
+        {
+          "slot": 2,
+          "target": "否定陳述語尾 (아닙니다)",
+          "answer": "아닙니다",
+          "options": ["아닙니다", "입니다", "없습니다", "않습니다"]
+        }
+      ]
+    },
+    {
+      "id": "fill_104",
+      "lessonId": "lesson-1",
+      "grammarId": ["g_l1_3", "g_l1_4"],
+      "zh": "王偉也是學生，不是醫生。",
+      "fullKr": "왕웨이 씨도 학생입니다. 의사가 아닙니다.",
+      "sentenceParts": ["왕웨이 씨", "학생입니다. 의사", "아닙니다."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "副詞格助詞 (也)",
+          "answer": "도",
+          "options": ["도", "는", "가", "를"]
+        },
+        {
+          "slot": 2,
+          "target": "主格助詞 (無尾音搭配否定)",
+          "answer": "가",
+          "options": ["가", "이", "는", "를"]
+        }
+      ]
+    },
+    {
+      "id": "fill_105",
+      "lessonId": "lesson-1",
+      "grammarId": ["g_l1_1", "g_l1_2"],
+      "zh": "老師是韓國人嗎？",
+      "fullKr": "선생님은 한국 사람입니까?",
+      "sentenceParts": ["선생님", "한국 사람", "?"],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "主題助詞 (有尾音)",
+          "answer": "은",
+          "options": ["은", "는", "이", "가"]
+        },
+        {
+          "slot": 2,
+          "target": "肯定疑問語尾 (-입니까)",
+          "answer": "입니까",
+          "options": ["입니까", "입니다", "아닙니까", "있습니까"]
+        }
+      ]
+    },
+    {
+      "id": "fill_106",
+      "lessonId": "lesson-1",
+      "grammarId": ["g_l1_2", "g_l1_3"],
+      "zh": "我的朋友不是護士。",
+      "fullKr": "제 친구는 간호사가 아닙니다.",
+      "sentenceParts": ["제 친구", "간호사", "아닙니다."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "主題助詞 (無尾音)",
+          "answer": "는",
+          "options": ["는", "은", "도", "가"]
+        },
+        {
+          "slot": 2,
+          "target": "主格助詞 (無尾音搭配否定)",
+          "answer": "가",
+          "options": ["가", "이", "를", "은"]
+        }
+      ]
+    },
+
+    {
+      "id": "fill_201",
+      "lessonId": "lesson-2",
+      "grammarId": ["g_l2_1", "g_l2_2"],
+      "zh": "這是韓語字典。",
+      "fullKr": "이것은 한국어 사전입니다.",
+      "sentenceParts": ["이것", "한국어 사전", "."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "主題助詞 (有尾音)",
+          "answer": "은",
+          "options": ["은", "는", "이", "을"]
+        },
+        {
+          "slot": 2,
+          "target": "肯定陳述語尾 (-입니다)",
+          "answer": "입니다",
+          "options": ["입니다", "입니까", "아닙니다", "있습니다"]
+        }
+      ]
+    },
+    {
+      "id": "fill_202",
+      "lessonId": "lesson-2",
+      "grammarId": ["g_l2_4", "g_l2_6"],
+      "zh": "教室裡有書桌和椅子。",
+      "fullKr": "교실에 책상하고 의자가 있습니다.",
+      "sentenceParts": ["교실", "책상", "의자가 있습니다."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "處所存在助詞 (在...)",
+          "answer": "에",
+          "options": ["에", "에서", "을", "로"]
+        },
+        {
+          "slot": 2,
+          "target": "連接名詞助詞 (和/與)",
+          "answer": "하고",
+          "options": ["하고", "과", "도", "에"]
+        }
+      ]
+    },
+    {
+      "id": "fill_203",
+      "lessonId": "lesson-2",
+      "grammarId": ["g_l2_3", "g_l2_5"],
+      "zh": "書桌上有包包。",
+      "fullKr": "책상 위에 가방이 있습니다.",
+      "sentenceParts": ["책상", "가방", "있습니다."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "方位處所助詞 (上面)",
+          "answer": "위에",
+          "options": ["위에", "밑에", "앞에", "안에"]
+        },
+        {
+          "slot": 2,
+          "target": "主格助詞 (有尾音搭配存在)",
+          "answer": "이",
+          "options": ["이", "가", "을", "는"]
+        }
+      ]
+    },
+    {
+      "id": "fill_204",
+      "lessonId": "lesson-2",
+      "grammarId": ["g_l2_3", "g_l2_4"],
+      "zh": "房間裡沒有電視。",
+      "fullKr": "방에 텔레비전이 없습니다.",
+      "sentenceParts": ["방", "텔레비전이", "."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "處所存在助詞 (在...)",
+          "answer": "에",
+          "options": ["에", "에서", "은", "으로"]
+        },
+        {
+          "slot": 2,
+          "target": "否定存在語尾 (없습니다)",
+          "answer": "없습니다",
+          "options": ["없습니다", "있습니다", "아닙니다", "안 합니다"]
+        }
+      ]
+    },
+    {
+      "id": "fill_205",
+      "lessonId": "lesson-2",
+      "grammarId": ["g_l2_2", "g_l2_4"],
+      "zh": "洗手間在二樓。",
+      "fullKr": "화장실은 이 층에 있습니다.",
+      "sentenceParts": ["화장실", "이 층", "있습니다."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "主題助詞 (有尾音)",
+          "answer": "은",
+          "options": ["은", "는", "이", "가"]
+        },
+        {
+          "slot": 2,
+          "target": "樓層處所助詞 (在...)",
+          "answer": "에",
+          "options": ["에", "에서", "로", "까지"]
+        }
+      ]
+    },
+    {
+      "id": "fill_206",
+      "lessonId": "lesson-2",
+      "grammarId": ["g_l2_3", "g_l2_5"],
+      "zh": "椅子底下有貓咪。",
+      "fullKr": "의자 밑에 고양이가 있습니다.",
+      "sentenceParts": ["의자", "고양이", "있습니다."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "空間方位助詞 (下面)",
+          "answer": "밑에",
+          "options": ["밑에", "위에", "뒤에", "옆에"]
+        },
+        {
+          "slot": 2,
+          "target": "主格助詞 (無尾音搭配存在)",
+          "answer": "가",
+          "options": ["가", "이", "는", "를"]
+        }
+      ]
+    },
+
+    {
+      "id": "fill_301",
+      "lessonId": "lesson-3",
+      "grammarId": ["g_l3_1", "g_l3_3"],
+      "zh": "在圖書館讀韓語書。",
+      "fullKr": "도서관에서 한국어 책을 읽습니다.",
+      "sentenceParts": ["도서관", "한국어 책", "읽습니다."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "動作場所格助詞 (活動地點)",
+          "answer": "에서",
+          "options": ["에서", "에", "으로", "까지"]
+        },
+        {
+          "slot": 2,
+          "target": "受格助詞 (有尾音)",
+          "answer": "을",
+          "options": ["을", "를", "이", "에"]
+        }
+      ]
+    },
+    {
+      "id": "fill_302",
+      "lessonId": "lesson-3",
+      "grammarId": ["g_l3_1", "g_l3_3"],
+      "zh": "在咖啡廳喝溫咖啡。",
+      "fullKr": "카페에서 따뜻한 커피를 마십니다.",
+      "sentenceParts": ["카페", "따뜻한 커피", "마십니다."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "動作場所格助詞",
+          "answer": "에서",
+          "options": ["에서", "에", "로", "의"]
+        },
+        {
+          "slot": 2,
+          "target": "受格助詞 (無尾音)",
+          "answer": "를",
+          "options": ["를", "을", "가", "는"]
+        }
+      ]
+    },
+    {
+      "id": "fill_303",
+      "lessonId": "lesson-3",
+      "grammarId": ["g_l3_1", "g_l3_4"],
+      "zh": "今天不上班（不工作）。",
+      "fullKr": "오늘은 일을 안 합니다.",
+      "sentenceParts": ["오늘은 일", "", "합니다."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "受格助詞 (有尾音)",
+          "answer": "을",
+          "options": ["을", "를", "이", "에"]
+        },
+        {
+          "slot": 2,
+          "target": "否定副詞 (不...)",
+          "answer": "안",
+          "options": ["안", "못", "별로", "아니"]
+        }
+      ]
+    },
+    {
+      "id": "fill_304",
+      "lessonId": "lesson-3",
+      "grammarId": ["g_l3_1", "g_l3_3"],
+      "zh": "在房間裡聽音樂。",
+      "fullKr": "방에서 음악을 듣습니다.",
+      "sentenceParts": ["방", "음악", "듣습니다."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "動作場所助詞",
+          "answer": "에서",
+          "options": ["에서", "에", "으로", "은"]
+        },
+        {
+          "slot": 2,
+          "target": "受格助詞 (有尾音)",
+          "answer": "을",
+          "options": ["을", "를", "이", "과"]
+        }
+      ]
+    },
+    {
+      "id": "fill_305",
+      "lessonId": "lesson-3",
+      "grammarId": ["g_l3_1", "g_l3_3"],
+      "zh": "在學生餐廳吃午餐。",
+      "fullKr": "학생식당에서 점심을 먹습니다.",
+      "sentenceParts": ["학생식당", "점심을", "."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "動作場所助詞",
+          "answer": "에서",
+          "options": ["에서", "에", "까지", "로"]
+        },
+        {
+          "slot": 2,
+          "target": "格式體陳述語尾 (有尾音 -습니다)",
+          "answer": "먹습니다",
+          "options": ["먹습니다", "먹ㅂ니다", "마십니다", "봅니다"]
+        }
+      ]
+    },
+    {
+      "id": "fill_306",
+      "lessonId": "lesson-3",
+      "grammarId": ["g_l3_1", "g_l3_3"],
+      "zh": "在健身房做運動嗎？",
+      "fullKr": "헬스장에서 운동을 합니까?",
+      "sentenceParts": ["헬스장", "운동", "합니까?"],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "動作場所助詞",
+          "answer": "에서",
+          "options": ["에서", "에", "으로", "은"]
+        },
+        {
+          "slot": 2,
+          "target": "受格助詞 (有尾音)",
+          "answer": "을",
+          "options": ["을", "를", "이", "가"]
+        }
+      ]
+    },
+
+    {
+      "id": "fill_401",
+      "lessonId": "lesson-4",
+      "grammarId": ["g_l4_1", "g_l4_2"],
+      "zh": "星期一去學校。",
+      "fullKr": "월요일에 학교에 갑니다.",
+      "sentenceParts": ["월요일", "학교", "갑니다."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "時間助詞 (星期幾...)",
+          "answer": "에",
+          "options": ["에", "에서", "을", "은"]
+        },
+        {
+          "slot": 2,
+          "target": "目的地助詞 (往/去...)",
+          "answer": "에",
+          "options": ["에", "에서", "로", "을"]
+        }
+      ]
+    },
+    {
+      "id": "fill_402",
+      "lessonId": "lesson-4",
+      "grammarId": ["g_l4_1", "g_l4_3"],
+      "zh": "請坐在這裡。",
+      "fullKr": "여기에 앉으십시오.",
+      "sentenceParts": ["여기", "", "."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "定點處所助詞",
+          "answer": "에",
+          "options": ["에", "에서", "를", "로"]
+        },
+        {
+          "slot": 2,
+          "target": "格式體敬語命令語尾 (有尾音 -으십시오)",
+          "answer": "앉으십시오",
+          "options": ["앉으십시오", "앉십시오", "앉읍시다", "앉으세요"]
+        }
+      ]
+    },
+    {
+      "id": "fill_403",
+      "lessonId": "lesson-4",
+      "grammarId": ["g_l4_2", "g_l4_4"],
+      "zh": "星期五一起吃午餐吧。",
+      "fullKr": "금요일에 점심을 같이 먹읍시다.",
+      "sentenceParts": ["금요일", "점심을 같이", "."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "時間助詞",
+          "answer": "에",
+          "options": ["에", "에서", "을", "은"]
+        },
+        {
+          "slot": 2,
+          "target": "格式體提議語尾 (有尾音 -읍시다)",
+          "answer": "먹읍시다",
+          "options": ["먹읍시다", "먹ㅂ시다", "먹으십시오", "먹습니다"]
+        }
+      ]
+    },
+    {
+      "id": "fill_404",
+      "lessonId": "lesson-4",
+      "grammarId": ["g_l4_2", "g_l4_4"],
+      "zh": "週末一起喝咖啡吧。",
+      "fullKr": "주말에 커피를 같이 마십시다.",
+      "sentenceParts": ["주말", "커피", "같이 마십시다."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "時間助詞",
+          "answer": "에",
+          "options": ["에", "에서", "부터", "은"]
+        },
+        {
+          "slot": 2,
+          "target": "受格助詞 (無尾音)",
+          "answer": "를",
+          "options": ["를", "을", "이", "가"]
+        }
+      ]
+    },
+    {
+      "id": "fill_405",
+      "lessonId": "lesson-4",
+      "grammarId": ["g_l4_3", "g_l4_1"],
+      "zh": "請讀這篇文章。",
+      "fullKr": "이 글을 읽으십시오.",
+      "sentenceParts": ["이 글", "", "."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "受格助詞 (有尾音)",
+          "answer": "을",
+          "options": ["을", "를", "이", "은"]
+        },
+        {
+          "slot": 2,
+          "target": "格式體敬語命令語尾 (有尾音 -으십시오)",
+          "answer": "읽으십시오",
+          "options": ["읽으십시오", "읽십시오", "읽읍시다", "읽습니다"]
+        }
+      ]
+    },
+    {
+      "id": "fill_406",
+      "lessonId": "lesson-4",
+      "grammarId": ["g_l4_2", "g_l4_4"],
+      "zh": "下午兩點在圖書館見面吧。",
+      "fullKr": "오후 두 시에 도서관에서 만납시다.",
+      "sentenceParts": ["오후 두 시", "도서관", "만납시다."],
+      "blanks": [
+        {
+          "slot": 1,
+          "target": "時間助詞 (點鐘)",
+          "answer": "에",
+          "options": ["에", "에서", "부터", "을"]
+        },
+        {
+          "slot": 2,
+          "target": "會面動作場所助詞",
+          "answer": "에서",
+          "options": ["에서", "에", "으로", "까지"]
+        }
+      ]
+    }
+  ]
+}
