@@ -31,7 +31,7 @@ async function initApp() {
 
     const dataList = await Promise.all(fetchPromises);
 
-    dataList.forEach((data, index) => {
+    dataList.forEach((data) => {
       if (!data) return;
       if (data.lessons) appData.lessons.push(...data.lessons);
       if (data.vocabularies) appData.vocabularies.push(...data.vocabularies);
@@ -46,7 +46,7 @@ async function initApp() {
             return {
               id: q.id,
               lessonId: q.lessonId,
-              grammarId: q.grammarId, // 保留文法 ID
+              grammarId: q.grammarId,
               translation: q.zh || q.translation,
               correctOrder: correctOrder,
               options: [...correctOrder, ...extra]
@@ -59,35 +59,46 @@ async function initApp() {
     });
 
     if (appData.lessons.length === 0) {
-      document.getElementById('promptText').innerText = "⚠️ 尚未讀取到教材資料，請確認 JSON 檔案是否存在！";
+      const promptEl = document.getElementById('promptText');
+      if (promptEl) promptEl.innerText = "⚠️ 尚未讀取到教材資料，請確認 JSON 檔案是否存在！";
       return;
     }
 
-    function populateLessonDropdowns() {
+    populateLessonDropdowns();
+    if (typeof initSentenceQuiz === 'function') initSentenceQuiz();
+    if (typeof startVocabQuiz === 'function') startVocabQuiz();
+    if (typeof filterBankData === 'function') filterBankData();
+
+  } catch (e) {
+    console.error("App 初始化失敗:", e);
+    const promptEl = document.getElementById('promptText');
+    if (promptEl) promptEl.innerText = "載入教材資料發生錯誤，請確認檔案格式！";
+  }
+}
+
+function populateLessonDropdowns() {
   const normalLessons = appData.lessons.filter(l => l.id !== 'special');
 
   // 1. 全範圍選項
   let quizOpts = `<option value="all">🎲 綜合測驗 (全範圍 1~10 課)</option>`;
 
-  // 2. 累積進度範圍選項 (自動產生 第 1~2 課、第 1~3 課 ... 第 1~9 課)
+  // 2. 累積進度範圍選項 (第 1~2 課 ... 第 1~9 課)
   quizOpts += `<optgroup label="── 📚 進度累積測驗 ──">`;
   for (let i = 2; i < normalLessons.length; i++) {
     quizOpts += `<option value="range_1_${i}">📖 第 1 ～ ${i} 課 綜合測驗</option>`;
   }
   quizOpts += `</optgroup>`;
 
-  // 3. 單課專屬選項 (第 1 課 到 第 10 課)
+  // 3. 單課專屬選項
   quizOpts += `<optgroup label="── 🎯 單課專屬測驗 ──">`;
   quizOpts += normalLessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('');
   quizOpts += `</optgroup>`;
 
-  // 套用到「造句測驗」與「單字測驗」選單
   const sentenceSelect = document.getElementById('sentenceLessonSelect');
   const vocabSelect = document.getElementById('vocabQuizLessonSelect');
   if (sentenceSelect) sentenceSelect.innerHTML = quizOpts;
   if (vocabSelect) vocabSelect.innerHTML = quizOpts;
 
-  // 教材資料庫選單保持原樣
   const bankSelect = document.getElementById('bankLessonSelect');
   if (bankSelect) {
     bankSelect.innerHTML = `
@@ -98,6 +109,23 @@ async function initApp() {
   }
 }
 
+function switchMainView(view) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+  if (view === 'quiz') {
+    if (document.querySelectorAll('.nav-btn')[0]) document.querySelectorAll('.nav-btn')[0].classList.add('active');
+    if (document.getElementById('quizView')) document.getElementById('quizView').classList.add('active');
+  } else if (view === 'vocabQuiz') {
+    if (document.querySelectorAll('.nav-btn')[1]) document.querySelectorAll('.nav-btn')[1].classList.add('active');
+    if (document.getElementById('vocabQuizView')) document.getElementById('vocabQuizView').classList.add('active');
+  } else if (view === 'bank') {
+    if (document.querySelectorAll('.nav-btn')[2]) document.querySelectorAll('.nav-btn')[2].classList.add('active');
+    if (document.getElementById('bankView')) document.getElementById('bankView').classList.add('active');
+  } else if (view === 'numbers') {
+    if (document.querySelectorAll('.nav-btn')[3]) document.querySelectorAll('.nav-btn')[3].classList.add('active');
+    if (document.getElementById('numbersView')) document.getElementById('numbersView').classList.add('active');
+  }
+}
 
 function speakKorean(text, activeBtnId = null) {
   if (!text || !('speechSynthesis' in window)) return;
