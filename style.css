@@ -618,3 +618,156 @@ select {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+/* 填充測驗外觀容器 */
+.fill-sentence-container {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 32px 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  line-height: 1.8;
+}
+
+/* 句子固定文字部分 */
+.sentence-part {
+  color: #0f172a;
+}
+
+/* 空格插槽基礎外觀 */
+.fill-slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  min-height: 48px;
+  padding: 4px 14px;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border: 2px dashed #94a3b8;
+  background-color: #f8fafc;
+  color: #64748b;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+/* 當前聚焦作答中的空格（呼吸燈效果） */
+.fill-slot.active {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+  color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  animation: pulseSlot 1.5s infinite;
+}
+
+@keyframes pulseSlot {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+/* 該格已答對完成 */
+.fill-slot.filled-correct {
+  border-style: solid;
+  border-color: #10b981;
+  background-color: #ecfdf5;
+  color: #047857;
+  transform: none;
+}
+
+/* 階梯作答階段提示文字 */
+.fill-stage-hint {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #475569;
+  text-align: center;
+  margin-bottom: 18px;
+  min-height: 24px;
+}
+
+/* 選項卡片網格 */
+.fill-options-box {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 10px 0 20px;
+}
+
+/* iPad 專屬大點選按鈕 */
+.fill-opt-btn {
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: 14px;
+  border: 2px solid #e2e8f0;
+  background: #ffffff;
+  color: #1e293b;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: all 0.15s ease;
+  min-width: 100px;
+  text-align: center;
+}
+
+.fill-opt-btn:active {
+  transform: scale(0.95);
+  background-color: #f1f5f9;
+}
+
+/* 點擊錯誤樣式 */
+.fill-opt-btn.wrong {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+  color: #b91c1c;
+  animation: shakeBtn 0.4s ease;
+}
+
+@keyframes shakeBtn {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* 反饋文字 */
+.fill-feedback {
+  text-align: center;
+  font-weight: 600;
+  min-height: 24px;
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+}
+/* 📱 手機螢幕最佳化 (寬度小於 600px 時自動生效) */
+@media (max-width: 600px) {
+  .fill-sentence-container {
+    font-size: 1.3rem; /* 稍微縮小字體，避免在小螢幕被切成過多斷行 */
+    margin: 20px 0 16px;
+    gap: 6px;
+  }
+
+  .fill-slot {
+    min-width: 56px;
+    min-height: 40px;
+    padding: 2px 10px;
+    font-size: 1.15rem;
+  }
+
+  .fill-options-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 在手機上固定為整齊的 2x2 兩欄大按鈕 */
+    gap: 10px;
+    width: 100%;
+    max-width: 340px;
+    margin: 12px auto 20px;
+  }
+
+  .fill-opt-btn {
+    font-size: 1.15rem;
+    padding: 12px 10px;
+    min-width: unset; /* 取消固定寬度，由網格自動等寬分配 */
+    width: 100%;
+  }
+}
