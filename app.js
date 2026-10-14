@@ -131,21 +131,36 @@ function populateLessonDropdowns() {
   }
 }
 
+// 修正後的 5 分頁精準切換邏輯
 function switchMainView(view) {
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
-  if (view === 'quiz') {
-    if (document.querySelectorAll('.nav-btn')[0]) document.querySelectorAll('.nav-btn')[0].classList.add('active');
-    if (document.getElementById('quizView')) document.getElementById('quizView').classList.add('active');
-  } else if (view === 'vocabQuiz') {
-    if (document.querySelectorAll('.nav-btn')[1]) document.querySelectorAll('.nav-btn')[1].classList.add('active');
-    if (document.getElementById('vocabQuizView')) document.getElementById('vocabQuizView').classList.add('active');
-  } else if (view === 'bank') {
-    if (document.querySelectorAll('.nav-btn')[2]) document.querySelectorAll('.nav-btn')[2].classList.add('active');
-    if (document.getElementById('bankView')) document.getElementById('bankView').classList.add('active');
-  } else if (view === 'numbers') {
-    if (document.querySelectorAll('.nav-btn')[3]) document.querySelectorAll('.nav-btn')[3].classList.add('active');
-    if (document.getElementById('numbersView')) document.getElementById('numbersView').classList.add('active');
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const sections = document.querySelectorAll('.view-section');
+
+  // 清除全部反白與顯示
+  navBtns.forEach(b => b.classList.remove('active'));
+  sections.forEach(s => s.classList.remove('active'));
+
+  // 5 大分頁精準對照表 (不再發生索引錯位)
+  const viewMap = {
+    'quiz':      { index: 0, viewId: 'quizView' },
+    'vocabQuiz': { index: 1, viewId: 'vocabQuizView' },
+    'fillQuiz':  { index: 2, viewId: 'fillQuizView' },
+    'bank':       { index: 3, viewId: 'bankView' },
+    'numbers':    { index: 4, viewId: 'numbersView' }
+  };
+
+  const target = viewMap[view];
+  if (target) {
+    if (navBtns[target.index]) navBtns[target.index].classList.add('active');
+    const targetEl = document.getElementById(target.viewId);
+    if (targetEl) targetEl.classList.add('active');
+  }
+
+  // 切換到語法填充時，若尚未抽題則自動初始化
+  if (view === 'fillQuiz' && typeof initFillQuiz === 'function') {
+    if (typeof currentFillQuestions !== 'undefined' && currentFillQuestions.length === 0) {
+      initFillQuiz();
+    }
   }
 }
 
