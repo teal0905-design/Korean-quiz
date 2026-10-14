@@ -76,28 +76,50 @@ async function initApp() {
   }
 }
 
+// 輔助函式：自動建立並置入「範圍選單」至主選單與題數選單之間
+function setupRangeDropdown(targetSelectId, rangeSelectId, onChangeCallback) {
+  let rangeEl = document.getElementById(rangeSelectId);
+  const targetEl = document.getElementById(targetSelectId);
+
+  if (!rangeEl && targetEl && targetEl.parentNode) {
+    rangeEl = document.createElement('select');
+    rangeEl.id = rangeSelectId;
+    rangeEl.className = targetEl.className;
+    rangeEl.style.marginLeft = '6px';
+    rangeEl.style.marginRight = '6px';
+    rangeEl.onchange = onChangeCallback;
+    targetEl.insertAdjacentElement('afterend', rangeEl);
+  }
+
+  if (rangeEl) {
+    const normalLessons = appData.lessons.filter(l => l.id !== 'special');
+    let opts = `<option value="1-${normalLessons.length}">📖 全範圍 (1~${normalLessons.length} 課)</option>`;
+    for (let i = 2; i <= normalLessons.length; i++) {
+      opts += `<option value="1-${i}">📖 第 1 ～ ${i} 課</option>`;
+    }
+    rangeEl.innerHTML = opts;
+  }
+}
+
 function populateLessonDropdowns() {
   const normalLessons = appData.lessons.filter(l => l.id !== 'special');
 
-  // 1. 全範圍選項
-  let quizOpts = `<option value="all">🎲 綜合測驗 (全範圍 1~10 課)</option>`;
-
-  // 2. 累積進度範圍選項 (第 1~2 課 ... 第 1~9 課)
-  quizOpts += `<optgroup label="── 📚 進度累積測驗 ──">`;
-  for (let i = 2; i < normalLessons.length; i++) {
-    quizOpts += `<option value="range_1_${i}">📖 第 1 ～ ${i} 課 綜合測驗</option>`;
-  }
-  quizOpts += `</optgroup>`;
-
-  // 3. 單課專屬選項
-  quizOpts += `<optgroup label="── 🎯 單課專屬測驗 ──">`;
-  quizOpts += normalLessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('');
-  quizOpts += `</optgroup>`;
+  // 主選單保持清爽：只有綜合測驗 + 各單課
+  const quizOpts = `<option value="all">🎲 綜合測驗</option>` + 
+                   normalLessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('');
 
   const sentenceSelect = document.getElementById('sentenceLessonSelect');
   const vocabSelect = document.getElementById('vocabQuizLessonSelect');
   if (sentenceSelect) sentenceSelect.innerHTML = quizOpts;
   if (vocabSelect) vocabSelect.innerHTML = quizOpts;
+
+  // 動態建立插入在中間的「範圍選單」
+  setupRangeDropdown('sentenceLessonSelect', 'sentenceRangeSelect', () => {
+    if (typeof initSentenceQuiz === 'function') initSentenceQuiz();
+  });
+  setupRangeDropdown('vocabQuizLessonSelect', 'vocabRangeSelect', () => {
+    if (typeof startVocabQuiz === 'function') startVocabQuiz();
+  });
 
   const bankSelect = document.getElementById('bankLessonSelect');
   if (bankSelect) {
@@ -154,5 +176,4 @@ if ('speechSynthesis' in window) {
   window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 }
 
-// 頁面載入完成後啟動 App
 document.addEventListener('DOMContentLoaded', initApp);
