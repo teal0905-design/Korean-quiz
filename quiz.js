@@ -1,4 +1,4 @@
-// 測驗專用變數 (包含定點佔位與狀態)
+// 測驗專用變數
 let currentSentenceList = [], sentenceIdx = 0, initialShuffledCards = [], selectedCards = [], isSentenceCorrect = false;
 let vocabQuizList = [], vocabQuizIdx = 0, vocabQuizScore = 0, currentVocabQuestion = null;
 
@@ -6,39 +6,39 @@ let vocabQuizList = [], vocabQuizIdx = 0, vocabQuizScore = 0, currentVocabQuesti
    1. 句子重組測驗 (Sentence Quiz)
 ========================================= */
 function initSentenceQuiz() {
-  const val = document.getElementById('sentenceLessonSelect').value;
-  const cnt = document.getElementById('sentenceCountSelect');
-  const isRange = val.startsWith('range_');
-  const isMultiLesson = (val === 'all' || isRange);
+  const lessonSelect = document.getElementById('sentenceLessonSelect');
+  const rangeSelect = document.getElementById('sentenceRangeSelect');
+  const cntSelect = document.getElementById('sentenceCountSelect');
+  const val = lessonSelect ? lessonSelect.value : 'all';
 
-  // 1. 根據全範圍、進度累積範圍、或單課篩選題目池
   let pool = [];
+
   if (val === 'all') {
-    pool = [...appData.questions];
-  } else if (isRange) {
-    const parts = val.split('_');
-    const startNum = parseInt(parts[1], 10);
-    const endNum = parseInt(parts[2], 10);
+    // 進入綜合測驗：顯示中間的「範圍選單」與右邊的「題數選單」
+    if (rangeSelect) rangeSelect.style.display = 'inline-block';
+    if (cntSelect) cntSelect.style.display = 'inline-block';
+
+    const rangeVal = rangeSelect ? rangeSelect.value : '1-10';
+    const [startNum, endNum] = rangeVal.split('-').map(Number);
+
     pool = appData.questions.filter(q => {
       const num = parseInt((q.lessonId || '').replace('lesson-', ''), 10);
       return num >= startNum && num <= endNum;
     });
-  } else {
-    pool = appData.questions.filter(q => q.lessonId === val);
-  }
 
-  // 2. 全範圍或累積範圍時顯示題數選單，單課時隱藏
-  cnt.style.display = isMultiLesson ? 'inline-block' : 'none';
+    pool.sort(() => Math.random() - 0.5);
 
-  // 3. 隨機打亂題目順序
-  pool.sort(() => Math.random() - 0.5);
-
-  // 4. 若為多課範圍，依選擇的題數進行切片
-  if (isMultiLesson && cnt) {
-    const countLimit = parseInt(cnt.value, 10);
-    if (!isNaN(countLimit) && countLimit > 0) {
-      pool = pool.slice(0, countLimit);
+    if (cntSelect) {
+      const limit = parseInt(cntSelect.value, 10);
+      if (!isNaN(limit) && limit > 0) pool = pool.slice(0, limit);
     }
+  } else {
+    // 單課測驗：隱藏「範圍選單」與「題數選單」
+    if (rangeSelect) rangeSelect.style.display = 'none';
+    if (cntSelect) cntSelect.style.display = 'none';
+
+    pool = appData.questions.filter(q => q.lessonId === val);
+    pool.sort(() => Math.random() - 0.5);
   }
 
   currentSentenceList = pool;
@@ -55,7 +55,6 @@ function updateSentenceProgress() {
 function loadSentenceQuestion() {
   updateSentenceProgress();
   
-  // 換題時，清空上題的文法解析區塊
   const oldGrammar = document.getElementById('grammarExplain');
   if (oldGrammar) oldGrammar.remove();
 
@@ -70,7 +69,6 @@ function loadSentenceQuestion() {
   const q = currentSentenceList[sentenceIdx];
   document.getElementById('promptText').innerText = `(${sentenceIdx + 1}/${currentSentenceList.length}) ${q.translation}`;
   
-  // 記住最初打亂的順序，用來當作定點佔位
   const shuffled = [...q.options].sort(() => Math.random() - 0.5);
   initialShuffledCards = shuffled.map((text, idx) => ({ id: idx, text }));
   selectedCards = [];
@@ -86,33 +84,28 @@ function renderSentenceQuiz() {
     document.getElementById('message').innerText = '';
   }
   
-  // 1. 渲染上方作答區
   zone.innerHTML = '';
   selectedCards.forEach(c => {
     zone.appendChild(createCard(c.text, () => {
-      if (isSentenceCorrect) return; // 答對後鎖定
+      if (isSentenceCorrect) return;
       selectedCards = selectedCards.filter(x => x.id !== c.id);
-      renderSentenceQuiz(); // 點擊退回下方
+      renderSentenceQuiz();
     }));
   });
   
-  // 2. 渲染下方選項區 (定點不移位邏輯)
   bank.innerHTML = '';
   initialShuffledCards.forEach(c => {
     const isSelected = selectedCards.some(x => x.id === c.id);
-    
     if (isSelected) {
-      // 被選後在原地留下灰色佔位符
       const placeholder = document.createElement('div');
       placeholder.className = 'card placeholder';
       placeholder.innerText = c.text;
       bank.appendChild(placeholder);
     } else {
-      // 未被選取的正常卡片
       bank.appendChild(createCard(c.text, () => {
-        if (isSentenceCorrect) return; // 答對後鎖定
+        if (isSentenceCorrect) return;
         selectedCards.push(c);
-        renderSentenceQuiz(); // 點擊移動到上方
+        renderSentenceQuiz();
       }));
     }
   });
@@ -157,9 +150,7 @@ function handleSentenceSubmit() {
     isSentenceCorrect = true;
     playCurrentSentenceAudio();
 
-    // 答對時，只秀出該題專屬的文法解析
     showGrammarExplanation(q.grammarId);
-
   } else {
     zone.classList.remove('shake', 'bounce-success');
     void zone.offsetWidth;
@@ -175,7 +166,6 @@ function playCurrentSentenceAudio() {
   }
 }
 
-// 動態顯示文法解析區塊 (精準打擊版：只顯示該題對應的文法)
 function showGrammarExplanation(grammarId) {
   if (!grammarId) return;
 
@@ -213,23 +203,37 @@ function showGrammarExplanation(grammarId) {
    2. 單字選擇測驗 (Vocab Quiz)
 ========================================= */
 function startVocabQuiz() {
-  const val = document.getElementById('vocabQuizLessonSelect').value;
-  const cnt = parseInt(document.getElementById('vocabQuizCountSelect').value, 10);
-  const isRange = val.startsWith('range_');
+  const lessonSelect = document.getElementById('vocabQuizLessonSelect');
+  const rangeSelect = document.getElementById('vocabRangeSelect');
+  const cntSelect = document.getElementById('vocabQuizCountSelect');
+  const val = lessonSelect ? lessonSelect.value : 'all';
 
   let pool = [];
+
   if (val === 'all') {
-    pool = [...appData.vocabularies];
-  } else if (isRange) {
-    const parts = val.split('_');
-    const startNum = parseInt(parts[1], 10);
-    const endNum = parseInt(parts[2], 10);
+    if (rangeSelect) rangeSelect.style.display = 'inline-block';
+    if (cntSelect) cntSelect.style.display = 'inline-block';
+
+    const rangeVal = rangeSelect ? rangeSelect.value : '1-10';
+    const [startNum, endNum] = rangeVal.split('-').map(Number);
+
     pool = appData.vocabularies.filter(v => {
       const num = parseInt((v.lessonId || '').replace('lesson-', ''), 10);
       return num >= startNum && num <= endNum;
     });
+
+    pool.sort(() => Math.random() - 0.5);
+
+    if (cntSelect) {
+      const cnt = parseInt(cntSelect.value, 10);
+      if (!isNaN(cnt) && cnt > 0) pool = pool.slice(0, Math.min(cnt, pool.length));
+    }
   } else {
+    if (rangeSelect) rangeSelect.style.display = 'none';
+    if (cntSelect) cntSelect.style.display = 'none';
+
     pool = appData.vocabularies.filter(v => v.lessonId === val);
+    pool.sort(() => Math.random() - 0.5);
   }
 
   if (pool.length < 4) {
@@ -238,8 +242,7 @@ function startVocabQuiz() {
     return;
   }
 
-  pool.sort(() => Math.random() - 0.5);
-  vocabQuizList = pool.slice(0, Math.min(cnt, pool.length));
+  vocabQuizList = pool;
   vocabQuizIdx = 0;
   vocabQuizScore = 0;
   loadVocabQuizQuestion();
